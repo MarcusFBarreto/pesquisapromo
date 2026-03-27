@@ -23,6 +23,8 @@
 # misc
 .DS_Store
 *.pem
+.mydif_backups/
+contexto_ia.txt
 
 # debug
 npm-debug.log*
