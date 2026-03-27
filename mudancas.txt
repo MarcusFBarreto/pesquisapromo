@@ -1,0 +1,904 @@
+// CREATE: lib/pesquisapromo-types.ts
++ export type CityDestinationType = "street" | "avenue" | "shop" | "offer";
++ 
++ export interface PriceHistoryPoint {
++   date: string;
++   price: number;
++ }
++ 
++ export interface Store {
++   id: string;
++   name: string;
++   slug: string;
++   rating?: number;
++ }
++ 
++ export interface CityDestination {
++   id: string;
++   type: CityDestinationType;
++   name: string;
++   slug: string;
++   summary: string;
++   keywords: string[];
++   targetRoute: string;
++ }
++ 
++ export interface OfferInput {
++   id: string;
++   productId: string;
++   storeId: string;
++   streetSlug: string;
++   shopSlug: string;
++   title: string;
++   currentPrice: number;
++   previousPrice?: number;
++   rating?: number;
++   history: PriceHistoryPoint[];
++ }
++ 
++ export interface VerifiedDiscountResult {
++   verifiedDiscount: boolean;
++   verifiedDiscountLabel: string;
++   confidence: "alta" | "media" | "baixa";
++   recentAveragePrice: number | null;
++   percentBelowRecent: number | null;
++   evidenceCount: number;
++   rankingScore: number;
++ }
++ 
++ export interface Offer extends OfferInput, VerifiedDiscountResult {}
++ 
++ export interface Shop {
++   id: string;
++   name: string;
++   slug: string;
++   streetSlug: string;
++   kind: "comparison" | "daily-deal" | "general";
++   summary: string;
++   keywords: string[];
++   targetRoute: string;
++ }
++ 
++ export interface Street {
++   id: string;
++   name: string;
++   slug: string;
++   kind: "street" | "avenue" | "travessa";
++   summary: string;
++   keywords: string[];
++   targetRoute: string;
++ }
++ 
++ export interface SearchIntentResult {
++   query: string;
++   normalizedQuery: string;
++   bestPath: CityDestination | null;
++   destinations: CityDestination[];
++   relatedOffers: Offer[];
++   relatedShops: Shop[];
++   relatedStreets: Street[];
++ }
+
+// CREATE: lib/pesquisapromo-verified-discount.ts
++ import type { OfferInput, PriceHistoryPoint, VerifiedDiscountResult } from "./pesquisapromo-types";
++ 
++ function average(values: number[]): number | null {
++   if (!values.length) return null;
++   return values.reduce((total, value) => total + value, 0) / values.length;
++ }
++ 
++ function getRecentHistory(history: PriceHistoryPoint[], sampleSize = 4): PriceHistoryPoint[] {
++   return [...history].sort((a, b) => a.date.localeCompare(b.date)).slice(-sampleSize);
++ }
++ 
++ function round(value: number): number {
++   return Math.round(value * 100) / 100;
++ }
++ 
++ export function getVerifiedDiscount(input: OfferInput): VerifiedDiscountResult {
++   const recentHistory = getRecentHistory(input.history);
++   const evidenceCount = recentHistory.length;
++   const recentAveragePrice = average(recentHistory.map((point) => point.price));
++ 
++   if (!recentAveragePrice || evidenceCount < 2) {
++     return {
++       verifiedDiscount: false,
++       verifiedDiscountLabel: "Evidência insuficiente",
++       confidence: "baixa",
++       recentAveragePrice,
++       percentBelowRecent: null,
++       evidenceCount,
++       rankingScore: input.rating ?? 0,
++     };
++   }
++ 
++   const percentBelowRecent = round(((recentAveragePrice - input.currentPrice) / recentAveragePrice) * 100);
++   const hasMeaningfulDrop = percentBelowRecent >= 8;
++   const hasEnoughEvidence = evidenceCount >= 4;
++ 
++   let verifiedDiscount = false;
++   let verifiedDiscountLabel = "Preço recente estável";
++   let confidence: "alta" | "media" | "baixa" = "baixa";
++ 
++   if (hasMeaningfulDrop && hasEnoughEvidence) {
++     verifiedDiscount = true;
++     verifiedDiscountLabel = "Desconto verificado";
++     confidence = "alta";
++   } else if (hasMeaningfulDrop) {
++     verifiedDiscountLabel = "Queda real com evidência parcial";
++     confidence = "media";
++   } else if (percentBelowRecent > 0) {
++     verifiedDiscountLabel = "Preço abaixo do recente";
++     confidence = "media";
++   }
++ 
++   const rankingScore =
++     (verifiedDiscount ? 100 : 0) +
++     Math.max(percentBelowRecent, 0) * 2 +
++     evidenceCount * 5 +
++     (input.rating ?? 0) * 3;
++ 
++   return {
++     verifiedDiscount,
++     verifiedDiscountLabel,
++     confidence,
++     recentAveragePrice: round(recentAveragePrice),
++     percentBelowRecent: round(percentBelowRecent),
++     evidenceCount,
++     rankingScore: round(rankingScore),
++   };
++ }
++ 
++ export function rankOffers<T extends OfferInput>(offers: T[]) {
++   return offers
++     .map((offer) => ({
++       ...offer,
++       ...getVerifiedDiscount(offer),
++     }))
++     .sort((a, b) => b.rankingScore - a.rankingScore);
++ }
+
+// CREATE: lib/pesquisapromo-city-data.ts
++ import { rankOffers } from "./pesquisapromo-verified-discount";
++ import type { CityDestination, Offer, OfferInput, Shop, Store, Street } from "./pesquisapromo-types";
++ 
++ export const stores: Store[] = [
++   { id: "loja-frio-certo", name: "Frio Certo", slug: "frio-certo", rating: 4.8 },
++   { id: "casa-nova", name: "Casa Nova", slug: "casa-nova", rating: 4.6 },
++   { id: "passo-firme", name: "Passo Firme", slug: "passo-firme", rating: 4.7 },
++   { id: "som-de-bolso", name: "Som de Bolso", slug: "som-de-bolso", rating: 4.5 },
++   { id: "cozinha-pratica", name: "Cozinha Prática", slug: "cozinha-pratica", rating: 4.4 },
++ ];
++ 
++ export const streets: Street[] = [
++   {
++     id: "avenida-grandes-promocoes",
++     name: "Avenida Grandes Promoções",
++     slug: "avenida-grandes-promocoes",
++     kind: "avenue",
++     summary: "Destaques fortes da cidade, com ofertas priorizadas por evidência e confiança.",
++     keywords: ["promoções", "promocoes", "descontos", "ofertas", "avenida"],
++     targetRoute: "/avenidas/avenida-grandes-promocoes",
++   },
++   {
++     id: "rua-da-casa",
++     name: "Rua da Casa",
++     slug: "rua-da-casa",
++     kind: "street",
++     summary: "Eletrodomésticos e itens de casa com foco em utilidade real.",
++     keywords: ["geladeira", "air fryer", "casa", "cozinha", "eletrodomésticos", "eletrodomesticos"],
++     targetRoute: "/ruas/rua-da-casa",
++   },
++   {
++     id: "rua-dos-calcados",
++     name: "Rua dos Calçados",
++     slug: "rua-dos-calcados",
++     kind: "street",
++     summary: "Tênis, sandálias e vitrines para quem quer comparar antes de decidir.",
++     keywords: ["tênis", "tenis", "calçados", "calcados", "sapato"],
++     targetRoute: "/ruas/rua-dos-calcados",
++   },
++   {
++     id: "travessa-dos-achadinhos",
++     name: "Travessa dos Achadinhos",
++     slug: "travessa-dos-achadinhos",
++     kind: "travessa",
++     summary: "Uma vitrine mais ágil, com achados em destaque e retorno diário.",
++     keywords: ["achado", "achadinhos", "oferta do dia", "achado do dia"],
++     targetRoute: "/ruas/travessa-dos-achadinhos",
++   },
++ ];
++ 
++ export const shops: Shop[] = [
++   {
++     id: "comparador-de-geladeiras",
++     name: "Comparador de Geladeiras",
++     slug: "comparador-de-geladeiras",
++     streetSlug: "rua-da-casa",
++     kind: "comparison",
++     summary: "Compara modelos e destaca quedas reais de preço dentro da própria loja.",
++     keywords: ["geladeira", "refrigerador", "frost free", "duplex"],
++     targetRoute: "/lojas/comparador-de-geladeiras",
++   },
++   {
++     id: "achado-do-dia",
++     name: "Achado do Dia",
++     slug: "achado-do-dia",
++     streetSlug: "travessa-dos-achadinhos",
++     kind: "daily-deal",
++     summary: "Uma oferta central com leitura rápida e sinais de confiança.",
++     keywords: ["achado", "oferta do dia", "desconto verificado"],
++     targetRoute: "/lojas/achado-do-dia",
++   },
++   {
++     id: "outlet-do-tenis",
++     name: "Outlet do Tênis",
++     slug: "outlet-do-tenis",
++     streetSlug: "rua-dos-calcados",
++     kind: "general",
++     summary: "Tênis em vitrines comparáveis, com leitura rápida de preço recente.",
++     keywords: ["tenis", "corrida", "casual", "esportivo"],
++     targetRoute: "/lojas/outlet-do-tenis",
++   },
++ ];
++ 
++ const offerInputs: OfferInput[] = [
++   {
++     id: "geladeira-brastemp-1",
++     productId: "geladeira-brastemp-bro85",
++     storeId: "loja-frio-certo",
++     streetSlug: "rua-da-casa",
++     shopSlug: "comparador-de-geladeiras",
++     title: "Geladeira Brastemp Frost Free 375L",
++     currentPrice: 2899,
++     previousPrice: 3499,
++     rating: 4.8,
++     history: [
++       { date: "2026-02-28", price: 3499 },
++       { date: "2026-03-05", price: 3449 },
++       { date: "2026-03-12", price: 3399 },
++       { date: "2026-03-19", price: 3299 },
++       { date: "2026-03-26", price: 2899 },
++     ],
++   },
++   {
++     id: "geladeira-electrolux-2",
++     productId: "geladeira-electrolux-if43",
++     storeId: "casa-nova",
++     streetSlug: "rua-da-casa",
++     shopSlug: "comparador-de-geladeiras",
++     title: "Geladeira Electrolux Inverter 390L",
++     currentPrice: 3199,
++     previousPrice: 3249,
++     rating: 4.6,
++     history: [
++       { date: "2026-03-03", price: 3259 },
++       { date: "2026-03-10", price: 3249 },
++       { date: "2026-03-17", price: 3229 },
++       { date: "2026-03-24", price: 3219 },
++       { date: "2026-03-26", price: 3199 },
++     ],
++   },
++   {
++     id: "tenis-urban-run",
++     productId: "tenis-urban-run",
++     storeId: "passo-firme",
++     streetSlug: "rua-dos-calcados",
++     shopSlug: "outlet-do-tenis",
++     title: "Tênis Urban Run Knit",
++     currentPrice: 239.9,
++     previousPrice: 299.9,
++     rating: 4.7,
++     history: [
++       { date: "2026-03-08", price: 299.9 },
++       { date: "2026-03-15", price: 294.9 },
++       { date: "2026-03-22", price: 289.9 },
++       { date: "2026-03-26", price: 239.9 },
++     ],
++   },
++   {
++     id: "fone-wave-pro",
++     productId: "fone-wave-pro",
++     storeId: "som-de-bolso",
++     streetSlug: "rua-dos-calcados",
++     shopSlug: "outlet-do-tenis",
++     title: "Fone Bluetooth Wave Pro",
++     currentPrice: 179.9,
++     previousPrice: 189.9,
++     rating: 4.5,
++     history: [
++       { date: "2026-03-20", price: 189.9 },
++       { date: "2026-03-26", price: 179.9 },
++     ],
++   },
++   {
++     id: "air-fryer-pratica-5l",
++     productId: "air-fryer-pratica-5l",
++     storeId: "cozinha-pratica",
++     streetSlug: "travessa-dos-achadinhos",
++     shopSlug: "achado-do-dia",
++     title: "Air Fryer Prática 5L",
++     currentPrice: 299.9,
++     previousPrice: 419.9,
++     rating: 4.4,
++     history: [
++       { date: "2026-02-27", price: 419.9 },
++       { date: "2026-03-06", price: 399.9 },
++       { date: "2026-03-13", price: 389.9 },
++       { date: "2026-03-20", price: 379.9 },
++       { date: "2026-03-26", price: 299.9 },
++     ],
++   },
++ ];
++ 
++ export const offers: Offer[] = rankOffers(offerInputs);
++ 
++ export const cityDestinations: CityDestination[] = [
++   ...streets.map((street) => ({
++     id: street.id,
++     type: street.kind === "avenue" ? "avenue" : "street",
++     name: street.name,
++     slug: street.slug,
++     summary: street.summary,
++     keywords: street.keywords,
++     targetRoute: street.targetRoute,
++   })),
++   ...shops.map((shop) => ({
++     id: shop.id,
++     type: "shop" as const,
++     name: shop.name,
++     slug: shop.slug,
++     summary: shop.summary,
++     keywords: shop.keywords,
++     targetRoute: shop.targetRoute,
++   })),
++   ...offers.slice(0, 4).map((offer) => ({
++     id: offer.id,
++     type: "offer" as const,
++     name: offer.title,
++     slug: offer.id,
++     summary: offer.verifiedDiscount
++       ? "Queda real baseada no histórico desta loja."
++       : "Oferta encontrada na cidade.",
++     keywords: [offer.title.toLowerCase(), offer.shopSlug, offer.streetSlug],
++     targetRoute: `/busca?q=${encodeURIComponent(offer.title)}`,
++   })),
++ ];
++ 
++ export function getStreetBySlug(slug: string) {
++   return streets.find((street) => street.slug === slug) ?? null;
++ }
++ 
++ export function getShopBySlug(slug: string) {
++   return shops.find((shop) => shop.slug === slug) ?? null;
++ }
++ 
++ export function getOffersByStreetSlug(streetSlug: string) {
++   return offers.filter((offer) => offer.streetSlug === streetSlug);
++ }
++ 
++ export function getOffersByShopSlug(shopSlug: string) {
++   return offers.filter((offer) => offer.shopSlug === shopSlug);
++ }
++ 
++ export function getStoreById(storeId: string) {
++   return stores.find((store) => store.id === storeId) ?? null;
++ }
++ 
++ export function getTopOffers(limit = 4) {
++   return offers.slice(0, limit);
++ }
+
+// CREATE: lib/pesquisapromo-search.ts
++ import { cityDestinations, getOffersByShopSlug, offers, shops, streets } from "./pesquisapromo-city-data";
++ import type { CityDestination, SearchIntentResult } from "./pesquisapromo-types";
++ 
++ function normalize(input: string) {
++   return input
++     .normalize("NFD")
++     .replace(/[\u0300-\u036f]/g, "")
++     .toLowerCase()
++     .trim();
++ }
++ 
++ function includesNormalized(source: string, query: string) {
++   return normalize(source).includes(normalize(query));
++ }
++ 
++ export function getSearchSuggestions(query: string): CityDestination[] {
++   const normalizedQuery = normalize(query);
++   if (!normalizedQuery) {
++     return cityDestinations.slice(0, 6);
++   }
++ 
++   return cityDestinations
++     .filter((destination) => {
++       return (
++         includesNormalized(destination.name, normalizedQuery) ||
++         includesNormalized(destination.summary, normalizedQuery) ||
++         destination.keywords.some((keyword) => includesNormalized(keyword, normalizedQuery))
++       );
++     })
++     .slice(0, 8);
++ }
++ 
++ export function resolveCityDestination(query: string): CityDestination | null {
++   const normalizedQuery = normalize(query);
++   if (!normalizedQuery) return null;
++ 
++   if (normalizedQuery.includes("geladeira")) {
++     return cityDestinations.find((item) => item.slug === "comparador-de-geladeiras") ?? null;
++   }
++ 
++   if (normalizedQuery.includes("tenis") || normalizedQuery.includes("tênis")) {
++     return cityDestinations.find((item) => item.slug === "outlet-do-tenis") ?? null;
++   }
++ 
++   if (normalizedQuery.includes("achado")) {
++     return cityDestinations.find((item) => item.slug === "achado-do-dia") ?? null;
++   }
++ 
++   if (normalizedQuery.includes("promoc")) {
++     return cityDestinations.find((item) => item.slug === "avenida-grandes-promocoes") ?? null;
++   }
++ 
++   if (normalizedQuery.includes("fone")) {
++     return cityDestinations.find((item) => item.slug === "outlet-do-tenis") ?? null;
++   }
++ 
++   return getSearchSuggestions(query)[0] ?? null;
++ }
++ 
++ export function searchCityNavigation(query: string): SearchIntentResult {
++   const normalizedQuery = normalize(query);
++   const destinations = getSearchSuggestions(query);
++   const bestPath = resolveCityDestination(query);
++ 
++   const relatedOffers = offers.filter((offer) => {
++     return (
++       includesNormalized(offer.title, normalizedQuery) ||
++       includesNormalized(offer.streetSlug, normalizedQuery) ||
++       includesNormalized(offer.shopSlug, normalizedQuery)
++     );
++   });
++ 
++   const relatedShops = shops.filter((shop) => {
++     return (
++       includesNormalized(shop.name, normalizedQuery) ||
++       includesNormalized(shop.summary, normalizedQuery) ||
++       shop.keywords.some((keyword) => includesNormalized(keyword, normalizedQuery))
++     );
++   });
++ 
++   const relatedStreets = streets.filter((street) => {
++     return (
++       includesNormalized(street.name, normalizedQuery) ||
++       includesNormalized(street.summary, normalizedQuery) ||
++       street.keywords.some((keyword) => includesNormalized(keyword, normalizedQuery))
++     );
++   });
++ 
++   if (bestPath?.slug === "comparador-de-geladeiras" && relatedOffers.length === 0) {
++     relatedOffers.push(...getOffersByShopSlug("comparador-de-geladeiras"));
++   }
++ 
++   if (bestPath?.slug === "achado-do-dia" && relatedOffers.length === 0) {
++     relatedOffers.push(...getOffersByShopSlug("achado-do-dia"));
++   }
++ 
++   return {
++     query,
++     normalizedQuery,
++     bestPath,
++     destinations,
++     relatedOffers: relatedOffers.slice(0, 6),
++     relatedShops: relatedShops.slice(0, 4),
++     relatedStreets: relatedStreets.slice(0, 4),
++   };
++ }
+
+// CREATE: components/pesquisapromo/verified-discount-badge.tsx
++ import type { VerifiedDiscountResult } from "@/lib/pesquisapromo-types";
++ 
++ type Props = Pick<
++   VerifiedDiscountResult,
++   "verifiedDiscount" | "verifiedDiscountLabel" | "percentBelowRecent" | "confidence"
++ > & {
++   compact?: boolean;
++ };
++ 
++ export function VerifiedDiscountBadge({
++   verifiedDiscount,
++   verifiedDiscountLabel,
++   percentBelowRecent,
++   confidence,
++   compact = false,
++ }: Props) {
++   const title = verifiedDiscount ? "Desconto verificado" : verifiedDiscountLabel;
++   const subtitle =
++     verifiedDiscount && percentBelowRecent
++       ? `${percentBelowRecent}% abaixo do preço recente`
++       : "Baseado no histórico desta loja";
++ 
++   return (
++     <div
++       className={
++         compact
++           ? "inline-flex flex-col rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-left"
++           : "flex flex-col rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-left"
++       }
++     >
++       <span className="text-sm font-semibold text-emerald-800">{title}</span>
++       <span className="text-xs text-emerald-700">{subtitle}</span>
++       {!compact ? <span className="mt-1 text-[11px] text-emerald-700/80">Confiança: {confidence}</span> : null}
++     </div>
++   );
++ }
+
+// CREATE: components/pesquisapromo/price-history-hint.tsx
++ type Props = {
++   recentAveragePrice: number | null;
++   evidenceCount: number;
++ };
++ 
++ export function PriceHistoryHint({ recentAveragePrice, evidenceCount }: Props) {
++   return (
++     <div className="rounded-xl border border-slate-200 bg-white/80 p-3 text-sm text-slate-600">
++       <p className="font-medium text-slate-800">Baseado no histórico desta loja</p>
++       <p>
++         {recentAveragePrice
++           ? `Preço médio recente: R$ ${recentAveragePrice.toFixed(2)}`
++           : "Ainda há pouco histórico para uma leitura forte."}
++       </p>
++       <p className="text-xs text-slate-500">Amostras consideradas: {evidenceCount}</p>
++     </div>
++   );
++ }
+
+// CREATE: components/pesquisapromo/header.tsx
++ import Link from "next/link";
++ 
++ export function PesquisaPromoHeader() {
++   return (
++     <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
++       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
++         <Link href="/" className="text-lg font-semibold text-slate-900">
++           PesquisaPromo
++         </Link>
++         <nav className="flex items-center gap-4 text-sm text-slate-600">
++           <Link href="/busca">Buscar na cidade</Link>
++           <Link href="/taxi-virtual">Táxi Virtual</Link>
++         </nav>
++       </div>
++     </header>
++   );
++ }
+
+// CREATE: components/pesquisapromo/taxi-button.tsx
++ import Link from "next/link";
++ 
++ export function TaxiButton() {
++   return (
++     <Link
++       href="/taxi-virtual"
++       className="inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:opacity-90"
++     >
++       Chamar Táxi
++     </Link>
++   );
++ }
+
+// CREATE: components/pesquisapromo/city-section-card.tsx
++ import Link from "next/link";
++ 
++ type Props = {
++   title: string;
++   summary: string;
++   href: string;
++ };
++ 
++ export function CitySectionCard({ title, summary, href }: Props) {
++   return (
++     <Link
++       href={href}
++       className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
++     >
++       <h3 className="text-base font-semibold text-slate-900">{title}</h3>
++       <p className="mt-2 text-sm text-slate-600">{summary}</p>
++       <span className="mt-4 inline-block text-sm font-medium text-slate-900">Ir para a rua</span>
++     </Link>
++   );
++ }
+
+// CREATE: components/pesquisapromo/shop-card.tsx
++ import Link from "next/link";
++ import type { Shop } from "@/lib/pesquisapromo-types";
++ 
++ export function ShopCard({ shop }: { shop: Shop }) {
++   return (
++     <Link
++       href={shop.targetRoute}
++       className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md"
++     >
++       <p className="text-xs uppercase tracking-wide text-slate-500">Lojinha</p>
++       <h3 className="mt-1 text-base font-semibold text-slate-900">{shop.name}</h3>
++       <p className="mt-2 text-sm text-slate-600">{shop.summary}</p>
++       <span className="mt-4 inline-block text-sm font-medium text-slate-900">Ver a lojinha</span>
++     </Link>
++   );
++ }
+
+// CREATE: components/pesquisapromo/product-card.tsx
++ import { getStoreById } from "@/lib/pesquisapromo-city-data";
++ import type { Offer } from "@/lib/pesquisapromo-types";
++ import { PriceHistoryHint } from "./price-history-hint";
++ import { VerifiedDiscountBadge } from "./verified-discount-badge";
++ 
++ export function ProductCard({ offer }: { offer: Offer }) {
++   const store = getStoreById(offer.storeId);
++ 
++   return (
++     <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
++       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
++         <div className="space-y-2">
++           <p className="text-xs uppercase tracking-wide text-slate-500">{store?.name ?? "Loja parceira"}</p>
++           <h3 className="text-lg font-semibold text-slate-900">{offer.title}</h3>
++           <p className="text-sm text-slate-600">Avaliação: {offer.rating?.toFixed(1) ?? "—"}</p>
++           <div className="flex items-end gap-3">
++             <span className="text-2xl font-bold text-slate-900">R$ {offer.currentPrice.toFixed(2)}</span>
++             {offer.previousPrice ? (
++               <span className="text-sm text-slate-400 line-through">R$ {offer.previousPrice.toFixed(2)}</span>
++             ) : null}
++           </div>
++         </div>
++         <div className="min-w-[220px]">
++           <VerifiedDiscountBadge
++             verifiedDiscount={offer.verifiedDiscount}
++             verifiedDiscountLabel={offer.verifiedDiscountLabel}
++             percentBelowRecent={offer.percentBelowRecent}
++             confidence={offer.confidence}
++           />
++         </div>
++       </div>
++       <div className="mt-4">
++         <PriceHistoryHint
++           recentAveragePrice={offer.recentAveragePrice}
++           evidenceCount={offer.evidenceCount}
++         />
++       </div>
++       <div className="mt-4">
++         <button className="rounded-xl bg-slate-900 px-4 py-3 text-sm font-medium text-white">Ver oferta</button>
++       </div>
++     </article>
++   );
++ }
+
+// CREATE: components/pesquisapromo/search-result-card.tsx
++ import Link from "next/link";
++ import type { CityDestination } from "@/lib/pesquisapromo-types";
++ 
++ export function SearchResultCard({ destination }: { destination: CityDestination }) {
++   return (
++     <Link
++       href={destination.targetRoute}
++       className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:shadow-md"
++     >
++       <p className="text-xs uppercase tracking-wide text-slate-500">{destination.type}</p>
++       <h3 className="mt-1 text-base font-semibold text-slate-900">{destination.name}</h3>
++       <p className="mt-2 text-sm text-slate-600">{destination.summary}</p>
++     </Link>
++   );
++ }
+
+// CREATE: components/pesquisapromo/search-suggestions.tsx
++ import Link from "next/link";
++ import type { CityDestination } from "@/lib/pesquisapromo-types";
++ 
++ export function SearchSuggestions({ suggestions }: { suggestions: CityDestination[] }) {
++   if (!suggestions.length) return null;
++ 
++   return (
++     <div className="rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
++       {suggestions.map((suggestion) => (
++         <Link
++           key={`${suggestion.type}-${suggestion.id}`}
++           href={suggestion.targetRoute}
++           className="block rounded-xl px-3 py-3 transition hover:bg-slate-50"
++         >
++           <p className="text-sm font-medium text-slate-900">{suggestion.name}</p>
++           <p className="text-xs text-slate-500">{suggestion.summary}</p>
++         </Link>
++       ))}
++     </div>
++   );
++ }
+
+// CREATE: components/pesquisapromo/search-bar.tsx
++ "use client";
++ 
++ import { useMemo, useState } from "react";
++ import { useRouter } from "next/navigation";
++ import { getSearchSuggestions } from "@/lib/pesquisapromo-search";
++ import { SearchSuggestions } from "./search-suggestions";
++ 
++ type Props = {
++   placeholder?: string;
++   initialValue?: string;
++   showTaxiShortcut?: boolean;
++ };
++ 
++ export function SearchBar({
++   placeholder = "Buscar na cidade...",
++   initialValue = "",
++   showTaxiShortcut = true,
++ }: Props) {
++   const [value, setValue] = useState(initialValue);
++   const router = useRouter();
++ 
++   const suggestions = useMemo(() => getSearchSuggestions(value), [value]);
++ 
++   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
++     event.preventDefault();
++     const query = value.trim();
++     if (!query) return;
++     router.push(`/busca?q=${encodeURIComponent(query)}`);
++   }
++ 
++   return (
++     <div className="relative">
++       <form onSubmit={onSubmit} className="flex flex-col gap-3 md:flex-row">
++         <input
++           value={value}
++           onChange={(event) => setValue(event.target.value)}
++           placeholder={placeholder}
++           className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none ring-0 placeholder:text-slate-400"
++         />
++         <div className="flex gap-3">
++           <button
++             type="submit"
++             className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white"
++           >
++             Buscar
++           </button>
++           {showTaxiShortcut ? (
++             <button
++               type="button"
++               onClick={() => router.push(`/taxi-virtual?q=${encodeURIComponent(value.trim())}`)}
++               className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900"
++             >
++               Táxi Virtual
++             </button>
++           ) : null}
++         </div>
++       </form>
++       {value.trim() ? (
++         <div className="absolute left-0 right-0 top-[calc(100%+12px)] z-20">
++           <SearchSuggestions suggestions={suggestions} />
++         </div>
++       ) : null}
++     </div>
++   );
++ }
+
+// CREATE: app/busca/page.tsx
++ import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
++ import { ProductCard } from "@/components/pesquisapromo/product-card";
++ import { SearchBar } from "@/components/pesquisapromo/search-bar";
++ import { SearchResultCard } from "@/components/pesquisapromo/search-result-card";
++ import { searchCityNavigation } from "@/lib/pesquisapromo-search";
++ 
++ export default function BuscaPage({
++   searchParams,
++ }: {
++   searchParams?: { q?: string };
++ }) {
++   const query = searchParams?.q ?? "";
++   const result = searchCityNavigation(query);
++ 
++   return (
++     <main className="min-h-screen bg-slate-50">
++       <PesquisaPromoHeader />
++       <div className="mx-auto max-w-6xl px-4 py-10">
++         <div className="max-w-3xl">
++           <p className="text-sm font-medium text-slate-500">Buscar na cidade</p>
++           <h1 className="mt-2 text-3xl font-semibold text-slate-900">Encontramos um bom caminho para você</h1>
++           <p className="mt-3 text-slate-600">
++             Use a busca para ir direto ou explorar outras opções da cidade.
++           </p>
++         </div>
++ 
++         <div className="mt-8 max-w-3xl">
++           <SearchBar initialValue={query} />
++         </div>
++ 
++         {result.bestPath ? (
++           <section className="mt-10">
++             <p className="text-sm font-medium text-slate-500">Melhor caminho</p>
++             <div className="mt-4 grid gap-4">
++               <SearchResultCard destination={result.bestPath} />
++             </div>
++           </section>
++         ) : null}
++ 
++         <section className="mt-10">
++           <p className="text-sm font-medium text-slate-500">Lugares na cidade</p>
++           <div className="mt-4 grid gap-4 md:grid-cols-2">
++             {result.destinations.map((destination) => (
++               <SearchResultCard key={`${destination.type}-${destination.id}`} destination={destination} />
++             ))}
++           </div>
++         </section>
++ 
++         <section className="mt-10">
++           <p className="text-sm font-medium text-slate-500">Ofertas diretas</p>
++           <div className="mt-4 grid gap-4">
++             {result.relatedOffers.map((offer) => (
++               <ProductCard key={offer.id} offer={offer} />
++             ))}
++           </div>
++         </section>
++       </div>
++     </main>
++   );
++ }
+
+// CREATE: app/taxi-virtual/page.tsx
++ import Link from "next/link";
++ import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
++ import { SearchBar } from "@/components/pesquisapromo/search-bar";
++ import { SearchResultCard } from "@/components/pesquisapromo/search-result-card";
++ import { searchCityNavigation } from "@/lib/pesquisapromo-search";
++ 
++ export default function TaxiVirtualPage({
++   searchParams,
++ }: {
++   searchParams?: { q?: string };
++ }) {
++   const query = searchParams?.q ?? "";
++   const result = searchCityNavigation(query);
++ 
++   return (
++     <main className="min-h-screen bg-slate-50">
++       <PesquisaPromoHeader />
++       <div className="mx-auto max-w-5xl px-4 py-10">
++         <div className="max-w-3xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
++           <p className="text-sm font-medium text-slate-500">Táxi Virtual</p>
++           <h1 className="mt-2 text-3xl font-semibold text-slate-900">Para onde vamos?</h1>
++           <p className="mt-3 text-slate-600">
++             Digite seu destino e use o atalho para chegar ao melhor ponto da cidade.
++           </p>
++           <div className="mt-6">
++             <SearchBar
++               initialValue={query}
++               placeholder="Digite seu destino"
++               showTaxiShortcut={false}
++             />
++           </div>
++         </div>
++ 
++         {result.bestPath ? (
++           <section className="mt-10">
++             <p className="text-sm font-medium text-slate-500">Levar até lá</p>
++             <div className="mt-4 grid gap-4">
++               <SearchResultCard destination={result.bestPath} />
++             </div>
++           </section>
++         ) : null}
++ 
++         <section className="mt-10">
++           <div className="rounded-2xl border border-dashed border-slate-300 p-6 text-sm text-slate-600">
++             <p className="font-medium text-slate-900">Explorar ou ir direto</p>
++             <p className="mt-2">
++               Você pode chamar o Táxi para chegar rápido ou voltar ao portal e seguir pelas ruas.
++             </p>
++             <div className="mt-4">
++               <Link href="/" className="font-medium text-slate-900">
++                 Voltar ao portal da cidade
++               </Link>
++             </div>
++           </div>
++         </section>
++       </div>
++     </main>
++   );
++ }
