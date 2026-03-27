@@ -1,0 +1,196 @@
+Feed geral do projeto PesquisaPromo
+
+Este resumo serve para manter contexto entre as iteracoes de codigo e registrar o que foi construido manualmente e conceitualmente fora dos diffs automatizados.
+
+1. Direcao do produto consolidada
+O projeto deixou de ser apenas uma landing e passou a ser pensado como uma cidade virtual de ofertas.
+
+Conceitos consolidados:
+- ruas
+- avenidas
+- lojinhas
+- vitrines
+- exploracao
+- cidade virtual
+- camadas de navegacao
+- misto de ludico com utilidade real
+
+Direcao de identidade:
+- evitar cara de comparador generico
+- evitar linguagem fria e B2B
+- manter linguagem mais humana
+- manter o conceito de passeio e descoberta
+
+Slogan consolidado:
+- "Lojas virtuais, promocoes reais"
+
+2. Estrutura construida manualmente fora dos diffs iniciais
+Foi criada a estrutura principal da cidade com rotas reais em Next:
+
+- /                      home / portal da cidade
+- /ruas/[slug]           ruas da cidade
+- /avenidas/[slug]       avenidas da cidade
+- /lojas/[slug]          lojinhas da cidade
+
+Arquivos principais criados/adaptados nessa fase:
+- app/page.tsx
+- app/ruas/[slug]/page.tsx
+- app/ruas/[slug]/loading.tsx
+- app/avenidas/[slug]/page.tsx
+- app/avenidas/[slug]/loading.tsx
+- app/lojas/[slug]/page.tsx
+- lib/exploration-data.ts
+- app/globals.css
+- app/layout.tsx
+
+3. O que foi definido na cidade
+Ruas/areas conceituais ja registradas:
+- Rua dos Calcados
+- Rua da Casa
+- Rua dos Testes
+- Rua dos Servicos
+- Avenida Grandes Promocoes
+
+Conceitos importantes ja preservados:
+- desconto verificado
+- Taxi Virtual
+- exploracao gamificada
+- eggs no futuro
+- Rua dos Brinquedos no futuro
+- segundo site para testes maiores
+
+4. Rua dos Testes e laboratorio
+Foi criada a Rua dos Testes como ambiente seguro para experimentacao dentro da cidade principal.
+
+Objetivo:
+- testar layouts
+- testar experiencia
+- testar interacoes
+- testar lojinhas
+- validar ideias antes de espalhar para as ruas oficiais
+
+Dentro dela foi criada a Lojinha Alfa como sandbox/laboratorio.
+
+Na Lojinha Alfa foram simulados:
+- card piloto de oferta
+- CTA
+- mini gamificacao
+- area de testes
+- bloco conceitual da futura Rua dos Brinquedos
+- espaco para ensaiar joguinhos gratis e experiencia mais ludica
+
+5. Segundo site paralelo
+Foi decidido que testes grandes e quase independentes nao devem viver apenas como rotas internas.
+
+Por isso foi criada a base de um segundo site separado no mesmo repositorio:
+- /pesquisapromo-teste
+
+Objetivo:
+- prototipos maiores
+- novas versoes quase independentes
+- testes sem interferir no site principal
+
+Porta sugerida:
+- principal: localhost:3000
+- segundo site: localhost:3001
+
+6. O que o parceiro GPT adicionou via diff
+Entrou uma camada nova com:
+- /busca
+- /taxi-virtual
+- components/pesquisapromo/*
+- lib/pesquisapromo-types.ts
+- lib/pesquisapromo-verified-discount.ts
+- lib/pesquisapromo-city-data.ts
+- lib/pesquisapromo-search.ts
+- /lojas/comparador-de-geladeiras
+- /lojas/achado-do-dia
+- /lojas/outlet-do-tenis
+
+7. O que deu certo nos diffs
+Pontos positivos:
+- a nova camada de busca foi criada com boa base
+- a ideia de desconto verificado ficou bem estruturada
+- os componentes novos ficaram modularizados
+- as novas paginas de loja ajudam a expandir a terceira camada do produto
+- o script de aplicacao funcionou bem e gerou backups locais automaticamente
+
+8. O que deu errado / conflitos encontrados
+Problema principal:
+- a camada nova criada pelo diff introduziu uma cidade paralela com slugs e rotas que nao batiam com a cidade principal ja existente
+
+Exemplos de conflito encontrados:
+- criava /ruas/rua-da-casa, mas a cidade principal ja usava /ruas/casa
+- criava /ruas/rua-dos-calcados, mas a cidade principal ja usava /ruas/calcados
+- criava /avenidas/avenida-grandes-promocoes, mas a cidade principal ja usava /avenidas/grandes-promocoes
+- usava travessas e slugs que nao existiam mais como rota real principal
+- a busca apontava para caminhos que poderiam cair em 404 ou ficar incoerentes com a narrativa da cidade
+
+Outro ponto:
+- o botão "Ver oferta" em ProductCard inicialmente nao levava a lugar nenhum
+
+Outro ponto:
+- a SearchBar inicialmente sempre mandava para /busca?q=... mesmo quando havia destino claro
+
+9. Correcoes feitas depois
+Foram feitas correcoes usando o script de diff para alinhar a camada nova ao ecossistema real.
+
+Correcao estrutural em lib/pesquisapromo-city-data.ts:
+- slugs e targetRoute foram alinhados com a cidade principal
+- a malha considerada passou a ser:
+  - /ruas/calcados
+  - /ruas/casa
+  - /ruas/testes
+  - /ruas/servicos
+  - /avenidas/grandes-promocoes
+  - /lojas/lojinha-alfa
+- a Lojinha Alfa foi integrada na malha de busca da nova camada
+
+Correcao em lib/pesquisapromo-search.ts:
+- passou a reconhecer melhor a Lojinha Alfa
+- passou a lidar melhor com consultas como fone, teste, sandbox e laboratorio
+- passou a poder puxar ofertas da lojinha alfa quando ela for o melhor caminho
+
+Correcao em components/pesquisapromo/search-bar.tsx:
+- antes: submit sempre levava para /busca?q=...
+- agora: se houver destino resolvido, navega direto para a rota correta
+- se nao houver, cai para /busca?q=...
+
+Correcao em components/pesquisapromo/product-card.tsx:
+- antes: "Ver oferta" nao fazia nada
+- agora: leva para a lojinha correspondente quando existir rota
+- fallback: mostra indisponivel se nao houver rota
+
+10. Estado atual
+O projeto esta agora em um estado melhor integrado:
+- a cidade principal continua viva e coerente
+- a camada nova de busca, taxi e desconto verificado entrou sem apagar a narrativa principal
+- a navegacao ficou mais funcional
+- os CTAs ficaram mais coerentes
+- o script de diff provou ser util e confiavel para essa fase
+
+11. Ponto de atencao futuro
+Ainda existem duas bases conceituais convivendo:
+- lib/exploration-data.ts
+- lib/pesquisapromo-city-data.ts
+
+Isso nao esta quebrando o projeto agora, mas no futuro sera importante:
+- centralizar slugs
+- centralizar nomes de ruas
+- centralizar relacao entre ruas, lojas e destinos
+- evitar duplicacao de cidade em duas fontes diferentes
+
+12. Direcao recomendada daqui para frente
+- continuar integrando a camada nova sem destruir o que ja foi construido manualmente
+- preservar a identidade da cidade virtual
+- amadurecer o Taxi Virtual
+- amadurecer a busca por produto, rua e loja
+- fortalecer desconto verificado como diferencial
+- planejar futura consolidacao das duas bases de dados da cidade
+
+13. Conclusao
+O projeto evoluiu bastante.
+A identidade do PesquisaPromo ficou mais forte.
+A cidade principal foi criada manualmente e com bastante intencao.
+A camada nova enviada por diff agregou valor real, mas precisou ser costurada com a estrutura viva do projeto.
+Hoje o ecossistema esta mais consistente do que antes e pronto para continuar crescendo.
