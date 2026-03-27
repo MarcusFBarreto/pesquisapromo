@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Fraunces, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
+const display = Fraunces({
   subsets: ["latin"],
+  variable: "--font-display",
+});
+
+const sans = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
   title: "PesquisaPromo Teste",
   description:
-    "Segundo site do ecossistema PesquisaPromo para testes paralelos, prototipos e novas direcoes.",
+    "Cidade virtual de ofertas com busca, taxi virtual e desconto verificado em um laboratorio paralelo ao site principal.",
 };
 
 export default function RootLayout({
@@ -18,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className={geist.className}>
+    <html lang="pt-BR" className={`${display.variable} ${sans.variable}`}>
       <body>{children}</body>
     </html>
   );

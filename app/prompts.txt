@@ -1,0 +1,324 @@
+Quero que você trabalhe sobre o projeto `pesquisapromo-teste`, que roda em paralelo ao site principal.
+
+IMPORTANTE:
+- Antes de codar, leia a estrutura real do projeto.
+- Quero que você proponha e implemente uma primeira versão forte, coesa e visualmente marcante do conceito do produto.
+- Não trate isso como um comparador genérico.
+- Não faça apenas remendos técnicos.
+- Quero uma direção de produto + UX + UI + implementação.
+- Depois da leitura do projeto, gere e aplique as mudanças necessárias no código real.
+- Prefira criar uma base limpa e evolutiva no `pesquisapromo-teste`.
+- Preserve o isolamento em relação ao site principal.
+
+CONTEXTO
+Hoje temos:
+- `pesquisapromo` em localhost:3000 como site principal
+- `pesquisapromo-teste` em localhost:3001 como laboratório paralelo
+- o `pesquisapromo-teste` ainda está basicamente com uma página estática
+- este segundo site existe para experimentar caminhos maiores sem bagunçar o principal
+
+OBJETIVO
+Quero que o `pesquisapromo-teste` vire a primeira visão realmente interessante do produto.
+
+Você deve pensar como:
+- designer de produto
+- arquiteto de UX
+- desenvolvedor front-end
+- alguém que entendeu a alma do PesquisaPromo
+
+A ideia não é só “ter páginas”.
+A ideia é fazer nascer uma experiência que dê vontade de explorar.
+
+CONCEITO DO PRODUTO
+PesquisaPromo é uma plataforma de ofertas com identidade de cidade virtual.
+
+O usuário pode:
+1. explorar a cidade
+2. buscar direto
+3. usar o Táxi Virtual para chegar ao melhor destino
+
+A experiência precisa equilibrar:
+- utilidade real
+- clareza
+- leve encanto
+- confiança
+
+O produto não deve parecer:
+- marketplace genérico
+- comparador frio
+- site infantilizado
+- peça publicitária exagerada
+
+O produto deve parecer:
+- original
+- vivo
+- navegável
+- útil
+- confiável
+- memorável
+
+PILAR CENTRAL
+Implementar e valorizar o conceito de “Desconto Verificado”.
+
+Definição:
+- nem todo preço baixo é promoção real
+- o selo “Desconto Verificado” deve existir quando houver queda real dentro do histórico da própria loja
+- a interface deve comunicar confiança, não hype
+
+Microcopy prioritária:
+- “Desconto verificado”
+- “Baseado no histórico desta loja”
+- “23% abaixo do preço recente”
+- “Queda real”
+- “Menor preço recente nesta loja”
+
+Evitar:
+- “super promoção”
+- “oferta absurda”
+- “imperdível”
+- linguagem agressiva de marketing
+
+MISSÃO DESTA ENTREGA
+Quero que você CRIE A PRIMEIRA EXPERIÊNCIA CONVINCENTE do `pesquisapromo-teste`.
+
+Pense nisso como um protótipo vivo de alto nível.
+
+ENTREGÁVEL ESPERADO
+Quero uma versão navegável com:
+- home/portal forte
+- busca funcional
+- Táxi Virtual funcional
+- cidade com áreas claras
+- ao menos algumas ruas e lojinhas
+- ofertas mockadas
+- desconto verificado visível
+- linguagem consistente
+- design com personalidade
+
+O que você fizer deve ser bonito, coerente e utilizável.
+
+DIREÇÃO DE PRODUTO
+Quero que a home expresse claramente dois modos:
+
+MODO 1 — Explorar a cidade
+- descobrir ruas
+- entrar em lojinhas
+- passear pelas áreas
+
+MODO 2 — Ir direto
+- buscar
+- usar Táxi Virtual
+- chegar rápido ao melhor ponto
+
+Essa dualidade é essencial.
+Ela deve estar muito clara no layout e na narrativa.
+
+ESTRUTURA DESEJADA
+Crie uma versão inicial com estas áreas da cidade:
+
+- Avenida Grandes Promoções
+- Rua da Casa
+- Rua dos Calçados
+- Travessa dos Achadinhos
+
+E estas lojinhas iniciais:
+
+- Comparador de Geladeiras
+- Achado do Dia
+- Outlet do Tênis
+
+Pode criar outras se ajudar, mas mantenha foco.
+
+EXPERIÊNCIA DESEJADA
+
+1. HOME / PORTAL DA CIDADE
+A home deve ser o grande portal do produto.
+Não quero uma landing page genérica.
+Quero algo que pareça a entrada de uma cidade comercial inteligente.
+
+Ela deve ter:
+- header simples e elegante
+- marca PesquisaPromo
+- campo de busca com protagonismo
+- acesso claro ao Táxi Virtual
+- separação visual entre “Explorar” e “Ir direto”
+- blocos clicáveis das áreas da cidade
+- uma seção de destaques
+- uma seção de lojinhas em alta
+- um primeiro contato forte com o conceito de desconto verificado
+
+A home deve causar sensação de:
+“isso é diferente, mas faz sentido”
+
+2. BUSCA
+A busca deve ser realmente útil já nesta fase.
+Ela pode ser mockada, mas precisa parecer funcional.
+
+Ela deve:
+- sugerir ruas
+- sugerir lojinhas
+- sugerir produtos
+- sugerir ofertas
+- ajudar o usuário a decidir o melhor caminho
+
+Exemplos esperados:
+- geladeira → Rua da Casa + Comparador de Geladeiras
+- tênis → Rua dos Calçados + Outlet do Tênis
+- achado → Travessa dos Achadinhos + Achado do Dia
+- promoções → Avenida Grandes Promoções
+- fone → caminho coerente dentro da cidade
+
+3. TÁXI VIRTUAL
+O Táxi Virtual deve ser apresentado como o atalho encantador do produto.
+Não precisa ser complexo.
+Mas precisa ser claro, desejável e útil.
+
+Quero que ele responda à ideia:
+“Para onde vamos?”
+
+Ele pode ser:
+- uma página dedicada
+- um modal
+- uma camada da busca
+- ou uma combinação leve
+
+Mas deve ficar claro que:
+- ele entende o destino
+- ele leva o usuário até lá
+- ele é um acelerador dentro da cidade
+
+4. RUAS
+As ruas devem ser mais do que listas.
+Cada rua precisa ter identidade.
+
+Exemplos:
+- Rua da Casa: mais utilitária, organizada, eletrodomésticos e casa
+- Rua dos Calçados: mais vitrine, comparação, moda funcional
+- Travessa dos Achadinhos: mais dinâmica, descoberta rápida
+- Avenida Grandes Promoções: mais concentrada em destaque e força comercial
+
+Cada uma deve ter:
+- título
+- descrição curta
+- cards de lojinhas
+- sensação de setor da cidade
+
+5. LOJINHAS
+Quero pelo menos estas duas bem resolvidas:
+- Comparador de Geladeiras
+- Achado do Dia
+
+Comparador de Geladeiras:
+- mais sóbrio
+- mais comparativo
+- focado em clareza e confiança
+- cards ou tabela leve
+- preço atual
+- loja
+- avaliação
+- selo de desconto verificado quando houver
+- explicação curta baseada no histórico
+
+Achado do Dia:
+- mais chamativo
+- destaque de uma oferta principal
+- sensação de oportunidade real
+- ainda limpo e elegante
+- CTA claro
+- texto como “Um achado que vale a pena hoje”
+
+6. DESCONTO VERIFICADO
+Implemente o pilar no projeto.
+Mesmo mockado, ele precisa parecer sério.
+
+Quero:
+- dados de histórico por loja/produto
+- função simples para avaliar desconto verificado
+- textos prontos para UI
+- exibição consistente em cards e páginas
+
+Cenários mínimos:
+- desconto real
+- bom preço sem queda real
+- evidência insuficiente
+
+7. DADOS MOCKADOS
+Monte uma base mockada consistente para sustentar a experiência.
+Ela deve incluir:
+- ruas
+- lojinhas
+- produtos
+- ofertas
+- histórico de preço
+- palavras-chave de busca
+- rotas/destinos
+- ranking simples de ofertas
+
+8. DESIGN
+Quero que você tome decisões de design.
+Não quero só blocos neutros.
+
+Direção visual:
+- elegante
+- leve
+- urbano-digital
+- clean
+- com personalidade
+- sem poluição
+- sem cara infantil
+- sem cara de template genérico
+
+A interface deve misturar:
+- mapa mental de cidade
+- navegação editorial
+- utilidade de produto real
+
+Se a stack permitir:
+- use boa hierarquia tipográfica
+- espaçamento generoso
+- cards bem resolvidos
+- estados hover/focus
+- composição responsiva
+- mobile razoável
+
+9. STACK
+Respeite a stack existente.
+Se houver:
+- Next.js
+- React
+- TypeScript
+- Tailwind
+- App Router
+- components
+- lib
+então siga isso.
+
+10. FORMA DE EXECUÇÃO
+Quero que você:
+1. leia a estrutura real do `pesquisapromo-teste`
+2. identifique o ponto de entrada
+3. proponha a melhor arquitetura simples para esse MVP
+4. implemente a solução
+5. mantenha o código organizado
+6. evite complexidade desnecessária
+
+11. IMPORTANTE
+- trabalhe no `pesquisapromo-teste`, não no principal
+- não replique mecanicamente o que já foi feito no principal
+- use a essência do que aprendemos, mas com liberdade criativa
+- priorize uma experiência que eu possa abrir e pensar:
+  “agora o conceito começou a ganhar forma”
+
+12. SAÍDA ESPERADA
+Ao final, quero:
+- o código implementado
+- a navegação funcionando
+- a home com força conceitual
+- busca e Táxi Virtual em primeira versão
+- ruas e lojinhas navegáveis
+- desconto verificado visível
+- uma base boa para evoluções futuras
+
+Se houver escolhas de UX/UI a fazer, decida.
+Se houver ambiguidade, escolha o caminho mais coerente com o conceito.
+Prefira uma solução coesa a uma solução excessivamente fragmentada.

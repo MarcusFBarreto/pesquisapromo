@@ -84,6 +84,34 @@ export default async function StreetPage({ params }: PageProps) {
           </div>
         </header>
 
+        {district.slug === "testes" ? (
+          <section className="rounded-[2rem] border border-[var(--pp-blue)]/20 bg-[linear-gradient(135deg,_rgba(25,76,160,0.08),_rgba(229,93,58,0.08))] p-6 shadow-[0_16px_40px_rgba(16,37,74,0.05)] md:p-7">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
+                  Cidade teste paralela
+                </p>
+                <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em] md:text-3xl">
+                  Entre no laboratorio separado
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-[var(--pp-muted)] md:text-base">
+                  Quando quisermos ousar mais, sem mexer na cidade principal, este
+                  atalho leva para o segundo site de experimentos.
+                </p>
+              </div>
+
+              <Link
+                href="http://localhost:3001"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-[var(--pp-blue)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#123a7e]"
+              >
+                Abrir cidade teste
+              </Link>
+            </div>
+          </section>
+        ) : null}
+
         <section className="rounded-[2rem] border border-[var(--pp-line)] bg-[linear-gradient(180deg,_#f8f4ec,_#f3eee5)] p-4 shadow-[0_20px_60px_rgba(16,37,74,0.05)] md:p-6">
           <div className="mb-6 flex items-center justify-between rounded-[1.5rem] bg-white px-5 py-4">
             <div>
@@ -136,6 +164,12 @@ export default async function StreetPage({ params }: PageProps) {
                             {shop.vibe}
                           </p>
 
+                          {shop.address ? (
+                            <p className="mt-3 text-xs font-medium uppercase tracking-[0.14em] text-[var(--pp-muted)]">
+                              {shop.address}
+                            </p>
+                          ) : null}
+
                           <div className="mt-4 rounded-[1.3rem] bg-[var(--pp-surface)] p-4">
                             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)]">
                               Oferta chamando atencao
@@ -187,6 +221,12 @@ export default async function StreetPage({ params }: PageProps) {
                           <p className="mt-5 text-sm leading-8 text-[var(--pp-muted)]">
                             {shop.vibe}
                           </p>
+
+                          {shop.address ? (
+                            <p className="mt-3 text-xs font-medium uppercase tracking-[0.14em] text-[var(--pp-muted)]">
+                              {shop.address}
+                            </p>
+                          ) : null}
 
                           <div className="mt-4 rounded-[1.3rem] bg-[var(--pp-surface)] p-4">
                             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)]">

@@ -291,12 +291,30 @@ export default function Home() {
 
             <article className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 md:p-7">
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-orange)]">
-                Lojinhas favoritas
+                Piloto local
               </p>
-              <p className="mt-3 text-sm leading-8 text-[var(--pp-muted)]">
-                Mais pra frente, cada pessoa pode salvar suas ruas preferidas,
-                acompanhar vitrines queridas e montar a propria rota de economia.
+              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
+                Horizonte, Ceara, ja entrou no mapa.
+              </h2>
+              <p className="mt-4 text-sm leading-8 text-[var(--pp-muted)]">
+                O principal agora ja carrega uma primeira leva de lojinhas e
+                servicos inspirados em Horizonte. A ideia e misturar o que foi
+                encontrado em fontes publicas com o que ainda esta em observacao.
               </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <Link
+                  href="/ruas/servicos"
+                  className="rounded-full bg-[var(--pp-blue)] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#123a7e]"
+                >
+                  Abrir Rua dos Servicos
+                </Link>
+                <Link
+                  href="/ruas/casa"
+                  className="rounded-full border border-[var(--pp-line)] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-muted)] transition hover:border-[var(--pp-blue)] hover:text-[var(--pp-blue)]"
+                >
+                  Ver Rua da Casa
+                </Link>
+              </div>
             </article>
           </section>
         </section>
