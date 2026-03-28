@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { districts } from "@/lib/exploration-data";
 import { getFeaturedPartners } from "@/lib/partner-data";
 
 const howItWorks = [
@@ -30,7 +29,6 @@ const trustSignals = [
 ] as const;
 
 export default function Home() {
-  const visibleDistricts = districts.filter((d) => d.slug !== "testes");
 
   return (
     <main className="min-h-screen">
@@ -60,10 +58,10 @@ export default function Home() {
               Como funciona
             </a>
             <a
-              href="#explorar"
+              href="#destaques"
               className="text-sm font-medium text-white/60 transition hover:text-white"
             >
-              Explorar
+              Destaques
             </a>
           </div>
         </div>
@@ -194,69 +192,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── EXPLORAR A CIDADE (Bridge CTA) ─── */}
-      <section id="explorar" className="bg-pp-cream py-20 lg:py-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="animate-fade-in-up rounded-[1.75rem] bg-pp-dark p-8 text-center md:p-12">
-            <p className="section-label text-pp-teal-soft">
-              Enquanto espera
-            </p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-              Que tal ver o que está rolando na cidade?
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/50">
-              Temos promoções reais e verificadas de parceiros em{" "}
-              <strong className="text-pp-orange">Horizonte/CE</strong>.
-              Passeie pelas ruas, visite vitrines e descubra oportunidades.
-            </p>
-          </div>
-
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {visibleDistricts.map((district, index) => (
-              <Link
-                href={`/${district.type}/${district.slug}`}
-                key={district.slug}
-                className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
-              >
-                <div className="mb-4 flex items-center justify-between">
-                  <span className="section-label text-pp-teal">
-                    {district.type === "ruas" ? "Rua" : "Avenida"}
-                  </span>
-                  <span className="text-xs font-medium text-pp-muted">
-                    {district.count}
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold leading-snug text-pp-ink group-hover:text-pp-teal transition">
-                  {district.title}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-pp-muted">
-                  {district.subtitle}
-                </p>
-
-                {/* Mini bar decoration */}
-                <div className="mt-5 flex items-end gap-1.5">
-                  <div className="h-6 w-3 rounded-t-md bg-pp-teal/15" />
-                  <div className="h-10 w-4 rounded-t-md bg-pp-teal/25" />
-                  <div className="h-8 w-3 rounded-t-md bg-pp-orange/20" />
-                  <div className="h-12 w-4 rounded-t-md bg-pp-teal/40" />
-                  <div className="h-5 w-3 rounded-t-md bg-pp-teal/15" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PARCEIROS VERIFICADOS ─── */}
+      {/* ─── PARCEIROS EM DESTAQUE ─── */}
       <section id="parceiros" className="border-t border-pp-line bg-pp-surface py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="section-label text-pp-teal">
-                Parceiros verificados
+                Parceiros em destaque
               </p>
               <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl">
-                Quem responde suas demandas.
+                Conheça quem atende na sua região.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-7 text-pp-muted">
@@ -308,6 +253,67 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── DESTAQUES DA SEMANA (dark break) ─── */}
+      <section id="destaques" className="bg-pp-dark py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="animate-fade-in-up text-center">
+            <p className="section-label text-pp-teal-soft">
+              Destaques da semana
+            </p>
+            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+              O que está em alta em Horizonte
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/50">
+              Produtos e serviços que nossos parceiros estão oferecendo
+              esta semana. Atualizado toda segunda.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                tag: "Casa e Eletro",
+                title: "Geladeira Frost Free 375L",
+                partner: "J Erivaldo & Cia",
+                highlight: "Condições especiais esta semana",
+              },
+              {
+                tag: "Volta às aulas",
+                title: "Kit escolar completo",
+                partner: "Art & Ton Papelaria",
+                highlight: "Kits montados com desconto por quantidade",
+              },
+              {
+                tag: "Saúde",
+                title: "Vitamina C 1g + Zinco",
+                partner: "Farmácia Caminho Popular",
+                highlight: "Oferta válida enquanto durar o estoque",
+              },
+            ].map((item, index) => (
+              <article
+                key={item.title}
+                className={`animate-fade-in-up delay-${index + 1} glass-card rounded-[1.75rem] p-6 transition hover:-translate-y-1`}
+              >
+                <div className="mb-3 inline-flex rounded-full bg-pp-orange/15 px-3 py-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-orange">
+                    {item.tag}
+                  </span>
+                </div>
+                <h3 className="text-lg font-semibold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-1 text-sm text-white/50">
+                  {item.partner}
+                </p>
+                <p className="mt-4 text-xs leading-6 text-white/35">
+                  {item.highlight}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── FOOTER ─── */}
       <footer className="bg-pp-dark py-14">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
@@ -346,10 +352,10 @@ export default function Home() {
               Como funciona
             </a>
             <a
-              href="#explorar"
+              href="#destaques"
               className="text-xs font-medium text-white/40 transition hover:text-white/70"
             >
-              Explorar
+              Destaques
             </a>
           </div>
         </div>
