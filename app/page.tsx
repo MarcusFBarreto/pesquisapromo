@@ -257,15 +257,14 @@ export default function Home() {
       <section id="destaques" className="bg-pp-dark py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up text-center">
-            <p className="section-label text-pp-teal-soft">
-              Destaques da semana
+            <p className="section-label text-pp-orange">
+              📣 ALERTA DE OFERTA
             </p>
             <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-              O que está em alta em Horizonte
+              Preço que o dono nem queria soltar.
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/50">
-              Produtos e serviços que nossos parceiros estão oferecendo
-              esta semana. Atualizado toda segunda.
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/60">
+              Nossos parceiros soltaram condições que não vão durar. Corre!
             </p>
           </div>
 
@@ -305,7 +304,7 @@ export default function Home() {
                 <p className="mt-1 text-sm text-white/50">
                   {item.partner}
                 </p>
-                <p className="mt-4 text-xs leading-6 text-white/35">
+                <p className="mt-4 text-xs leading-6 text-white/50">
                   {item.highlight}
                 </p>
               </article>
@@ -313,47 +312,46 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* ─── FOOTER ─── */}
-      <footer className="bg-pp-dark py-14">
+      <footer className="border-t border-pp-line bg-pp-cream py-14">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-pp-line bg-white px-5 py-2 shadow-sm">
             <div className="pulse-dot" />
-            <span className="text-xs font-medium text-white/60">
+            <span className="text-xs font-medium text-pp-muted">
               Cidade piloto ativa — Horizonte, Ceará
             </span>
           </div>
 
           <div className="flex items-center justify-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-pp-teal bg-pp-dark-surface">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-pp-teal bg-pp-dark">
               <div className="h-2 w-2 rounded-full bg-pp-orange" />
             </div>
-            <p className="text-sm font-semibold text-white/80">
+            <p className="text-sm font-semibold text-pp-ink">
               Pesquisa<span className="text-pp-orange">Promo</span>
             </p>
           </div>
 
-          <p className="mt-4 text-xs leading-6 text-white/30">
+          <p className="mt-4 text-xs leading-6 text-pp-muted">
             Lojas virtuais, promoções reais. Pesquisa local de preços, pedidos
             de orçamento e ofertas com contexto.
           </p>
 
           <div className="mt-6 flex justify-center gap-6">
-            <a
-              href="#parceiros"
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+            <Link
+              href="/busca"
+              className="text-xs font-medium text-pp-muted transition hover:text-pp-teal"
             >
-              Parceiros
-            </a>
+              Buscar
+            </Link>
             <a
               href="#como-funciona"
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+              className="text-xs font-medium text-pp-muted transition hover:text-pp-teal"
             >
               Como funciona
             </a>
             <a
               href="#destaques"
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+              className="text-xs font-medium text-pp-muted transition hover:text-pp-teal"
             >
               Destaques
             </a>
