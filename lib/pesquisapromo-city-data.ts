@@ -211,7 +211,7 @@ export const offers: Offer[] = rankOffers(offerInputs);
 export const cityDestinations: CityDestination[] = [
   ...streets.map((street) => ({
     id: street.id,
-    type: street.kind === "avenue" ? "avenue" : "street",
+    type: street.kind === "avenue" ? ("avenue" as const) : ("street" as const),
     name: street.name,
     slug: street.slug,
     summary: street.summary,

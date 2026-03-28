@@ -1,474 +1,346 @@
 import Link from "next/link";
-import {
-  cityRoutes,
-  districts,
-  featuredDeals,
-  missions,
-  steps,
-  testShops,
-} from "@/lib/exploration-data";
+import { districts, featuredDeals } from "@/lib/exploration-data";
+
+const howItWorks = [
+  {
+    step: "01",
+    title: "Diga o que precisa",
+    description:
+      "Produto, serviço ou orçamento — descreva em poucas palavras e informe sua região.",
+  },
+  {
+    step: "02",
+    title: "Parceiros recebem",
+    description:
+      "Quem puder atender na sua região recebe sua demanda e prepara uma proposta.",
+  },
+  {
+    step: "03",
+    title: "Compare e escolha",
+    description:
+      "Receba propostas reais, compare com calma e decida sem pressa.",
+  },
+] as const;
+
+const trustSignals = [
+  { label: "Parceiros", value: "10+" },
+  { label: "Cidade piloto", value: "Horizonte/CE" },
+  { label: "Ofertas verificadas", value: "Sim" },
+] as const;
 
 export default function Home() {
-  const taxiProducts = Array.from(
-    new Map(
-      districts.flatMap((district) =>
-        district.shops.flatMap((shop) =>
-          (shop.products ?? []).map((product) => [
-            product,
-            {
-              product,
-              stores: district.shops
-                .filter((item) => item.products?.includes(product))
-                .map((item) => item.name)
-                .join(", "),
-            },
-          ]),
-        ),
-      ),
-    ).values(),
-  );
+  const visibleDistricts = districts.filter((d) => d.slug !== "testes");
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[var(--pp-cream)] text-[var(--pp-ink)]">
-      <section className="relative mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 py-8 sm:px-10 lg:px-12">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-[radial-gradient(circle_at_top_left,_rgba(25,76,160,0.22),_transparent_48%)]" />
-
-        <header className="relative flex flex-col gap-6 rounded-[2rem] border border-[var(--pp-line)] bg-white/82 px-6 py-6 shadow-[0_28px_90px_rgba(16,37,74,0.08)] backdrop-blur md:px-8">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="mb-5 flex items-center gap-4">
-                <div className="relative h-16 w-16 shrink-0 rounded-full border-[10px] border-[var(--pp-blue)] bg-white shadow-[inset_0_0_0_6px_rgba(229,93,58,0.08)]">
-                  <div className="absolute left-[2.8rem] top-[2.8rem] h-10 w-16 rounded-full bg-[var(--pp-blue)]" />
-                  <div className="absolute inset-[0.95rem] rounded-full border-2 border-dashed border-[var(--pp-blue-soft)]" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.36em] text-[var(--pp-blue)]">
-                    PesquisaPromo
-                  </p>
-                  <p className="text-sm text-[var(--pp-muted)]">
-                    Lojas virtuais, promocoes reais.
-                  </p>
-                </div>
-              </div>
-
-              <span className="inline-flex rounded-full border border-[var(--pp-line)] bg-[var(--pp-warm)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-[var(--pp-blue)]">
-                Lojas virtuais, promocoes reais.
-              </span>
-
-              <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-balance sm:text-5xl lg:text-7xl">
-                Encontre precos melhores e promocoes de verdade.
-              </h1>
-
-              <p className="mt-5 max-w-2xl text-base leading-8 text-[var(--pp-muted)] sm:text-lg">
-                A proposta e ajudar voce a passear por ruas cheias de lojinhas,
-                comparar ofertas da sua regiao e achar oportunidades boas sem
-                virar um trabalhão.
-              </p>
+    <main className="min-h-screen">
+      {/* ─── NAVBAR ─── */}
+      <nav className="animate-fade-in sticky top-0 z-50 border-b border-white/[0.06] bg-pp-dark backdrop-blur-xl">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-pp-teal bg-pp-dark-surface">
+              <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
             </div>
+            <span className="text-lg font-semibold tracking-tight text-white">
+              Pesquisa<span className="text-pp-orange">Promo</span>
+            </span>
+          </Link>
 
-            <div className="grid gap-3 rounded-[1.75rem] bg-[var(--pp-blue)] p-5 text-white md:min-w-[19rem]">
-              <p className="text-sm uppercase tracking-[0.22em] text-white/72">
-                Do seu jeito
-              </p>
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div className="rounded-2xl bg-white/10 px-3 py-4">
-                  <p className="text-2xl font-semibold">5</p>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/72">
-                    Ofertas
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-white/10 px-3 py-4">
-                  <p className="text-2xl font-semibold">10</p>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/72">
-                    Parceiros
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-white/10 px-3 py-4">
-                  <p className="text-2xl font-semibold">20</p>
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/72">
-                    Alertas
-                  </p>
-                </div>
-              </div>
-              <p className="text-sm leading-7 text-white/78">
-                Nada de poluicao. So o que ajuda voce a decidir melhor.
-              </p>
-            </div>
+          <div className="hidden items-center gap-8 md:flex">
+            <Link
+              href="/busca"
+              className="text-sm font-medium text-white/60 transition hover:text-white"
+            >
+              Buscar
+            </Link>
+            <a
+              href="#como-funciona"
+              className="text-sm font-medium text-white/60 transition hover:text-white"
+            >
+              Como funciona
+            </a>
+            <a
+              href="#explorar"
+              className="text-sm font-medium text-white/60 transition hover:text-white"
+            >
+              Explorar
+            </a>
           </div>
+        </div>
+      </nav>
 
-          <div className="grid gap-4 rounded-[1.75rem] border border-[var(--pp-line)] bg-[var(--pp-surface)] p-4 md:grid-cols-[1.15fr_0.85fr] md:p-5">
-            <div className="grid gap-3">
-              <label className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--pp-muted)]">
-                O que voce quer encontrar?
+      {/* ─── HERO: CAPTURA DE DEMANDA ─── */}
+      <section className="relative overflow-hidden bg-pp-dark pb-20 pt-16 lg:pb-28 lg:pt-24">
+        {/* Background decorations */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-pp-teal opacity-[0.07] blur-[120px]" />
+          <div className="absolute -left-24 bottom-0 h-[400px] w-[400px] rounded-full bg-pp-orange opacity-[0.05] blur-[100px]" />
+        </div>
+
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-10">
+          {/* Left: Copy + Form */}
+          <div className="animate-fade-in-up flex flex-col justify-center">
+            <p className="section-label mb-5 text-pp-teal-soft">
+              Lojas virtuais, promoções reais
+            </p>
+
+            <h1 className="max-w-2xl text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-5xl lg:text-[3.5rem]">
+              Precisa de algo?{" "}
+              <span className="text-pp-orange">
+                Diga e receba propostas.
+              </span>
+            </h1>
+
+            <p className="mt-5 max-w-xl text-base leading-8 text-white/55 sm:text-lg">
+              Descreva o que você precisa — produto, serviço ou orçamento — e
+              parceiros da sua região respondem com propostas reais. Sem
+              intermediário, sem enrolação.
+            </p>
+
+            {/* Demand capture form */}
+            <div className="mt-8 rounded-[1.75rem] border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-sm sm:p-6">
+              <label className="section-label text-white/40">
+                O que você está precisando?
               </label>
-              <div className="flex flex-col gap-3 md:flex-row">
+              <div className="mt-3 flex flex-col gap-3 sm:flex-row">
                 <input
-                  className="h-14 flex-1 rounded-full border border-[var(--pp-line)] bg-white px-5 text-base outline-none transition focus:border-[var(--pp-blue)] focus:ring-4 focus:ring-[rgba(25,76,160,0.14)]"
-                  placeholder="Ex.: smart tv 50, cimento, caderno, ar-condicionado"
+                  id="demand-input"
+                  className="h-14 flex-1 rounded-full border border-white/10 bg-white/[0.06] px-6 text-base text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-4 focus:ring-pp-teal/20"
+                  placeholder="Ex.: cimento 50 sacos, conserto de ar-condicionado, orçamento de pintura..."
                 />
-                <button className="h-14 rounded-full bg-[var(--pp-orange)] px-7 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#cc4f2f]">
-                  Buscar ofertas
+                <button
+                  id="demand-submit"
+                  className="h-14 shrink-0 rounded-full bg-pp-orange px-8 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover hover:shadow-lg hover:shadow-pp-orange/20 active:scale-[0.98]"
+                >
+                  Receber propostas
                 </button>
               </div>
-            </div>
-
-            <div className="grid gap-3 rounded-[1.35rem] bg-white px-5 py-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--pp-muted)]">
-                  Taxi virtual
-                </p>
-                <p className="mt-2 text-sm leading-7 text-[var(--pp-muted)]">
-                  Digite o nome da loja, da rua ou um endereco da cidade para ir
-                  direto sem precisar passear.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <input
-                  list="taxi-products"
-                  className="h-12 rounded-full border border-[var(--pp-line)] bg-[var(--pp-surface)] px-4 text-sm outline-none transition focus:border-[var(--pp-blue)] focus:ring-4 focus:ring-[rgba(25,76,160,0.14)]"
-                  placeholder="Ex.: air fryer, tenis urbano, sandalia rasteira"
-                />
-                <datalist id="taxi-products">
-                  {taxiProducts.map((item) => (
-                    <option
-                      key={item.product}
-                      value={item.product}
-                    >{`${item.product} - ${item.stores}`}</option>
-                  ))}
-                </datalist>
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <button className="h-11 rounded-full bg-[var(--pp-blue)] px-5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#123a7e]">
-                    Me leve ate la
-                  </button>
-                  <button className="h-11 rounded-full border border-[var(--pp-line)] px-5 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-muted)] transition hover:border-[var(--pp-blue)] hover:text-[var(--pp-blue)]">
-                    Ver sugestoes
-                  </button>
-                </div>
-              </div>
-
-              <p className="text-xs leading-6 text-[var(--pp-muted)]">
-                Teste atual: autocomplete por produto. Depois o taxi pode ligar
-                o produto as lojas e enderecos da cidade.
+              <p className="mt-3 text-xs leading-6 text-white/30">
+                Gratuito. Seus dados ficam com você. Parceiros respondem direto.
               </p>
             </div>
           </div>
-        </header>
 
-        <section className="grid gap-6 rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] md:p-7">
-          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
-                Um portal para explorar
+          {/* Right: Trust card + numbers */}
+          <div className="animate-fade-in-up delay-2 flex flex-col gap-5">
+            {/* Trust card */}
+            <div className="glass-card rounded-[1.75rem] p-6">
+              <p className="section-label text-pp-teal-soft">
+                Por que usar
               </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] md:text-3xl">
-                Como se voce entrasse numa cidade cheia de ruas e vitrines.
-              </h2>
+              <div className="mt-4 grid gap-4">
+                {trustSignals.map((signal) => (
+                  <div
+                    key={signal.label}
+                    className="flex items-center justify-between rounded-[1.25rem] bg-white/[0.05] px-4 py-3"
+                  >
+                    <span className="text-sm text-white/50">
+                      {signal.label}
+                    </span>
+                    <span className="text-base font-semibold text-white">
+                      {signal.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <p className="max-w-xl text-sm leading-7 text-[var(--pp-muted)]">
-              Em vez de um site frio, a ideia e passar a sensacao de passeio:
-              varios caminhos, varias vitrines e sempre alguma coisa nova para
-              olhar com calma.
+
+            {/* Quick trust line */}
+            <div className="glass-card flex items-start gap-4 rounded-[1.75rem] p-5">
+              <div className="pulse-dot mt-1.5 shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-white/80">
+                  Piloto ativo em Horizonte, Ceará
+                </p>
+                <p className="mt-1 text-xs text-white/40">
+                  Parceiros reais já estão recebendo demandas e respondendo com
+                  propostas verificáveis.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── COMO FUNCIONA ─── */}
+      <section
+        id="como-funciona"
+        className="border-b border-pp-line bg-pp-surface py-20 lg:py-24"
+      >
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="animate-fade-in-up text-center">
+            <p className="section-label text-pp-teal">Como funciona</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-pp-ink sm:text-4xl">
+              Simples, direto e sem intermediário.
+            </h2>
+          </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3 lg:gap-8">
+            {howItWorks.map((item, index) => (
+              <article
+                key={item.step}
+                className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-pp-line bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-pp-dark text-sm font-bold text-white">
+                  {item.step}
+                </div>
+                <h3 className="text-xl font-semibold text-pp-ink">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-pp-muted">
+                  {item.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── EXPLORAR A CIDADE (Bridge CTA) ─── */}
+      <section id="explorar" className="bg-pp-cream py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="animate-fade-in-up rounded-[1.75rem] bg-pp-dark p-8 text-center md:p-12">
+            <p className="section-label text-pp-teal-soft">
+              Enquanto espera
+            </p>
+            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+              Que tal ver o que está rolando na cidade?
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/50">
+              Temos promoções reais e verificadas de parceiros em{" "}
+              <strong className="text-pp-orange">Horizonte/CE</strong>.
+              Passeie pelas ruas, visite vitrines e descubra oportunidades.
             </p>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-3">
-            {districts.map((district, index) => (
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {visibleDistricts.map((district, index) => (
               <Link
                 href={`/${district.type}/${district.slug}`}
-                key={district.title}
-                className="group relative overflow-hidden rounded-[1.75rem] border border-[var(--pp-line)] bg-[var(--pp-surface)] p-5 transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(16,37,74,0.08)]"
+                key={district.slug}
+                className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
               >
-                <div className="mb-5 flex items-center justify-between">
-                  <span className="inline-flex rounded-full bg-[rgba(25,76,160,0.08)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)]">
-                    {district.type === "ruas"
-                      ? `Rua ${index + 1}`
-                      : "Avenida"}
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="section-label text-pp-teal">
+                    {district.type === "ruas" ? "Rua" : "Avenida"}
                   </span>
-                  <span className="text-sm font-medium text-[var(--pp-muted)]">
+                  <span className="text-xs font-medium text-pp-muted">
                     {district.count}
                   </span>
                 </div>
+                <h3 className="text-lg font-semibold leading-snug text-pp-ink group-hover:text-pp-teal transition">
+                  {district.title}
+                </h3>
+                <p className="mt-2 text-sm leading-7 text-pp-muted">
+                  {district.subtitle}
+                </p>
 
-                <div className="space-y-3">
-                  <h3 className="text-xl font-semibold">{district.title}</h3>
-                  <p className="text-sm leading-7 text-[var(--pp-muted)]">
-                    {district.subtitle}
-                  </p>
-                  {district.slug === "testes" ? (
-                    <p className="inline-flex rounded-full bg-[rgba(229,93,58,0.12)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--pp-orange)]">
-                      Nosso laboratorio
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="mt-6 flex items-end gap-3">
-                  <div className="h-16 w-10 rounded-t-[1.2rem] bg-[var(--pp-blue)]/16" />
-                  <div className="h-24 w-12 rounded-t-[1.2rem] bg-[var(--pp-blue)]/28" />
-                  <div className="h-20 w-11 rounded-t-[1.2rem] bg-[var(--pp-orange)]/24" />
-                  <div className="h-28 w-14 rounded-t-[1.2rem] bg-[var(--pp-blue)]" />
-                  <div className="h-16 w-10 rounded-t-[1.2rem] bg-[var(--pp-blue)]/16" />
+                {/* Mini bar decoration */}
+                <div className="mt-5 flex items-end gap-1.5">
+                  <div className="h-6 w-3 rounded-t-md bg-pp-teal/15" />
+                  <div className="h-10 w-4 rounded-t-md bg-pp-teal/25" />
+                  <div className="h-8 w-3 rounded-t-md bg-pp-orange/20" />
+                  <div className="h-12 w-4 rounded-t-md bg-pp-teal/40" />
+                  <div className="h-5 w-3 rounded-t-md bg-pp-teal/15" />
                 </div>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <section className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] md:p-7">
-            <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
-                  Mapa da exploracao
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em]">
-                  Um mapa leve, divertido e cheio de caminhos.
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-7 text-[var(--pp-muted)]">
-                Aqui a pessoa nao entra so para buscar. Ela tambem pode passear,
-                descobrir e voltar para as ruas que mais gosta.
-              </p>
-            </div>
-
-            <div className="mt-6 rounded-[1.8rem] border border-[var(--pp-line)] bg-[linear-gradient(180deg,_#f9f6f0,_#f1ede5)] p-5">
-              <div className="grid gap-4">
-                {cityRoutes.map((route) => (
-                  <div key={route.name} className="rounded-[1.4rem] bg-white/80 p-4">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                      <div>
-                        <p className="text-lg font-semibold">{route.name}</p>
-                        <p className="text-sm text-[var(--pp-muted)]">
-                          {route.detail}
-                        </p>
-                      </div>
-                      <span className="inline-flex rounded-full border border-[var(--pp-line)] bg-white px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-muted)]">
-                        {route.label}
-                      </span>
-                    </div>
-                    <div className="mt-4 h-4 rounded-full bg-[rgba(25,76,160,0.08)] p-[3px]">
-                      <div
-                        className={`${route.width} ${route.accent} h-full rounded-full`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="grid gap-6">
-            <article className="rounded-[2rem] bg-[var(--pp-blue)] p-6 text-white shadow-[0_20px_60px_rgba(16,37,74,0.15)] md:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
-                Sua jornada
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
-                Um empurraozinho para explorar mais.
-              </h2>
-              <div className="mt-5 rounded-[1.5rem] bg-white/10 p-4">
-                <div className="flex items-center justify-between text-sm">
-                  <span>3 de 12 ruas visitadas</span>
-                  <span>25%</span>
-                </div>
-                <div className="mt-3 h-3 rounded-full bg-white/15 p-[2px]">
-                  <div className="h-full w-1/4 rounded-full bg-white" />
-                </div>
-              </div>
-              <div className="mt-5 grid gap-3">
-                {missions.map((mission, index) => (
-                  <div
-                    key={mission}
-                    className="grid grid-cols-[auto_1fr] gap-3 rounded-[1.2rem] bg-white/10 p-4"
-                  >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-semibold text-[var(--pp-blue)]">
-                      {index + 1}
-                    </span>
-                    <p className="text-sm leading-7 text-white/88">{mission}</p>
-                  </div>
-                ))}
-              </div>
-            </article>
-
-            <article className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 md:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-orange)]">
-                Piloto local
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
-                Horizonte, Ceara, ja entrou no mapa.
-              </h2>
-              <p className="mt-4 text-sm leading-8 text-[var(--pp-muted)]">
-                O principal agora ja carrega uma primeira leva de lojinhas e
-                servicos inspirados em Horizonte. A ideia e misturar o que foi
-                encontrado em fontes publicas com o que ainda esta em observacao.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-3">
-                <Link
-                  href="/ruas/servicos"
-                  className="rounded-full bg-[var(--pp-blue)] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#123a7e]"
-                >
-                  Abrir Rua dos Servicos
-                </Link>
-                <Link
-                  href="/ruas/casa"
-                  className="rounded-full border border-[var(--pp-line)] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-muted)] transition hover:border-[var(--pp-blue)] hover:text-[var(--pp-blue)]"
-                >
-                  Ver Rua da Casa
-                </Link>
-              </div>
-            </article>
-          </section>
-        </section>
-
-        <section className="grid gap-6 rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] md:p-7">
-          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+      {/* ─── PROMOÇÕES VERIFICADAS ─── */}
+      <section className="border-t border-pp-line bg-pp-surface py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="animate-fade-in-up flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
-                Segunda camada simulada
+              <p className="section-label text-pp-orange">
+                Promoções verificadas
               </p>
-              <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em] md:text-3xl">
-                Como se voce entrasse nas lojinhas da rua.
+              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl">
+                Preço de verdade, não etiqueta chamativa.
               </h2>
             </div>
-            <p className="max-w-xl text-sm leading-7 text-[var(--pp-muted)]">
-              Esta area simula o proximo passo da navegacao: depois da rua, a
-              pessoa encontra vitrines menores, cada uma com sua cara, seu
-              ritmo e suas ofertas.
+            <p className="max-w-md text-sm leading-7 text-pp-muted">
+              Aqui, promoção boa tem contexto. A gente olha o histórico da
+              própria loja para separar queda real de falsa queima.
             </p>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            {testShops.map((shop) => (
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {featuredDeals.map((deal, index) => (
               <article
-                key={shop.name}
-                className="rounded-[1.75rem] border border-[var(--pp-line)] bg-[var(--pp-surface)] p-5 transition hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(16,37,74,0.08)]"
+                key={deal.item}
+                className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xl font-semibold">{shop.name}</p>
-                    <p className="mt-1 text-sm text-[var(--pp-muted)]">
-                      {shop.street}
-                    </p>
-                  </div>
-                  <span className="inline-flex rounded-full bg-[rgba(229,93,58,0.12)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--pp-orange)]">
-                    {shop.badge}
+                <div className="mb-4 inline-flex rounded-full bg-pp-orange/10 px-3 py-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-orange">
+                    {deal.note}
                   </span>
                 </div>
-
-                <div className="mt-5 grid gap-5 md:grid-cols-[132px_1fr]">
-                  <div className="flex h-32 items-end justify-center gap-2 rounded-[1.4rem] border border-dashed border-[var(--pp-line)] bg-white px-4 pb-4">
-                    <div className="h-14 w-7 rounded-t-[0.8rem] bg-[var(--pp-blue)]/20" />
-                    <div className="h-20 w-8 rounded-t-[0.8rem] bg-[var(--pp-blue)]/35" />
-                    <div className="h-24 w-10 rounded-t-[0.9rem] bg-[var(--pp-orange)]/70" />
-                    <div className="h-16 w-7 rounded-t-[0.8rem] bg-[var(--pp-blue)]/20" />
-                  </div>
-
-                  <div>
-                    <p className="text-sm leading-7 text-[var(--pp-muted)]">
-                      {shop.vibe}
-                    </p>
-                    <div className="mt-4 rounded-[1.2rem] bg-white px-4 py-3">
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)]">
-                        Oferta chamando atencao
-                      </p>
-                      <p className="mt-2 text-base font-medium">{shop.offer}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                  <button className="rounded-full bg-[var(--pp-blue)] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#123a7e]">
-                    Entrar na lojinha
-                  </button>
-                  <button className="rounded-full border border-[var(--pp-line)] px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-muted)] transition hover:border-[var(--pp-blue)] hover:text-[var(--pp-blue)]">
-                    Guardar esta vitrine
+                <h3 className="text-lg font-semibold leading-snug text-pp-ink">
+                  {deal.item}
+                </h3>
+                <p className="mt-1 text-sm text-pp-muted">
+                  {deal.store}
+                </p>
+                <div className="mt-5 flex items-center justify-between">
+                  <span className="text-2xl font-bold text-pp-dark">
+                    {deal.price}
+                  </span>
+                  <button className="rounded-full border border-pp-dark px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-pp-dark transition hover:bg-pp-dark hover:text-white">
+                    Ver oferta
                   </button>
                 </div>
               </article>
             ))}
           </div>
-        </section>
-
-        <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] md:p-7">
-            <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
-                  Promocoes em destaque
-                </p>
-                <h2 className="mt-2 text-2xl font-semibold tracking-[-0.04em]">
-                  Menos vitrine, mais clareza.
-                </h2>
-              </div>
-              <p className="max-w-sm text-sm leading-7 text-[var(--pp-muted)]">
-                A ideia e mostrar poucas ofertas, mas com contexto suficiente
-                para voce bater o olho e entender se vale abrir ou nao.
-              </p>
-            </div>
-
-            <div className="mt-6 grid gap-4">
-              {featuredDeals.map((deal) => (
-                <article
-                  key={deal.item}
-                  className="grid gap-4 rounded-[1.5rem] border border-[var(--pp-line)] bg-[var(--pp-surface)] p-5 md:grid-cols-[1fr_auto]"
-                >
-                  <div>
-                    <p className="text-lg font-semibold">{deal.item}</p>
-                    <p className="mt-1 text-sm text-[var(--pp-muted)]">
-                      {deal.store}
-                    </p>
-                    <p className="mt-3 inline-flex rounded-full bg-[rgba(25,76,160,0.08)] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-[var(--pp-blue)]">
-                      {deal.note}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between gap-4 md:flex-col md:items-end">
-                    <p className="text-2xl font-semibold text-[var(--pp-blue)]">
-                      {deal.price}
-                    </p>
-                    <button className="rounded-full border border-[var(--pp-blue)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)] transition hover:bg-[var(--pp-blue)] hover:text-white">
-                      Quero ver
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-6">
-            <section className="rounded-[2rem] bg-[var(--pp-blue)] p-6 text-white shadow-[0_20px_60px_rgba(16,37,74,0.15)] md:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
-                Como funciona
-              </p>
-              <div className="mt-5 grid gap-4">
-                {steps.map((step, index) => (
-                  <div
-                    key={step}
-                    className="grid grid-cols-[auto_1fr] gap-4 rounded-[1.35rem] bg-white/10 p-4"
-                  >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-semibold text-[var(--pp-blue)]">
-                      0{index + 1}
-                    </span>
-                    <p className="text-sm leading-7 text-white/88">{step}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            <section className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 md:p-7">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-orange)]">
-                Mais pra frente
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
-                Promocao de verdade, nao so etiqueta chamativa.
-              </h2>
-              <p className="mt-4 text-sm leading-8 text-[var(--pp-muted)]">
-                A ideia e guardar o historico de preco da propria loja para
-                entender quando houve uma queda real. Assim, fica mais facil
-                separar desconto bom de falsa promocao.
-              </p>
-            </section>
-          </div>
-        </section>
+        </div>
       </section>
+
+      {/* ─── FOOTER ─── */}
+      <footer className="bg-pp-dark py-14">
+        <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2">
+            <div className="pulse-dot" />
+            <span className="text-xs font-medium text-white/60">
+              Cidade piloto ativa — Horizonte, Ceará
+            </span>
+          </div>
+
+          <div className="flex items-center justify-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-pp-teal bg-pp-dark-surface">
+              <div className="h-2 w-2 rounded-full bg-pp-orange" />
+            </div>
+            <p className="text-sm font-semibold text-white/80">
+              Pesquisa<span className="text-pp-orange">Promo</span>
+            </p>
+          </div>
+
+          <p className="mt-4 text-xs leading-6 text-white/30">
+            Lojas virtuais, promoções reais. Pesquisa local de preços, pedidos
+            de orçamento e ofertas com contexto.
+          </p>
+
+          <div className="mt-6 flex justify-center gap-6">
+            <Link
+              href="/busca"
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+            >
+              Buscar
+            </Link>
+            <a
+              href="#como-funciona"
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+            >
+              Como funciona
+            </a>
+            <a
+              href="#explorar"
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+            >
+              Explorar
+            </a>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

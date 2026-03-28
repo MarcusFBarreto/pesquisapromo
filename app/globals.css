@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
-  --background: #f4f1ea;
-  --foreground: #162033;
-  --pp-cream: #f4f1ea;
+  --pp-cream: #f7f4ee;
   --pp-surface: #fbf8f3;
   --pp-warm: #efe3cf;
   --pp-ink: #162033;
-  --pp-muted: #5f6d83;
+  --pp-muted: #6b7a8d;
   --pp-blue: #194ca0;
   --pp-blue-soft: #6f92ca;
   --pp-orange: #e55d3a;
@@ -16,10 +13,22 @@
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: #f7f4ee;
+  --color-foreground: #162033;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-pp-dark: #0f1c1e;
+  --color-pp-dark-surface: #162a2e;
+  --color-pp-teal: #1a6b5a;
+  --color-pp-teal-soft: #2a917b;
+  --color-pp-cream: #f7f4ee;
+  --color-pp-surface: #ffffff;
+  --color-pp-ink: #162033;
+  --color-pp-muted: #6b7a8d;
+  --color-pp-orange: #e55d3a;
+  --color-pp-orange-hover: #cc4f2f;
+  --color-pp-line: #e2e0db;
 }
 
 * {
@@ -32,25 +41,79 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  background: #f7f4ee;
+  color: #162033;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(135deg, rgba(25, 76, 160, 0.08), transparent 30%),
-    radial-gradient(circle at 85% 15%, rgba(229, 93, 58, 0.12), transparent 22%),
-    linear-gradient(var(--pp-cream), var(--pp-cream));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a,
 button,
 input {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Animations ── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out both;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+/* ── Glass card ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ── Section label (IsoCoop-style uppercase) ── */
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* ── Pulse dot ── */
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e55d3a;
+  box-shadow: 0 0 0 0 rgba(229, 93, 58, 0.5);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(229, 93, 58, 0.5); }
+  70% { box-shadow: 0 0 0 10px rgba(229, 93, 58, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(229, 93, 58, 0); }
 }
