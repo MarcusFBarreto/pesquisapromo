@@ -193,18 +193,18 @@ export default function Home() {
       </section>
 
       {/* ─── PARCEIROS EM DESTAQUE ─── */}
-      <section id="parceiros" className="border-t border-pp-line bg-pp-surface py-20 lg:py-24">
+      <section id="parceiros" className="bg-pp-dark py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="section-label text-pp-teal">
+              <p className="section-label text-pp-teal-soft">
                 Parceiros em destaque
               </p>
-              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl">
+              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-white sm:text-3xl">
                 Conheça quem atende na sua região.
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-7 text-pp-muted">
+            <p className="max-w-md text-sm leading-7 text-white/50">
               Nossos parceiros são verificados por nós. Eles recebem
               suas demandas e respondem com propostas reais.
             </p>
@@ -215,18 +215,18 @@ export default function Home() {
               <Link
                 href={`/parceiros/${partner.slug}`}
                 key={partner.slug}
-                className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
+                className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition hover:-translate-y-1 hover:border-white/20`}
               >
-                <div className="mb-3 inline-flex rounded-full bg-pp-teal/10 px-3 py-1">
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-teal">
+                <div className="mb-3 inline-flex rounded-full bg-pp-teal/15 px-3 py-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-teal-soft">
                     {partner.category}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-semibold leading-snug text-pp-ink group-hover:text-pp-teal transition">
+                <h3 className="text-lg font-semibold leading-snug text-white group-hover:text-pp-teal transition">
                   {partner.name}
                 </h3>
-                <p className="mt-1 text-sm text-pp-muted">
+                <p className="mt-1 text-sm text-white/60">
                   {partner.tagline}
                 </p>
 
@@ -234,16 +234,16 @@ export default function Home() {
                   {partner.services.slice(0, 3).map((service) => (
                     <div key={service} className="flex items-center gap-2">
                       <div className="h-1 w-1 shrink-0 rounded-full bg-pp-teal/40" />
-                      <span className="text-xs text-pp-muted truncate">{service}</span>
+                      <span className="text-xs text-white/40 truncate">{service}</span>
                     </div>
                   ))}
                 </div>
 
                 <div className="mt-5 flex items-center justify-between">
-                  <span className="text-xs text-pp-muted">
+                  <span className="text-xs text-white/30">
                     {partner.city}/{partner.region}
                   </span>
-                  <span className="rounded-full bg-pp-dark px-4 py-1.5 text-xs font-semibold text-white transition group-hover:bg-pp-teal">
+                  <span className="rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-pp-dark transition group-hover:bg-pp-teal group-hover:text-white">
                     Conhecer
                   </span>
                 </div>
@@ -253,17 +253,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── DESTAQUES DA SEMANA (dark break) ─── */}
-      <section id="destaques" className="bg-pp-dark py-20 lg:py-24">
+      {/* ─── ALERTA DE OFERTA (light break) ─── */}
+      <section id="destaques" className="bg-pp-cream py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up text-center">
             <p className="section-label text-pp-orange">
               📣 ALERTA DE OFERTA
             </p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+            <h2 className="mt-3 text-2xl font-bold text-pp-ink sm:text-3xl lg:text-4xl">
               Preço que o dono nem queria soltar.
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/60">
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-pp-muted">
               Nossos parceiros soltaram condições que não vão durar. Corre!
             </p>
           </div>
@@ -291,20 +291,20 @@ export default function Home() {
             ].map((item, index) => (
               <article
                 key={item.title}
-                className={`animate-fade-in-up delay-${index + 1} glass-card rounded-[1.75rem] p-6 transition hover:-translate-y-1`}
+                className={`animate-fade-in-up delay-${index + 1} rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
               >
-                <div className="mb-3 inline-flex rounded-full bg-pp-orange/15 px-3 py-1">
+                <div className="mb-3 inline-flex rounded-full bg-pp-orange/10 px-3 py-1">
                   <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-orange">
                     {item.tag}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-lg font-semibold text-pp-ink">
                   {item.title}
                 </h3>
-                <p className="mt-1 text-sm text-white/50">
+                <p className="mt-1 text-sm text-pp-muted">
                   {item.partner}
                 </p>
-                <p className="mt-4 text-xs leading-6 text-white/50">
+                <p className="mt-4 text-xs leading-6 text-pp-muted">
                   {item.highlight}
                 </p>
               </article>
@@ -312,26 +312,27 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* ─── FOOTER ─── */}
-      <footer className="border-t border-pp-line bg-pp-cream py-14">
+      <footer className="bg-pp-dark py-14">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-pp-line bg-white px-5 py-2 shadow-sm">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2">
             <div className="pulse-dot" />
-            <span className="text-xs font-medium text-pp-muted">
+            <span className="text-xs font-medium text-white/60">
               Cidade piloto ativa — Horizonte, Ceará
             </span>
           </div>
 
           <div className="flex items-center justify-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-pp-teal bg-pp-dark">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-pp-teal bg-pp-dark-surface">
               <div className="h-2 w-2 rounded-full bg-pp-orange" />
             </div>
-            <p className="text-sm font-semibold text-pp-ink">
+            <p className="text-sm font-semibold text-white/80">
               Pesquisa<span className="text-pp-orange">Promo</span>
             </p>
           </div>
 
-          <p className="mt-4 text-xs leading-6 text-pp-muted">
+          <p className="mt-4 text-xs leading-6 text-white/30">
             Lojas virtuais, promoções reais. Pesquisa local de preços, pedidos
             de orçamento e ofertas com contexto.
           </p>
@@ -339,19 +340,19 @@ export default function Home() {
           <div className="mt-6 flex justify-center gap-6">
             <Link
               href="/busca"
-              className="text-xs font-medium text-pp-muted transition hover:text-pp-teal"
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
             >
               Buscar
             </Link>
             <a
               href="#como-funciona"
-              className="text-xs font-medium text-pp-muted transition hover:text-pp-teal"
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
             >
               Como funciona
             </a>
             <a
               href="#destaques"
-              className="text-xs font-medium text-pp-muted transition hover:text-pp-teal"
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
             >
               Destaques
             </a>
