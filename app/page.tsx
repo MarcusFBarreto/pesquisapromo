@@ -193,7 +193,13 @@ export default function Home() {
       </section>
 
       {/* ─── PARCEIROS EM DESTAQUE ─── */}
-      <section id="parceiros" className="bg-pp-dark py-20 lg:py-24">
+      <section id="parceiros" className="relative overflow-hidden bg-pp-dark py-20 lg:py-24">
+        {/* Ambient glow matching the Hero */}
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-pp-teal/5 via-pp-dark to-pp-dark" />
+        <div className="absolute inset-x-0 top-0 -z-10 transform-gpu overflow-hidden blur-3xl">
+          <div className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-pp-teal to-pp-orange opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
+        </div>
+
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -217,13 +223,13 @@ export default function Home() {
                 key={partner.slug}
                 className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 backdrop-blur transition hover:-translate-y-1 hover:border-white/20`}
               >
-                <div className="mb-3 inline-flex rounded-full bg-pp-teal/15 px-3 py-1">
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-teal-soft">
+                <div className="mb-3 inline-flex rounded-full bg-pp-orange/15 px-3 py-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-orange">
                     {partner.category}
                   </span>
                 </div>
 
-                <h3 className="text-lg font-semibold leading-snug text-white group-hover:text-pp-teal transition">
+                <h3 className="text-lg font-semibold leading-snug text-white">
                   {partner.name}
                 </h3>
                 <p className="mt-1 text-sm text-white/60">
@@ -243,7 +249,7 @@ export default function Home() {
                   <span className="text-xs text-white/30">
                     {partner.city}/{partner.region}
                   </span>
-                  <span className="rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-pp-dark transition group-hover:bg-pp-teal group-hover:text-white">
+                  <span className="rounded-full bg-pp-orange px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white transition group-hover:bg-pp-orange-hover group-hover:shadow-lg group-hover:shadow-pp-orange/20">
                     Conhecer
                   </span>
                 </div>
