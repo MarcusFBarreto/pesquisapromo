@@ -166,11 +166,19 @@ export default function Home() {
         className="border-b border-pp-line bg-pp-surface py-20 lg:py-24"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="animate-fade-in-up text-center">
-            <p className="section-label text-pp-teal">Como funciona</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-[-0.03em] text-pp-ink sm:text-4xl">
-              Simples, direto e sem intermediário.
-            </h2>
+          <div className="animate-fade-in-up flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col">
+              <span className="text-4xl" aria-hidden="true">
+                🎯
+              </span>
+              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl lg:text-4xl">
+                Simples, direto e sem intermediário.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-7 text-pp-muted">
+              Você diz o que precisa, nossos parceiros locais recebem
+              sua solicitação e as propostas chegam no seu WhatsApp.
+            </p>
           </div>
 
           <div className="mt-14 grid gap-6 md:grid-cols-3 lg:gap-8">
@@ -201,16 +209,16 @@ export default function Home() {
         </div>
 
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="animate-fade-in-up flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="section-label text-pp-teal-soft">
-                Parceiros em destaque
-              </p>
-              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-white sm:text-3xl">
+          <div className="animate-fade-in-up flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col">
+              <span className="text-4xl" aria-hidden="true">
+                🤝
+              </span>
+              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-white sm:text-3xl lg:text-4xl">
                 Conheça quem atende na sua região.
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-7 text-white/50">
+            <p className="max-w-sm text-sm leading-7 text-white/50">
               Nossos parceiros são verificados por nós. Eles recebem
               suas demandas e respondem com propostas reais.
             </p>
@@ -262,15 +270,18 @@ export default function Home() {
       {/* ─── ALERTA DE OFERTA (light break) ─── */}
       <section id="destaques" className="bg-pp-cream py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="animate-fade-in-up text-center">
-            <p className="section-label text-pp-orange">
-              📣 ALERTA DE OFERTA
-            </p>
-            <h2 className="mt-3 text-2xl font-bold text-pp-ink sm:text-3xl lg:text-4xl">
-              Preço que o dono nem queria soltar.
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-pp-muted">
-              Nossos parceiros soltaram condições que não vão durar. Corre!
+          <div className="animate-fade-in-up flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="flex flex-col">
+              <span className="text-4xl" aria-hidden="true">
+                📣
+              </span>
+              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl lg:text-4xl">
+                Oportunidades imperdíveis da semana.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-7 text-pp-muted">
+              Seleção de ofertas e condições especiais dos parceiros locais.
+              Os estoques e prazos correm rápido!
             </p>
           </div>
 
