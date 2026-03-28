@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { districts, featuredDeals } from "@/lib/exploration-data";
+import { districts } from "@/lib/exploration-data";
+import { getFeaturedPartners } from "@/lib/partner-data";
 
 const howItWorks = [
   {
@@ -46,12 +47,12 @@ export default function Home() {
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
-            <Link
-              href="/busca"
+            <a
+              href="#parceiros"
               className="text-sm font-medium text-white/60 transition hover:text-white"
             >
-              Buscar
-            </Link>
+              Parceiros
+            </a>
             <a
               href="#como-funciona"
               className="text-sm font-medium text-white/60 transition hover:text-white"
@@ -246,50 +247,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── PROMOÇÕES VERIFICADAS ─── */}
-      <section className="border-t border-pp-line bg-pp-surface py-20 lg:py-24">
+      {/* ─── PARCEIROS VERIFICADOS ─── */}
+      <section id="parceiros" className="border-t border-pp-line bg-pp-surface py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="section-label text-pp-orange">
-                Promoções verificadas
+              <p className="section-label text-pp-teal">
+                Parceiros verificados
               </p>
               <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl">
-                Preço de verdade, não etiqueta chamativa.
+                Quem responde suas demandas.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-7 text-pp-muted">
-              Aqui, promoção boa tem contexto. A gente olha o histórico da
-              própria loja para separar queda real de falsa queima.
+              Nossos parceiros são verificados por nós. Eles recebem
+              suas demandas e respondem com propostas reais.
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {featuredDeals.map((deal, index) => (
-              <article
-                key={deal.item}
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {getFeaturedPartners().map((partner, index) => (
+              <Link
+                href={`/parceiros/${partner.slug}`}
+                key={partner.slug}
                 className={`animate-fade-in-up delay-${index + 1} group rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
               >
-                <div className="mb-4 inline-flex rounded-full bg-pp-orange/10 px-3 py-1">
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-orange">
-                    {deal.note}
+                <div className="mb-3 inline-flex rounded-full bg-pp-teal/10 px-3 py-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-teal">
+                    {partner.category}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold leading-snug text-pp-ink">
-                  {deal.item}
+
+                <h3 className="text-lg font-semibold leading-snug text-pp-ink group-hover:text-pp-teal transition">
+                  {partner.name}
                 </h3>
                 <p className="mt-1 text-sm text-pp-muted">
-                  {deal.store}
+                  {partner.tagline}
                 </p>
-                <div className="mt-5 flex items-center justify-between">
-                  <span className="text-2xl font-bold text-pp-dark">
-                    {deal.price}
-                  </span>
-                  <button className="rounded-full border border-pp-dark px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-pp-dark transition hover:bg-pp-dark hover:text-white">
-                    Ver oferta
-                  </button>
+
+                <div className="mt-4 space-y-1.5">
+                  {partner.services.slice(0, 3).map((service) => (
+                    <div key={service} className="flex items-center gap-2">
+                      <div className="h-1 w-1 shrink-0 rounded-full bg-pp-teal/40" />
+                      <span className="text-xs text-pp-muted truncate">{service}</span>
+                    </div>
+                  ))}
                 </div>
-              </article>
+
+                <div className="mt-5 flex items-center justify-between">
+                  <span className="text-xs text-pp-muted">
+                    {partner.city}/{partner.region}
+                  </span>
+                  <span className="rounded-full bg-pp-dark px-4 py-1.5 text-xs font-semibold text-white transition group-hover:bg-pp-teal">
+                    Conhecer
+                  </span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -320,12 +333,12 @@ export default function Home() {
           </p>
 
           <div className="mt-6 flex justify-center gap-6">
-            <Link
-              href="/busca"
+            <a
+              href="#parceiros"
               className="text-xs font-medium text-white/40 transition hover:text-white/70"
             >
-              Buscar
-            </Link>
+              Parceiros
+            </a>
             <a
               href="#como-funciona"
               className="text-xs font-medium text-white/40 transition hover:text-white/70"
