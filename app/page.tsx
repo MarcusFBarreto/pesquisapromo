@@ -102,9 +102,17 @@ export default function Home() {
                 O que você está precisando?
               </label>
               <HeroDemandForm />
-              <p className="mt-3 text-xs leading-6 text-white/30">
-                Gratuito. Seus dados ficam com você. Parceiros respondem direto.
-              </p>
+              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 text-xs">
+                <a href="#compradores" className="group flex items-center gap-1.5 text-white/50 transition hover:text-white">
+                  <span aria-hidden="true" className="opacity-70 group-hover:opacity-100">🕵️‍♂️</span>
+                  <span>Busca algo mais específico? <strong>Conte com nossa equipe</strong></span>
+                </a>
+                <span className="hidden text-white/20 sm:block">•</span>
+                <Link href="/solicitar" className="group flex items-center gap-1.5 text-pp-orange/80 transition hover:text-pp-orange">
+                  <span aria-hidden="true" className="opacity-70 group-hover:opacity-100">⚡</span>
+                  <span>Tô com pressa, <strong>vamos nessa!</strong></span>
+                </Link>
+              </div>
             </div>
           </div>
 
