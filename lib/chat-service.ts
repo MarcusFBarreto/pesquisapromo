@@ -126,9 +126,9 @@ const QUESTION_PATTERNS: Array<{
 ];
 
 const GENERIC_QUESTIONS = [
-  "Pode me dar mais detalhes sobre o que precisa?",
+  "Qual o seu prazo ideal para receber os orçamentos ou o produto em si?",
+  "Pode me dar mais detalhes sobre a quantidade ou Especificação técnica?",
   "É pra uso pessoal, de empresa ou pra presente?",
-  "Tem urgência ou pode esperar uns dias?",
   "Precisa de entrega ou vai buscar?",
 ];
 
@@ -154,6 +154,16 @@ async function getMockResponse(
     return {
       role: "assistant",
       content: "Sem problemas! 👍 Seu pedido já está bom. Preenche o WhatsApp ali do lado e clica em **Enviar** quando quiser.",
+      source: "mock",
+    };
+  }
+
+  // Check for hard-to-find terms
+  const isHardToFind = ["difícil", "dificil", "não acho", "nao acho", "raro", "sumiu", "encontrar", "importado"].some((kw) => allText.includes(kw));
+  if (isHardToFind && messages.length <= 3) {
+    return {
+      role: "assistant",
+      content: "Entendi! Nesses casos nós acionamos nossos **Compradores Terceirizados** — uma equipe especializada em caçar itens difíceis no mercado. Só me diz: qual o seu prazo máximo para conseguir isso e fechar o pedido?",
       source: "mock",
     };
   }
