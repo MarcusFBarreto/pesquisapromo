@@ -1,7 +1,7 @@
 export type ChatMessage = {
   role: "assistant" | "user";
   content: string;
-  source?: "gemini" | "mock";
+  source?: "openai" | "gemini" | "mock";
 };
 
 type ChatContext = {
@@ -51,7 +51,7 @@ export async function getAssistantResponse(
 
     // If the API returned a real response (not fallback), use it
     if (!data.fallback && data.content) {
-      return { role: "assistant", content: data.content, source: "gemini" };
+      return { role: "assistant", content: data.content, source: (data.provider || "gemini") as "openai" | "gemini" };
     }
   } catch {
     // Network error — fall through to mock

@@ -22,7 +22,7 @@ export function DemandChat({
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [initialized, setInitialized] = useState(false);
-  const [aiMode, setAiMode] = useState<"gemini" | "mock" | null>(null);
+  const [aiMode, setAiMode] = useState<"openai" | "gemini" | "mock" | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // Initialize with the first assistant message
