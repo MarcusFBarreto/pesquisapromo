@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getFeaturedPartners } from "@/lib/partner-data";
+import { HeroDemandForm } from "@/components/ui/hero-demand-form";
 
 const howItWorks = [
   {
@@ -100,19 +101,7 @@ export default function Home() {
               <label className="section-label text-white/40">
                 O que você está precisando?
               </label>
-              <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-                <input
-                  id="demand-input"
-                  className="h-14 flex-1 rounded-full border border-white/10 bg-white/[0.06] px-6 text-base text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-4 focus:ring-pp-teal/20"
-                  placeholder="Ex.: cimento 50 sacos, conserto de ar-condicionado, orçamento de pintura..."
-                />
-                <button
-                  id="demand-submit"
-                  className="h-14 shrink-0 rounded-full bg-pp-orange px-8 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover hover:shadow-lg hover:shadow-pp-orange/20 active:scale-[0.98]"
-                >
-                  Receber propostas
-                </button>
-              </div>
+              <HeroDemandForm />
               <p className="mt-3 text-xs leading-6 text-white/30">
                 Gratuito. Seus dados ficam com você. Parceiros respondem direto.
               </p>

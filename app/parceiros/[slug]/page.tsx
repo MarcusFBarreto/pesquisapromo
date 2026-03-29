@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllPartners, getPartnerBySlug } from "@/lib/partner-data";
+import { PartnerDemandCTA } from "@/components/ui/partner-demand-cta";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -154,12 +155,7 @@ export default async function PartnerPage({ params }: PageProps) {
                 Diga o que precisa e {partner.name} recebe
                 sua solicitação para responder com uma proposta.
               </p>
-              <Link
-                href="/#demand-input"
-                className="mt-5 block w-full rounded-full bg-pp-orange py-3.5 text-center text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover"
-              >
-                Abrir demanda
-              </Link>
+              <PartnerDemandCTA partnerName={partner.name} partnerSlug={partner.slug} />
             </div>
 
             {/* Trust badge */}
