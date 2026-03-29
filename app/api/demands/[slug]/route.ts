@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, { params }: RouteParams) {
     return NextResponse.json({ error: "Parceiro não encontrado" }, { status: 404 });
   }
 
-  const demands = getDemandsForPartner(slug, partner.category);
+  const demands = await getDemandsForPartner(slug, partner.category);
 
   return NextResponse.json({ demands });
 }
@@ -35,7 +35,7 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Campos: demandId, status" }, { status: 400 });
     }
 
-    updateDemandStatus(demandId, status);
+    await updateDemandStatus(demandId, status);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("[PesquisaPromo] Erro ao atualizar demanda:", error);

@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const demand = addDemand({
+    const demand = await addDemand({
       request,
       details,
       name,

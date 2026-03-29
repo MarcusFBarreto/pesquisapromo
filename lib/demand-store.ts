@@ -1,70 +1,29 @@
+import { adminDb } from "./firebase-admin";
 import { Demand, DemandStatus } from "./mock-demands";
 import { classifyDemand } from "./category-router";
 import { isBlocked } from "./blocklist-service";
 import { getAllPartners } from "./partner-data";
 
 /**
- * In-memory demand store.
- * 
- * This is the central data layer for demands. In production,
- * this would be Firestore queries. For now, it keeps state
- * in-memory on the server and syncs with the client via API.
+ * Firestore-backed demand store.
+ * Replaces the old in-memory array.
  */
 
-// Seed data
-const SEED_DEMANDS: Demand[] = [
-  {
-    id: "d-001",
-    request: "50 sacos de cimento CP2",
-    details: "Preciso de entrega em Horizonte, obra residencial no bairro Paz. Pode ser CP2 ou CP5 se tiver melhor preço.",
-    name: "Marcus",
-    whatsapp: "85999991111",
-    status: "new",
-    matchedCategories: ["Construção e Reforma", "Casa e Eletro"],
-    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000),
-  },
-  {
-    id: "d-002",
-    request: "Geladeira frost free 375L",
-    details: "Voltagem 220V, preferência por Electrolux ou Consul. Preciso de entrega e instalação.",
-    name: "Ana Paula",
-    whatsapp: "85988882222",
-    status: "new",
-    matchedCategories: ["Casa e Eletro", "Móveis e Decoração"],
-    createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000),
-  },
-  {
-    id: "d-003",
-    request: "Fogão 5 bocas com forno",
-    details: "Pode ser qualquer marca boa, mesa de vidro. Entrega no centro de Horizonte.",
-    name: "João Marcos",
-    whatsapp: "85966664444",
-    status: "responded",
-    matchedCategories: ["Casa e Eletro"],
-    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000),
-  },
-];
-
-// The live store — starts with seed data
-let demands: Demand[] = [...SEED_DEMANDS];
-let nextId = 100;
-
-/**
- * Add a new demand to the store.
- * Automatically classifies it by category via the router.
- */
-export function addDemand(payload: {
+export async function addDemand(payload: {
   request: string;
   details?: string;
   name?: string;
   whatsapp: string;
-}): Demand {
+}): Promise<Demand> {
   const categories = classifyDemand(payload.request, payload.details);
   
-  const demand: Demand = {
-    id: `d-${++nextId}`,
+  const demandsRef = adminDb.collection('demands');
+  const docRef = demandsRef.doc();
+
+  const demandData = {
+    id: docRef.id,
     request: payload.request,
-    details: payload.details,
+    details: payload.details || "",
     name: payload.name || "Anônimo",
     whatsapp: payload.whatsapp.replace(/\D/g, ""),
     status: "new",
@@ -72,46 +31,54 @@ export function addDemand(payload: {
     createdAt: new Date(),
   };
 
-  demands.unshift(demand); // newest first
-  
-  // Log routing info
+  await docRef.set({
+    ...demandData,
+    createdAt: new Date(), // Saved correctly in Firestore
+  });
+
+  const demand = demandData as Demand;
+
   const targets = getAllPartners()
     .filter((p) => categories.includes(p.category))
     .filter((p) => !isBlocked(p.slug, demand.whatsapp));
   
-  console.info(
-    `[PesquisaPromo] ✅ Nova demanda #${demand.id}: "${demand.request}"` +
-    `\n  → Categorias: ${categories.join(", ")}` +
-    `\n  → Enviada para ${targets.length} parceiro(s): ${targets.map((p) => p.name).join(", ")}`
-  );
-
+  console.info(`[PesquisaPromo] 🔥 Demanda salva no Firestore: #${demand.id} (${targets.length} alvos)`);
   return demand;
 }
 
-/**
- * Get demands for a specific partner based on their category.
- * Excludes blocked clients.
- */
-export function getDemandsForPartner(partnerSlug: string, partnerCategory: string): Demand[] {
-  return demands
-    .filter((d) => d.matchedCategories.includes(partnerCategory))
-    .filter((d) => !isBlocked(partnerSlug, d.whatsapp))
-    .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+export async function getDemandsForPartner(partnerSlug: string, partnerCategory: string): Promise<Demand[]> {
+  const snapshot = await adminDb.collection('demands')
+    .where('matchedCategories', 'array-contains', partnerCategory)
+    .orderBy('createdAt', 'desc')
+    .get();
+
+  const demands: Demand[] = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    demands.push({
+      ...data,
+      id: doc.id,
+      createdAt: data.createdAt?.toDate() || new Date(),
+    } as Demand);
+  });
+
+  return demands.filter((d) => !isBlocked(partnerSlug, d.whatsapp));
 }
 
-/**
- * Update the status of a demand.
- */
-export function updateDemandStatus(id: string, status: DemandStatus): void {
-  const demand = demands.find((d) => d.id === id);
-  if (demand) {
-    demand.status = status;
-  }
+export async function updateDemandStatus(id: string, status: DemandStatus): Promise<void> {
+  await adminDb.collection('demands').doc(id).update({ status });
 }
 
-/**
- * Get all demands (for debugging).
- */
-export function getAllDemands(): Demand[] {
-  return [...demands];
+export async function getAllDemands(): Promise<Demand[]> {
+  const snapshot = await adminDb.collection('demands').orderBy('createdAt', 'desc').get();
+  const demands: Demand[] = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    demands.push({
+      ...data,
+      id: doc.id,
+      createdAt: data.createdAt?.toDate() || new Date(),
+    } as Demand);
+  });
+  return demands;
 }
