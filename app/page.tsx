@@ -254,7 +254,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── CONCIERGE VIP ─── */}
+      {/* ─── COMPRADORES PARCEIROS ─── */}
       <section id="compradores" className="bg-pp-cream py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-pp-dark px-6 py-16 text-center sm:px-16 sm:py-24">
@@ -266,21 +266,21 @@ export default function Home() {
               Não achou o que procurava?
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70">
-              Acione nossos <strong className="text-white">Compradores Terceirizados</strong>. Uma equipe especializada em B2B, licitações e peças difíceis que vasculha o mercado e negocia para você. Um *personal shopper* corporativo.
+              Se o item for muito específico ou difícil de achar, não se preocupe. Acione nossa rede de <strong className="text-white">Compradores Parceiros</strong> — eles vasculham o mercado e fazem a ponte para você.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
-                href="https://wa.me/558199999999?text=Olá, quero saber mais sobre o serviço de Comprador Comissionado/VIP do PesquisaPromo."
+                href="https://wa.me/558199999999?text=Olá! Não encontrei o que procurava no PesquisaPromo, podem me ajudar a achar?"
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center gap-3 rounded-full bg-pp-orange px-8 py-4 text-sm font-bold tracking-tight text-white shadow-lg shadow-pp-orange/20 transition-all hover:scale-105 hover:bg-pp-orange-hover active:scale-95"
+                className="group flex w-full items-center justify-center gap-3 rounded-full bg-pp-orange px-8 py-4 text-sm font-bold tracking-tight text-white shadow-lg shadow-pp-orange/20 transition-all hover:scale-105 hover:bg-pp-orange-hover active:scale-95 sm:w-auto"
               >
-                Acionar Especialista Agora
+                Pedir ajuda da equipe
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </a>
             </div>
             <p className="mt-6 text-xs text-white/40">
-              * Serviço premium sob consulta tarifária.
+              * Diga o que precisa direto no nosso WhatsApp de suporte.
             </p>
           </div>
         </div>
