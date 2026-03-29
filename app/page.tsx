@@ -26,7 +26,7 @@ const howItWorks = [
 const trustSignals = [
   { icon: "🤝", text: "Parceiros locais REALMENTE interessados em atender você." },
   { icon: "⚡", text: "Excelente para cotações rápidas e comparativas." },
-  { icon: "🎯", text: "Encontre aqui o que não encontra em nenhum outro lugar." },
+  { icon: "🔍", text: "Não está encontrando algo? Consulte nossa rede de parceiros — eles têm de um tudo." },
 ] as const;
 
 export default function Home() {
