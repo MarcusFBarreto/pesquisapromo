@@ -266,7 +266,7 @@ export default function Home() {
               Não achou o que procurava?
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70">
-              Se o item for muito específico ou difícil de achar, não se preocupe. Acione nossa rede de <strong className="text-white">Compradores Parceiros</strong> — eles vasculham o mercado e fazem a ponte para você.
+              Se o item for muito específico ou difícil de achar, não se preocupe. Acione nossa <strong className="text-white">Equipe de Apoio para Buscas</strong> — eles vasculham o mercado e fazem a ponte para você.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
