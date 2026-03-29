@@ -1,26 +1,55 @@
+"use client";
+
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getPartnerBySlug, getAllPartners } from "@/lib/partner-data";
-import { getDemandsForPartner } from "@/lib/mock-demands";
+import { useParams } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { getPartnerBySlug } from "@/lib/partner-data";
 import { DemandList } from "@/components/ui/demand-list";
+import type { Demand } from "@/lib/mock-demands";
 
-type PageProps = {
-  params: Promise<{ slug: string }>;
-};
-
-export async function generateStaticParams() {
-  return getAllPartners().map(({ slug }) => ({ slug }));
-}
-
-export default async function PartnerDashboard({ params }: PageProps) {
-  const { slug } = await params;
+export default function PartnerDashboard() {
+  const params = useParams();
+  const slug = params.slug as string;
   const partner = getPartnerBySlug(slug);
 
+  const [demands, setDemands] = useState<Demand[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchDemands = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/demands/${slug}`);
+      const data = await res.json();
+      if (data.demands) {
+        // Parse date strings back to Date objects
+        setDemands(
+          data.demands.map((d: Demand & { createdAt: string }) => ({
+            ...d,
+            createdAt: new Date(d.createdAt),
+          }))
+        );
+      }
+    } catch (err) {
+      console.error("Erro ao buscar demandas:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [slug]);
+
+  // Fetch on mount and poll every 10 seconds for new demands
+  useEffect(() => {
+    fetchDemands();
+    const interval = setInterval(fetchDemands, 10000);
+    return () => clearInterval(interval);
+  }, [fetchDemands]);
+
   if (!partner) {
-    notFound();
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-pp-dark">
+        <p className="text-white/40">Parceiro não encontrado.</p>
+      </main>
+    );
   }
 
-  const demands = getDemandsForPartner(partner.category);
   const newCount = demands.filter((d) => d.status === "new").length;
   const respondedCount = demands.filter((d) => d.status === "responded").length;
 
@@ -38,6 +67,13 @@ export default async function PartnerDashboard({ params }: PageProps) {
             </span>
           </Link>
           <div className="flex items-center gap-3">
+            <button
+              onClick={fetchDemands}
+              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+              title="Atualizar demandas"
+            >
+              🔄 Atualizar
+            </button>
             <Link
               href={`/parceiros/${slug}`}
               className="text-xs font-medium text-white/40 transition hover:text-white/70"
@@ -60,9 +96,9 @@ export default async function PartnerDashboard({ params }: PageProps) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">
-                <div className="h-2 w-2 rounded-full bg-pp-teal" />
+                <div className="h-2 w-2 rounded-full bg-pp-teal animate-pulse" />
                 <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-pp-teal-soft">
-                  Painel do parceiro
+                  Painel ao vivo
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-white sm:text-3xl">
@@ -100,14 +136,20 @@ export default async function PartnerDashboard({ params }: PageProps) {
 
       {/* ─── DEMAND LIST ─── */}
       <section className="mx-auto max-w-5xl px-6 py-10 lg:px-10">
-        <DemandList demands={demands} partnerName={partner.name} partnerSlug={slug} />
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <p className="animate-pulse text-white/40">Carregando demandas...</p>
+          </div>
+        ) : (
+          <DemandList demands={demands} partnerName={partner.name} partnerSlug={slug} />
+        )}
       </section>
 
       {/* ─── FOOTER MINI ─── */}
       <footer className="border-t border-white/[0.06] py-8">
         <div className="mx-auto max-w-5xl px-6 text-center lg:px-10">
           <p className="text-xs text-white/25">
-            Painel exclusivo para parceiros verificados do PesquisaPromo.
+            Painel exclusivo para parceiros verificados · Atualiza automaticamente a cada 10s
           </p>
         </div>
       </footer>

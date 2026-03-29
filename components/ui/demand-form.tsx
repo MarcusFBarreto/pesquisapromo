@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { submitDemand } from "@/lib/demand-service";
 
 type DemandFormProps = {
   initialDemand?: string;
@@ -21,6 +20,7 @@ export function DemandForm({
   const [whatsapp, setWhatsapp] = useState("");
   const [name, setName] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [resultInfo, setResultInfo] = useState<{ categories?: string[]; id?: string } | null>(null);
 
   // Sync suggested details from parent/chat
   const prevSuggested = details;
@@ -48,18 +48,27 @@ export function DemandForm({
 
     setStatus("submitting");
 
-    const result = await submitDemand({
-      request,
-      details: details || undefined,
-      name: name || undefined,
-      whatsapp,
-      intendedPartnerSlug: partnerSlug,
-      sourceUrl: window.location.href,
-    });
+    try {
+      const res = await fetch("/api/demands", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          request,
+          details: details || undefined,
+          name: name || undefined,
+          whatsapp,
+        }),
+      });
 
-    if (result.success) {
-      setStatus("success");
-    } else {
+      const data = await res.json();
+
+      if (data.success) {
+        setResultInfo({ categories: data.matchedCategories, id: data.id });
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
       setStatus("error");
     }
   }
@@ -71,13 +80,25 @@ export function DemandForm({
           ✅
         </div>
         <h3 className="mb-2 text-2xl font-bold text-white">Tudo certo!</h3>
-        <p className="mx-auto mb-8 max-w-xs text-sm text-white/60">
+        <p className="mx-auto mb-4 max-w-xs text-sm text-white/60">
           Sua demanda foi enviada.{" "}
           {partnerName
             ? `O parceiro ${partnerName}`
             : "Os nossos parceiros locais"}{" "}
           em breve entrarão em contato via WhatsApp.
         </p>
+        {resultInfo?.categories && resultInfo.categories.length > 0 && (
+          <div className="mb-6 flex flex-wrap justify-center gap-2">
+            {resultInfo.categories.map((cat) => (
+              <span
+                key={cat}
+                className="rounded-full bg-pp-orange/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-pp-orange"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+        )}
         <a
           href="/"
           className="rounded-full bg-pp-orange px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover"
