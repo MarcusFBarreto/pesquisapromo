@@ -24,9 +24,9 @@ const howItWorks = [
 ] as const;
 
 const trustSignals = [
-  { label: "Parceiros", value: "10+" },
-  { label: "Cidade piloto", value: "Horizonte/CE" },
-  { label: "Ofertas verificadas", value: "Sim" },
+  { icon: "🤝", text: "Parceiros locais REALMENTE interessados em atender você." },
+  { icon: "⚡", text: "Excelente para cotações rápidas e comparativas." },
+  { icon: "🎯", text: "Encontre aqui o que não encontra em nenhum outro lugar." },
 ] as const;
 
 export default function Home() {
@@ -115,18 +115,16 @@ export default function Home() {
               <p className="section-label text-pp-teal-soft">
                 Por que usar
               </p>
-              <div className="mt-4 grid gap-4">
+              <div className="mt-4 grid gap-3">
                 {trustSignals.map((signal) => (
                   <div
-                    key={signal.label}
-                    className="flex items-center justify-between rounded-[1.25rem] bg-white/[0.05] px-4 py-3"
+                    key={signal.text}
+                    className="flex items-start gap-3 rounded-[1.25rem] bg-white/[0.05] p-4 transition-colors hover:bg-white/[0.08]"
                   >
-                    <span className="text-sm text-white/50">
-                      {signal.label}
-                    </span>
-                    <span className="text-base font-semibold text-white">
-                      {signal.value}
-                    </span>
+                    <span className="shrink-0 text-xl leading-none">{signal.icon}</span>
+                    <p className="text-sm font-medium leading-relaxed text-white/80">
+                      {signal.text}
+                    </p>
                   </div>
                 ))}
               </div>
