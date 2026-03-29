@@ -254,65 +254,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── ALERTA DE OFERTA (light break) ─── */}
-      <section id="destaques" className="bg-pp-cream py-20 lg:py-24">
+      {/* ─── CONCIERGE VIP ─── */}
+      <section id="compradores" className="bg-pp-cream py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="animate-fade-in-up flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <div className="flex flex-col">
-              <span className="text-4xl" aria-hidden="true">
-                📣
-              </span>
-              <h2 className="mt-3 text-2xl font-bold tracking-[-0.03em] text-pp-ink sm:text-3xl lg:text-4xl">
-                Oportunidades imperdíveis da semana.
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-7 text-pp-muted">
-              Seleção de ofertas e condições especiais dos parceiros locais.
-              Os estoques e prazos correm rápido!
+          <div className="relative isolate overflow-hidden rounded-[2.5rem] bg-pp-dark px-6 py-16 text-center sm:px-16 sm:py-24">
+            {/* Ambient glow */}
+            <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-pp-teal/20 via-pp-dark to-pp-dark" />
+            
+            <span className="text-5xl" aria-hidden="true">🕵️‍♂️</span>
+            <h2 className="mt-6 text-3xl font-bold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
+              Não achou o que procurava?
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70">
+              Acione nossos <strong className="text-white">Compradores Terceirizados</strong>. Uma equipe especializada em B2B, licitações e peças difíceis que vasculha o mercado e negocia para você. Um *personal shopper* corporativo.
             </p>
-          </div>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                tag: "Casa e Eletro",
-                title: "Geladeira Frost Free 375L",
-                partner: "J Erivaldo & Cia",
-                highlight: "Condições especiais esta semana",
-              },
-              {
-                tag: "Volta às aulas",
-                title: "Kit escolar completo",
-                partner: "Art & Ton Papelaria",
-                highlight: "Kits montados com desconto por quantidade",
-              },
-              {
-                tag: "Saúde",
-                title: "Vitamina C 1g + Zinco",
-                partner: "Farmácia Caminho Popular",
-                highlight: "Oferta válida enquanto durar o estoque",
-              },
-            ].map((item, index) => (
-              <article
-                key={item.title}
-                className={`animate-fade-in-up delay-${index + 1} rounded-[1.75rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md`}
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+              <a
+                href="https://wa.me/558199999999?text=Olá, quero saber mais sobre o serviço de Comprador Comissionado/VIP do PesquisaPromo."
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-3 rounded-full bg-pp-orange px-8 py-4 text-sm font-bold tracking-tight text-white shadow-lg shadow-pp-orange/20 transition-all hover:scale-105 hover:bg-pp-orange-hover active:scale-95"
               >
-                <div className="mb-3 inline-flex rounded-full bg-pp-orange/10 px-3 py-1">
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-pp-orange">
-                    {item.tag}
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold text-pp-ink">
-                  {item.title}
-                </h3>
-                <p className="mt-1 text-sm text-pp-muted">
-                  {item.partner}
-                </p>
-                <p className="mt-4 text-xs leading-6 text-pp-muted">
-                  {item.highlight}
-                </p>
-              </article>
-            ))}
+                Acionar Especialista Agora
+                <span className="transition-transform group-hover:translate-x-1">→</span>
+              </a>
+            </div>
+            <p className="mt-6 text-xs text-white/40">
+              * Serviço premium sob consulta tarifária.
+            </p>
           </div>
         </div>
       </section>
