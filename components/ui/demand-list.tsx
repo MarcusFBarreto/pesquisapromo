@@ -8,10 +8,12 @@ import {
   generateWhatsappLink,
   timeAgo,
 } from "@/lib/mock-demands";
+import { blockClient } from "@/lib/blocklist-service";
 
 type DemandListProps = {
   demands: Demand[];
   partnerName: string;
+  partnerSlug: string;
 };
 
 const TABS: { key: DemandStatus; label: string; emoji: string }[] = [
@@ -20,7 +22,7 @@ const TABS: { key: DemandStatus; label: string; emoji: string }[] = [
   { key: "archived", label: "Arquivadas", emoji: "📦" },
 ];
 
-export function DemandList({ demands: initialDemands, partnerName }: DemandListProps) {
+export function DemandList({ demands: initialDemands, partnerName, partnerSlug }: DemandListProps) {
   const [demands, setDemands] = useState(initialDemands);
   const [activeTab, setActiveTab] = useState<DemandStatus>("new");
 
@@ -35,6 +37,13 @@ export function DemandList({ demands: initialDemands, partnerName }: DemandListP
     setDemands((prev) =>
       prev.map((d) => (d.id === id ? { ...d, status: newStatus } : d))
     );
+  }
+
+  function handleBlock(demandId: string, clientWhatsapp: string) {
+    // Silently block this client — they'll never know
+    blockClient(partnerSlug, clientWhatsapp);
+    // Remove from the list immediately
+    setDemands((prev) => prev.filter((d) => d.id !== demandId));
   }
 
   return (
@@ -157,6 +166,13 @@ export function DemandList({ demands: initialDemands, partnerName }: DemandListP
                       className="rounded-full border border-white/10 px-4 py-2.5 text-xs font-semibold text-white/50 transition hover:border-white/20 hover:text-white/70"
                     >
                       📦 Arquivar
+                    </button>
+                    <button
+                      onClick={() => handleBlock(demand.id, demand.whatsapp)}
+                      className="rounded-full px-3 py-2.5 text-xs text-white/20 transition hover:text-red-400/60"
+                      title="Não receber mais demandas deste cliente"
+                    >
+                      🚫
                     </button>
                   </>
                 )}

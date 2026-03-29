@@ -8,18 +8,7 @@ type ChatContext = {
   partnerName?: string | null;
 };
 
-/**
- * Mock chat service for the "Promo" AI assistant.
- * 
- * In production, replace `getMockResponse` with a call to
- * Gemini or OpenAI using the same system prompt structure.
- */
-
-const SYSTEM_CONTEXT = `Você é o Promo, assistente virtual do PesquisaPromo em Horizonte/CE.
-Seu papel é ajudar o usuário a detalhar melhor seu pedido para que os parceiros locais possam responder com propostas mais certeiras.
-Faça perguntas curtas e diretas, no máximo 2 por vez.
-Seja simpático, informal e objetivo.
-Nunca invente preços ou produtos. Apenas ajude a esclarecer o pedido.`;
+// ─── Initial message (always local, no API needed) ───
 
 export function getInitialMessage(context: ChatContext): ChatMessage {
   const partnerRef = context.partnerName
@@ -39,7 +28,40 @@ export function getInitialMessage(context: ChatContext): ChatMessage {
   };
 }
 
-// Keyword-based mock responses — will be replaced by real AI
+// ─── Main response: tries Gemini API first, falls back to mock ───
+
+export async function getAssistantResponse(
+  messages: ChatMessage[],
+  context: ChatContext
+): Promise<ChatMessage> {
+  // Try the real AI first
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages,
+        demand: context.demand,
+        partnerName: context.partnerName,
+      }),
+    });
+
+    const data = await res.json();
+
+    // If the API returned a real response (not fallback), use it
+    if (!data.fallback && data.content) {
+      return { role: "assistant", content: data.content };
+    }
+  } catch {
+    // Network error — fall through to mock
+  }
+
+  // ─── Mock fallback ───
+  return getMockResponse(messages, context);
+}
+
+// ─── Mock response engine (keyword-based) ───
+
 const QUESTION_PATTERNS: Array<{
   keywords: string[];
   questions: string[];
@@ -104,94 +126,51 @@ const QUESTION_PATTERNS: Array<{
 
 const GENERIC_QUESTIONS = [
   "Pode me dar mais detalhes sobre o que precisa?",
-  "É pra uso pessoal, de empresia ou pra presente?",
+  "É pra uso pessoal, de empresa ou pra presente?",
   "Tem urgência ou pode esperar uns dias?",
   "Precisa de entrega ou vai buscar?",
 ];
 
 let questionIndex = 0;
 
-export async function getAssistantResponse(
+async function getMockResponse(
   messages: ChatMessage[],
   context: ChatContext
 ): Promise<ChatMessage> {
-  // Simulate network latency
   await new Promise((resolve) => setTimeout(resolve, 600 + Math.random() * 400));
 
-  const lastUserMessage = messages
-    .filter((m) => m.role === "user")
-    .pop()?.content.toLowerCase() || "";
-
+  const lastUserMessage =
+    messages.filter((m) => m.role === "user").pop()?.content.toLowerCase() || "";
   const allText = (context.demand + " " + lastUserMessage).toLowerCase();
 
-  // Check if user said "sim" / "topa" / "pode" to initial question
-  if (
-    messages.length <= 3 &&
-    /^(sim|topa|pode|claro|bora|vamos|ok|s)$/i.test(lastUserMessage.trim())
-  ) {
-    // Find relevant questions
-    const matched = QUESTION_PATTERNS.find((p) =>
-      p.keywords.some((kw) => allText.includes(kw))
-    );
+  // Quick replies to initial question
+  if (messages.length <= 3 && /^(sim|topa|pode|claro|bora|vamos|ok|s)$/i.test(lastUserMessage.trim())) {
+    const matched = QUESTION_PATTERNS.find((p) => p.keywords.some((kw) => allText.includes(kw)));
+    return { role: "assistant", content: `Boa! ${matched ? matched.questions[0] : GENERIC_QUESTIONS[0]}` };
+  }
 
-    if (matched) {
-      const q = matched.questions[0];
-      return { role: "assistant", content: `Boa! ${q}` };
-    }
-
+  if (messages.length <= 3 && /^(não|nao|n|enviar|pular)$/i.test(lastUserMessage.trim())) {
     return {
       role: "assistant",
-      content: `Boa! ${GENERIC_QUESTIONS[0]}`,
+      content: "Sem problemas! 👍 Seu pedido já está bom. Preenche o WhatsApp ali do lado e clica em **Enviar** quando quiser.",
     };
   }
 
-  // Check if user said "não" — skip chat, let them submit
-  if (
-    messages.length <= 3 &&
-    /^(não|nao|n|enviar|pular)$/i.test(lastUserMessage.trim())
-  ) {
+  const matched = QUESTION_PATTERNS.find((p) => p.keywords.some((kw) => allText.includes(kw)));
+  const userMessageCount = messages.filter((m) => m.role === "user").length;
+
+  if (userMessageCount >= 3) {
     return {
       role: "assistant",
-      content:
-        "Sem problemas! 👍 Seu pedido já está bom. Preenche o WhatsApp ali do lado e clica em **Enviar** quando quiser.",
+      content: `Perfeito, acho que já entendi bem o que você precisa! 🎯 Pode conferir o resumo ali do lado e enviar quando quiser.`,
     };
   }
-
-  // For subsequent messages — pick next relevant question
-  const matched = QUESTION_PATTERNS.find((p) =>
-    p.keywords.some((kw) => allText.includes(kw))
-  );
 
   if (matched) {
     questionIndex = (questionIndex + 1) % matched.questions.length;
-    const q = matched.questions[questionIndex];
-
-    // After 2+ questions, suggest they're ready
-    if (messages.filter((m) => m.role === "user").length >= 3) {
-      return {
-        role: "assistant",
-        content: `Entendi! Acho que já temos bastante informação. 🎯 Dá uma olhada no campo de detalhes ali do lado — eu sugiro adicionar isso: **"${lastUserMessage}"**. Quando estiver pronto, é só enviar!`,
-      };
-    }
-
-    return {
-      role: "assistant",
-      content: `Anotado! E mais uma coisa: ${q}`,
-    };
+    return { role: "assistant", content: `Anotado! E mais uma coisa: ${matched.questions[questionIndex]}` };
   }
 
-  // Generic fallback
   questionIndex = (questionIndex + 1) % GENERIC_QUESTIONS.length;
-  
-  if (messages.filter((m) => m.role === "user").length >= 3) {
-    return {
-      role: "assistant",
-      content: `Perfeito, acho que já entendi bem o que você precisa! 🎯 Pode conferir o resumo ali do lado e enviar quando quiser. Os parceiros vão receber tudo certinho.`,
-    };
-  }
-
-  return {
-    role: "assistant",
-    content: `Entendi! ${GENERIC_QUESTIONS[questionIndex]}`,
-  };
+  return { role: "assistant", content: `Entendi! ${GENERIC_QUESTIONS[questionIndex]}` };
 }

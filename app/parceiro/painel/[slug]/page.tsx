@@ -100,7 +100,7 @@ export default async function PartnerDashboard({ params }: PageProps) {
 
       {/* ─── DEMAND LIST ─── */}
       <section className="mx-auto max-w-5xl px-6 py-10 lg:px-10">
-        <DemandList demands={demands} partnerName={partner.name} />
+        <DemandList demands={demands} partnerName={partner.name} partnerSlug={slug} />
       </section>
 
       {/* ─── FOOTER MINI ─── */}
