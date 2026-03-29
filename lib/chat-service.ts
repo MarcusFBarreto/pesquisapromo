@@ -163,7 +163,7 @@ async function getMockResponse(
   if (isHardToFind && messages.length <= 3) {
     return {
       role: "assistant",
-      content: "Entendi! Nesses casos nós acionamos nossa **Equipe de Apoio para Buscas** — eles são especializados em caçar itens difíceis no mercado. Só me diz: qual o seu prazo máximo para conseguir isso e fechar o pedido?",
+      content: "Entendi! Nesses casos, quer solicitar apoio da nossa **Equipe de Apoio para Buscas**? Você continuará decidindo tudo, mas receberá um suporte valioso para encontrar o que precisa. O que acha?",
       source: "mock",
     };
   }
