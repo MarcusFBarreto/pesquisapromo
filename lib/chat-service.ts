@@ -1,6 +1,7 @@
 export type ChatMessage = {
   role: "assistant" | "user";
   content: string;
+  source?: "gemini" | "mock";
 };
 
 type ChatContext = {
@@ -50,7 +51,7 @@ export async function getAssistantResponse(
 
     // If the API returned a real response (not fallback), use it
     if (!data.fallback && data.content) {
-      return { role: "assistant", content: data.content };
+      return { role: "assistant", content: data.content, source: "gemini" };
     }
   } catch {
     // Network error — fall through to mock
@@ -146,13 +147,14 @@ async function getMockResponse(
   // Quick replies to initial question
   if (messages.length <= 3 && /^(sim|topa|pode|claro|bora|vamos|ok|s)$/i.test(lastUserMessage.trim())) {
     const matched = QUESTION_PATTERNS.find((p) => p.keywords.some((kw) => allText.includes(kw)));
-    return { role: "assistant", content: `Boa! ${matched ? matched.questions[0] : GENERIC_QUESTIONS[0]}` };
+    return { role: "assistant", content: `Boa! ${matched ? matched.questions[0] : GENERIC_QUESTIONS[0]}`, source: "mock" };
   }
 
   if (messages.length <= 3 && /^(não|nao|n|enviar|pular)$/i.test(lastUserMessage.trim())) {
     return {
       role: "assistant",
       content: "Sem problemas! 👍 Seu pedido já está bom. Preenche o WhatsApp ali do lado e clica em **Enviar** quando quiser.",
+      source: "mock",
     };
   }
 
@@ -163,14 +165,15 @@ async function getMockResponse(
     return {
       role: "assistant",
       content: `Perfeito, acho que já entendi bem o que você precisa! 🎯 Pode conferir o resumo ali do lado e enviar quando quiser.`,
+      source: "mock",
     };
   }
 
   if (matched) {
     questionIndex = (questionIndex + 1) % matched.questions.length;
-    return { role: "assistant", content: `Anotado! E mais uma coisa: ${matched.questions[questionIndex]}` };
+    return { role: "assistant", content: `Anotado! E mais uma coisa: ${matched.questions[questionIndex]}`, source: "mock" };
   }
 
   questionIndex = (questionIndex + 1) % GENERIC_QUESTIONS.length;
-  return { role: "assistant", content: `Entendi! ${GENERIC_QUESTIONS[questionIndex]}` };
+  return { role: "assistant", content: `Entendi! ${GENERIC_QUESTIONS[questionIndex]}`, source: "mock" };
 }

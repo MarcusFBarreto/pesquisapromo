@@ -22,6 +22,7 @@ export function DemandChat({
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [initialized, setInitialized] = useState(false);
+  const [aiMode, setAiMode] = useState<"gemini" | "mock" | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // Initialize with the first assistant message
@@ -61,6 +62,10 @@ export function DemandChat({
       partnerName,
     });
 
+    if (response.source) {
+      setAiMode(response.source);
+    }
+
     setMessages((prev) => [...prev, response]);
     setIsTyping(false);
   }
@@ -92,6 +97,17 @@ export function DemandChat({
         {isTyping && (
           <span className="ml-auto text-xs text-pp-teal animate-pulse">
             digitando...
+          </span>
+        )}
+        {!isTyping && aiMode && (
+          <span
+            className={`ml-auto rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] ${
+              aiMode === "gemini"
+                ? "bg-pp-teal/15 text-pp-teal-soft"
+                : "bg-amber-500/15 text-amber-400"
+            }`}
+          >
+            {aiMode === "gemini" ? "⚡ Gemini IA" : "🧪 Simulado"}
           </span>
         )}
       </div>
