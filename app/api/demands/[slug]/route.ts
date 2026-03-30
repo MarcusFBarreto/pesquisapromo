@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDemandsForPartner, updateDemandStatus } from "@/lib/demand-store";
-import { getPartnerBySlug } from "@/lib/partner-data";
+import { getPartnerBySlugAsync } from "@/lib/partner-data";
 
 type RouteParams = {
   params: Promise<{ slug: string }>;
@@ -11,7 +11,7 @@ type RouteParams = {
  */
 export async function GET(req: NextRequest, { params }: RouteParams) {
   const { slug } = await params;
-  const partner = getPartnerBySlug(slug);
+  const partner = await getPartnerBySlugAsync(slug);
 
   if (!partner) {
     return NextResponse.json({ error: "Parceiro não encontrado" }, { status: 404 });

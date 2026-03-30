@@ -29,7 +29,7 @@ const CATEGORY_KEYWORDS: Record<string, string[]> = {
     "cimento", "areia", "cal", "argamassa", "tijolo", "bloco",
     "tinta", "pintura", "ferragem", "ferramenta", "hidráulico",
     "elétrico", "telha", "madeira", "piso", "cerâmica", "obra",
-    "reforma", "construção", "pedreiro",
+    "reforma", "construção", "pedreiro", "isopor", "laje", "eps",
   ],
 };
 

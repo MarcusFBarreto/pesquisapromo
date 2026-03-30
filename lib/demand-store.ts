@@ -38,18 +38,25 @@ export async function addDemand(payload: {
 
   const demand = demandData as Demand;
 
-  const targets = getAllPartners()
+  const staticTargets = getAllPartners()
     .filter((p) => categories.includes(p.category))
     .filter((p) => !isBlocked(p.slug, demand.whatsapp));
+
+  // Count Firestore targets
+  const firestoreSnapshot = await adminDb.collection('partners')
+    .where('category', 'in', categories.length > 0 ? categories : ["none"])
+    .get();
   
-  console.info(`[PesquisaPromo] 🔥 Demanda salva no Firestore: #${demand.id} (${targets.length} alvos)`);
+  const firestoreTargetsCount = firestoreSnapshot.size;
+  const totalTargets = staticTargets.length + firestoreTargetsCount;
+  
+  console.info(`[PesquisaPromo] 🔥 Demanda salva no Firestore: #${demand.id} (${totalTargets} parceiros notificados simbolicamente)`);
   return demand;
 }
 
 export async function getDemandsForPartner(partnerSlug: string, partnerCategory: string): Promise<Demand[]> {
   const snapshot = await adminDb.collection('demands')
     .where('matchedCategories', 'array-contains', partnerCategory)
-    .orderBy('createdAt', 'desc')
     .get();
 
   const demands: Demand[] = [];
@@ -61,6 +68,9 @@ export async function getDemandsForPartner(partnerSlug: string, partnerCategory:
       createdAt: data.createdAt?.toDate() || new Date(),
     } as Demand);
   });
+
+  // Manual sort to avoid index requirement for now
+  demands.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   return demands.filter((d) => !isBlocked(partnerSlug, d.whatsapp));
 }

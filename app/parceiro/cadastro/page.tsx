@@ -5,6 +5,10 @@ import { PartnerOnboardingForm } from "@/components/ui/partner-onboarding-form";
 export const metadata = {
   title: "Sou Lojista | PesquisaPromo",
   description: "Cadastre sua loja para receber orçamentos hiper-segmentados de Horizonte.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function PartnerRegistrationPage() {
@@ -49,6 +53,15 @@ export default function PartnerRegistrationPage() {
         <section className="mx-auto max-w-3xl px-6 lg:px-10 -mt-12 pb-24 relative z-10">
           <div className="glass-card rounded-[2rem] border border-pp-line bg-white p-8 shadow-xl sm:p-12">
             <PartnerOnboardingForm />
+            
+            <div className="mt-8 border-t border-pp-line pt-8 text-center">
+              <p className="text-sm text-pp-muted">
+                Já é um parceiro cadastrado?{" "}
+                <Link href="/parceiro/login" className="font-bold text-pp-teal hover:underline">
+                  Faça login para acessar seu painel
+                </Link>
+              </p>
+            </div>
           </div>
         </section>
       </main>

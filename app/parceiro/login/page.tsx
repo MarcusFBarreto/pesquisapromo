@@ -123,7 +123,17 @@ export default function PartnerLoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 rounded-xl bg-white/[0.04] p-4">
+          <div className="mt-6 flex flex-col items-center gap-4 border-t border-white/5 pt-6">
+            <Link 
+              href="/parceiro/ativar" 
+              className="group flex items-center gap-2 text-xs font-semibold text-pp-teal-soft transition hover:text-pp-teal"
+            >
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-pp-teal/10 group-hover:bg-pp-teal/20">✨</span>
+              Primeiro acesso? Ative sua conta aqui
+            </Link>
+          </div>
+
+          <div className="mt-8 rounded-xl bg-white/[0.04] p-4">
             <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/30">
               Modo demonstração
             </p>

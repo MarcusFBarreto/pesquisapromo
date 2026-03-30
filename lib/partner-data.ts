@@ -139,3 +139,25 @@ export function getFeaturedPartners(): Partner[] {
 export function getAllPartners(): Partner[] {
   return partners;
 }
+
+export async function getPartnerBySlugAsync(slug: string): Promise<Partner | null> {
+  // 1. Check static partners
+  const staticPartner = getPartnerBySlug(slug);
+  if (staticPartner) return staticPartner;
+
+  // 2. Check Firestore
+  if (typeof window === "undefined") {
+    try {
+      const { adminDb } = await import("./firebase-admin");
+      // Use where('slug', '==', slug) because Firestore doc IDs might not be slugs
+      const snapshot = await adminDb.collection("partners").where("slug", "==", slug).limit(1).get();
+      if (!snapshot.empty) {
+        return snapshot.docs[0].data() as Partner;
+      }
+    } catch (err) {
+      console.error("Error fetching partner from Firestore:", err);
+    }
+  }
+
+  return null;
+}

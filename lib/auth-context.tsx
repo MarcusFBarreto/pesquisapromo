@@ -61,38 +61,73 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function signIn(email: string, password: string) {
     const lower = email.toLowerCase().trim();
 
-    if (IS_FIREBASE_READY) {
-      // Real Firebase Auth
-      try {
-        const { getAuth, signInWithEmailAndPassword } = await import("firebase/auth");
-        const { app } = await import("./firebase");
-        const auth = getAuth(app);
-        const cred = await signInWithEmailAndPassword(auth, lower, password);
+    try {
+      let partnerInfo = null;
 
-        const partner = PARTNER_EMAILS[cred.user.email || ""];
-        if (!partner) {
-          return { success: false, error: "Este email não está associado a um parceiro." };
+      // 1. Try to find partner in Firestore
+      const { collection, query, where, getDocs } = await import("firebase/firestore");
+      const { db } = await import("./firebase");
+      
+      const q = query(collection(db, "partners"), where("email", "==", lower));
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const docData = querySnapshot.docs[0].data();
+        partnerInfo = { slug: docData.slug, name: docData.name };
+      } else {
+        // Fallback to hardcoded list
+        partnerInfo = PARTNER_EMAILS[lower];
+      }
+
+      if (IS_FIREBASE_READY) {
+        // Real Firebase Auth
+        const { signInWithEmailAndPassword } = await import("firebase/auth");
+        const { auth } = await import("./firebase");
+        
+        try {
+          const cred = await signInWithEmailAndPassword(auth, lower, password);
+
+          if (!partnerInfo) {
+            return { success: false, error: "Este email não está associado a um parceiro verificado." };
+          }
+
+          const authUser = { email: cred.user.email!, partnerSlug: partnerInfo.slug, partnerName: partnerInfo.name };
+          setUser(authUser);
+          localStorage.setItem("pp_auth", JSON.stringify(authUser));
+          return { success: true };
+        } catch (authError: any) {
+          console.error("Firebase Auth Error:", authError);
+          
+          if (authError.code === 'auth/configuration-not-found') {
+            console.warn("[Auth] Firebase não configurado corretamente. Entrando em MODO DEMO para permitir teste.");
+            
+            if (!partnerInfo) {
+              return { success: false, error: "Este email não está associado a um parceiro verificado." };
+            }
+
+            const authUser = { email: lower, partnerSlug: partnerInfo.slug, partnerName: partnerInfo.name };
+            setUser(authUser);
+            localStorage.setItem("pp_auth", JSON.stringify(authUser));
+            return { success: true };
+          }
+          
+          return { success: false, error: authError.message || "Erro ao entrar." };
+        }
+      } else {
+        // Mock mode
+        if (!partnerInfo) {
+          return { success: false, error: "Email não encontrado. Use um email de parceiro cadastrado." };
         }
 
-        const authUser = { email: cred.user.email!, partnerSlug: partner.slug, partnerName: partner.name };
+        const authUser = { email: lower, partnerSlug: partnerInfo.slug, partnerName: partnerInfo.name };
         setUser(authUser);
         localStorage.setItem("pp_auth", JSON.stringify(authUser));
         return { success: true };
-      } catch {
-        return { success: false, error: "Email ou senha incorretos." };
       }
+    } catch (error: any) {
+      console.error("Auth error:", error);
+      return { success: false, error: error.message || "Erro ao entrar." };
     }
-
-    // Mock mode — accept any mapped email with any password
-    const partner = PARTNER_EMAILS[lower];
-    if (!partner) {
-      return { success: false, error: "Email não encontrado. Use um email de parceiro." };
-    }
-
-    const authUser = { email: lower, partnerSlug: partner.slug, partnerName: partner.name };
-    setUser(authUser);
-    localStorage.setItem("pp_auth", JSON.stringify(authUser));
-    return { success: true };
   }
 
   function signOut() {

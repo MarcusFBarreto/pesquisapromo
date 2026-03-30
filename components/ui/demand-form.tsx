@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect, useRef } from "react";
 
 type DemandFormProps = {
   initialDemand?: string;
@@ -22,11 +22,17 @@ export function DemandForm({
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [resultInfo, setResultInfo] = useState<{ categories?: string[]; id?: string } | null>(null);
 
+  const lastSuggestedRef = useRef("");
+1
   // Sync suggested details from parent/chat
-  const prevSuggested = details;
-  if (suggestedDetails && suggestedDetails !== prevSuggested && !details) {
-    setDetails(suggestedDetails);
-  }
+  useEffect(() => {
+    // Only auto-fill if the user hasn't manually changed the field to something else
+    // or if the field is currently what we last suggested.
+    if (suggestedDetails && (!details || details === lastSuggestedRef.current)) {
+      setDetails(suggestedDetails);
+      lastSuggestedRef.current = suggestedDetails;
+    }
+  }, [suggestedDetails, details]);
 
   const handleWhatsappChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let raw = e.target.value.replace(/\D/g, "");

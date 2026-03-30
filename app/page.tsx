@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getFeaturedPartners } from "@/lib/partner-data";
 import { HeroDemandForm } from "@/components/ui/hero-demand-form";
+import { MerchantCTA } from "@/components/ui/merchant-cta";
 
 const howItWorks = [
   {
@@ -40,9 +41,17 @@ export default function Home() {
             <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-pp-teal bg-pp-dark-surface">
               <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
             </div>
-            <span className="text-lg font-semibold tracking-tight text-white">
-              Pesquisa<span className="text-pp-orange">Promo</span>
-            </span>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+              <span className="text-lg font-semibold tracking-tight text-white">
+                Pesquisa<span className="text-pp-orange">Promo</span>
+              </span>
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-pp-teal/10 px-2 py-0.5 border border-pp-teal/20">
+                <div className="pulse-dot h-1.5 w-1.5" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-pp-teal-soft">
+                  Piloto: Horizonte, CE
+                </span>
+              </div>
+            </div>
           </Link>
 
           <div className="hidden items-center gap-8 md:flex">
@@ -58,12 +67,21 @@ export default function Home() {
             >
               Como funciona
             </a>
-            <a
-              href="#destaques"
-              className="text-sm font-medium text-white/60 transition hover:text-white"
-            >
-              Destaques
-            </a>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/parceiro/login"
+                className="text-xs font-semibold text-white/30 transition hover:text-white/60"
+              >
+                Acesso Parceiro
+              </Link>
+              <span className="text-white/10">|</span>
+              <Link
+                href="/parceiro/fornecer"
+                className="text-[10px] font-medium text-white/20 transition hover:text-white/40"
+              >
+                Quer fornecer?
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -76,25 +94,27 @@ export default function Home() {
           <div className="absolute -left-24 bottom-0 h-[400px] w-[400px] rounded-full bg-pp-orange opacity-[0.05] blur-[100px]" />
         </div>
 
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-10">
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-10 lg:items-end">
           {/* Left: Copy + Form */}
-          <div className="animate-fade-in-up flex flex-col justify-center">
-            <p className="section-label mb-5 text-pp-teal-soft">
-              Lojas virtuais, promoções reais
-            </p>
+          <div className="animate-fade-in-up flex flex-col">
+            <div>
+              <p className="section-label mb-5 text-pp-teal-soft">
+                Lojas virtuais, promoções reais
+              </p>
 
-            <h1 className="max-w-2xl text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-5xl lg:text-[3.5rem]">
-              Precisa de algo?{" "}
-              <span className="text-pp-orange">
-                Diga e receba propostas.
-              </span>
-            </h1>
+              <h1 className="max-w-2xl text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-white sm:text-5xl lg:text-[3.5rem]">
+                Precisa de algo?{" "}
+                <span className="text-pp-orange">
+                  Diga e receba propostas.
+                </span>
+              </h1>
 
-            <p className="mt-5 max-w-xl text-base leading-8 text-white/55 sm:text-lg">
-              Descreva o que você precisa — produto, serviço ou orçamento — e
-              parceiros da sua região respondem com propostas reais. Sem
-              intermediário, sem enrolação.
-            </p>
+              <p className="mt-5 max-w-xl text-base leading-8 text-white/55 sm:text-lg">
+                Descreva o que você precisa — produto, serviço ou orçamento — e
+                parceiros da sua região respondem com propostas reais. Sem
+                intermediário, sem enrolação.
+              </p>
+            </div>
 
             {/* Demand capture form */}
             <div className="mt-8 rounded-[1.75rem] border border-white/[0.08] bg-white/[0.04] p-5 backdrop-blur-sm sm:p-6">
@@ -138,17 +158,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Quick trust line */}
-            <div className="glass-card flex items-start gap-4 rounded-[1.75rem] p-5">
-              <div className="pulse-dot mt-1.5 shrink-0" />
-              <div>
-                <p className="text-sm font-medium text-white/80">
-                  Piloto ativo em Horizonte, Ceará
-                </p>
-                <p className="mt-1 text-xs text-white/40">
-                  Parceiros reais já estão recebendo demandas e respondendo com
-                  propostas verificáveis.
-                </p>
+            {/* Merchant CTA (Relocated here) */}
+            <div className="glass-card rounded-[1.75rem] border border-pp-teal/20 p-6 transition-all hover:bg-white/[0.06]">
+              <div className="flex flex-col gap-6">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pp-teal/10 text-2xl">🏢</span>
+                  <div>
+                    <p className="text-sm font-bold text-white leading-tight">Vende em Horizonte? <br/><span className="text-pp-teal-soft">Receba orçamentos.</span></p>
+                    <p className="mt-1 text-[10px] text-white/30 uppercase tracking-widest font-bold">Junte-se à nossa rede verificada</p>
+                  </div>
+                </div>
+                <Link 
+                  href="/parceiro/fornecer"
+                  className="group flex items-center justify-between rounded-xl bg-pp-teal px-5 py-3 text-xs font-bold text-white transition-all hover:bg-pp-teal-hover shadow-lg shadow-pp-teal/20"
+                >
+                  Ver como participar
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -259,6 +285,16 @@ export default function Home() {
               </Link>
             ))}
           </div>
+
+          <div className="mt-12 text-center">
+            <Link 
+              href="/parceiros"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-bold text-white transition hover:bg-white/10"
+            >
+              <span>Ver todos os parceiros</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -294,6 +330,7 @@ export default function Home() {
         </div>
       </section>
 
+
       {/* ─── FOOTER ─── */}
       <footer className="bg-pp-dark py-14">
         <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
@@ -318,25 +355,10 @@ export default function Home() {
             de orçamento e ofertas com contexto.
           </p>
 
-          <div className="mt-6 flex justify-center gap-6">
-            <Link
-              href="/busca"
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
-            >
-              Buscar
-            </Link>
-            <a
-              href="#como-funciona"
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
-            >
-              Como funciona
-            </a>
-            <a
-              href="#destaques"
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
-            >
-              Destaques
-            </a>
+          <div className="mt-8 flex justify-center gap-8">
+            <Link href="/busca" className="text-xs font-medium text-white/40 transition hover:text-white/70">Buscar Ofertas</Link>
+            <a href="#como-funciona" className="text-xs font-medium text-white/40 transition hover:text-white/70">Como Funciona</a>
+            <Link href="/parceiros" className="text-xs font-medium text-white/40 transition hover:text-white/70">Lojas Parceiras</Link>
           </div>
         </div>
       </footer>

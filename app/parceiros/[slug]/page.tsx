@@ -7,13 +7,45 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+import { adminDb } from "@/lib/firebase-admin";
+
 export async function generateStaticParams() {
   return getAllPartners().map(({ slug }) => ({ slug }));
 }
 
 export default async function PartnerPage({ params }: PageProps) {
   const { slug } = await params;
-  const partner = getPartnerBySlug(slug);
+  
+  // 1. Try hardcoded data first (for legacy/featured partners)
+  let partner = getPartnerBySlug(slug);
+
+  // 2. If not found, try Firestore
+  if (!partner) {
+    try {
+      const snapshot = await adminDb.collection("partners").doc(slug).get();
+      if (snapshot.exists) {
+        const data = snapshot.data()!;
+        partner = {
+          slug: data.slug,
+          name: data.name,
+          tagline: data.tagline || `Sua loja de ${data.category}`,
+          category: data.category,
+          city: data.city || "Horizonte",
+          region: data.region || "CE",
+          description: data.description || "",
+          services: data.services || [],
+          contact: {
+            phone: data.phone,
+            whatsapp: data.whatsapp,
+            email: data.email,
+          },
+          featured: data.featured || false,
+        };
+      }
+    } catch (error) {
+      console.error("Error fetching partner from Firestore:", error);
+    }
+  }
 
   if (!partner) {
     notFound();

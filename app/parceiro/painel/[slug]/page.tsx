@@ -4,16 +4,41 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 import { getPartnerBySlug } from "@/lib/partner-data";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import { DemandList } from "@/components/ui/demand-list";
 import type { Demand } from "@/lib/mock-demands";
 
 export default function PartnerDashboard() {
   const params = useParams();
   const slug = params.slug as string;
-  const partner = getPartnerBySlug(slug);
-
+  
+  const [partner, setPartner] = useState<any>(null);
   const [demands, setDemands] = useState<Demand[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Sync partner data
+  useEffect(() => {
+    async function loadPartner() {
+      // 1. Try hardcoded
+      let p = getPartnerBySlug(slug);
+      if (p) {
+        setPartner(p);
+      } else {
+        // 2. Try Firestore
+        try {
+          const docRef = doc(db, "partners", slug);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setPartner(docSnap.data());
+          }
+        } catch (err) {
+          console.error("Erro ao carregar parceiro:", err);
+        }
+      }
+    }
+    loadPartner();
+  }, [slug]);
 
   const fetchDemands = useCallback(async () => {
     try {
@@ -76,15 +101,16 @@ export default function PartnerDashboard() {
             </button>
             <Link
               href={`/parceiros/${slug}`}
-              className="text-xs font-medium text-white/40 transition hover:text-white/70"
+              className="flex items-center gap-2 rounded-full bg-pp-teal px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-white transition hover:bg-pp-teal-hover hover:shadow-lg hover:shadow-pp-teal/20"
             >
-              Meu perfil
+              <span>Ver meu perfil</span>
+              <span aria-hidden="true">→</span>
             </Link>
             <Link
               href="/"
               className="rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-white/60 transition hover:border-white/30 hover:text-white"
             >
-              Início
+              Sair
             </Link>
           </div>
         </div>
@@ -93,6 +119,28 @@ export default function PartnerDashboard() {
       {/* ─── HEADER ─── */}
       <section className="border-b border-white/[0.06] px-6 py-8 lg:px-10">
         <div className="mx-auto max-w-5xl">
+          {/* PERFIL LINK BOX (NEW) */}
+          <div className="mb-8 rounded-2xl border border-pp-teal/20 bg-pp-teal/5 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 bg-pp-teal/20 rounded-full flex items-center justify-center text-pp-teal">
+                <span className="text-xl">🌐</span>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-pp-teal-soft">Seu link público</p>
+                <p className="text-sm font-mono text-white/60">pesquisapromo.com/parceiros/{slug}</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => {
+                const link = `${window.location.origin}/parceiros/${slug}`;
+                navigator.clipboard.writeText(link);
+                alert("Link do seu perfil copiado!");
+              }}
+              className="text-xs font-bold text-pp-teal bg-white px-4 py-2 rounded-lg hover:bg-pp-surface transition text-center border border-pp-teal/10"
+            >
+              Copiar Link
+            </button>
+          </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">

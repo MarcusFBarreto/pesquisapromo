@@ -15,10 +15,12 @@ const CATEGORIES = [
 export function PartnerOnboardingForm() {
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     cnpj: "",
     whatsapp: "",
     category: "",
     description: "",
+    partnerType: "cnpj", // Default to CNPJ as it was the original
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,14 @@ export function PartnerOnboardingForm() {
     if (v.length <= 2) return `(${v}`;
     if (v.length <= 7) return `(${v.slice(0, 2)}) ${v.slice(2)}`;
     return `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7, 11)}`;
+  };
+
+  const formatCPF = (value: string) => {
+    const v = value.replace(/\D/g, "");
+    if (v.length <= 3) return v;
+    if (v.length <= 6) return `${v.slice(0, 3)}.${v.slice(3)}`;
+    if (v.length <= 9) return `${v.slice(0, 3)}.${v.slice(3, 6)}.${v.slice(6)}`;
+    return `${v.slice(0, 3)}.${v.slice(3, 6)}.${v.slice(6, 9)}-${v.slice(9, 11)}`;
   };
 
   const formatCNPJ = (value: string) => {
@@ -106,27 +116,63 @@ export function PartnerOnboardingForm() {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-pp-ink">Nome Fantasia da Lojinha *</label>
+          <label className="text-sm font-semibold text-pp-ink">Tipo de Atividade *</label>
+          <select
+            required
+            className="w-full rounded-xl border border-pp-line bg-pp-surface px-4 py-3 text-sm text-pp-ink outline-none transition focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
+            value={formData.partnerType}
+            onChange={(e) => setFormData({ ...formData, partnerType: e.target.value, cnpj: "" })}
+          >
+            <option value="cnpj">Empresa (CNPJ)</option>
+            <option value="cpf">Profissional (CPF)</option>
+            <option value="autonomo">Autônomo / Freelancer</option>
+          </select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-pp-ink">
+            {formData.partnerType === "cnpj" ? "Nome Fantasia da Empresa *" : "Nome Completo *"}
+          </label>
           <input
             type="text"
             required
             className="w-full rounded-xl border border-pp-line bg-pp-surface px-4 py-3 text-sm text-pp-ink outline-none transition focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
-            placeholder="Ex: J Erivaldo Material de Construção"
+            placeholder={formData.partnerType === "cnpj" ? "Ex: J Erivaldo Material" : "Seu nome completo"}
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-pp-ink">CNPJ *</label>
+          <label className="text-sm font-semibold text-pp-ink">
+            {formData.partnerType === "cnpj" ? "CNPJ *" : "CPF *"}
+          </label>
           <input
             type="text"
             required
-            maxLength={18}
+            maxLength={formData.partnerType === "cnpj" ? 18 : 14}
             className="w-full rounded-xl border border-pp-line bg-pp-surface px-4 py-3 text-sm text-pp-ink outline-none transition focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
-            placeholder="00.000.000/0000-00"
+            placeholder={formData.partnerType === "cnpj" ? "00.000.000/0000-00" : "000.000.000-00"}
             value={formData.cnpj}
-            onChange={(e) => setFormData({ ...formData, cnpj: formatCNPJ(e.target.value) })}
+            onChange={(e) => {
+              const val = e.target.value;
+              setFormData({ 
+                ...formData, 
+                cnpj: formData.partnerType === "cnpj" ? formatCNPJ(val) : formatCPF(val) 
+              });
+            }}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-pp-ink">Email para Login *</label>
+          <input
+            type="email"
+            required
+            className="w-full rounded-xl border border-pp-line bg-pp-surface px-4 py-3 text-sm text-pp-ink outline-none transition focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
+            placeholder="Ex: contato@sualoja.com.br"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
         </div>
 
@@ -164,7 +210,7 @@ export function PartnerOnboardingForm() {
         <textarea
           rows={3}
           className="w-full resize-none rounded-xl border border-pp-line bg-pp-surface px-4 py-3 text-sm text-pp-ink outline-none transition focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
-          placeholder="Diga rapidamente quais os seus best-sellers ou diferenciais..."
+          placeholder="Ex: Cimento Nassau, Tintas Coral, Areia lavada (Separe por vírgulas)..."
           value={formData.description}
           onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         />
