@@ -25,9 +25,17 @@ function SolicitarContent() {
             <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-pp-teal bg-pp-dark-surface">
               <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
             </div>
-            <span className="text-lg font-semibold tracking-tight text-white">
-              Pesquisa<span className="text-pp-orange">Promo</span>
-            </span>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+              <span className="text-lg font-semibold tracking-tight text-white">
+                Pesquisa<span className="text-pp-orange">Promo</span>
+              </span>
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 border border-white/20">
+                <div className="h-1.5 w-1.5 rounded-full bg-white opacity-80" />
+                <span className="text-[10px] font-black uppercase tracking-[0.15em] text-white">
+                  Piloto: Horizonte, CE
+                </span>
+              </div>
+            </div>
           </Link>
           <Link
             href="/"

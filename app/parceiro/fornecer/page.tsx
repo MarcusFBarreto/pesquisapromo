@@ -16,9 +16,17 @@ export default function FornecerLandingPage() {
       {/* ─── NAV SIMPLIFICADA ─── */}
       <nav className="border-b border-white/10 bg-pp-dark/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="flex items-center gap-2 transition hover:opacity-80">
+          <Link href="/" className="flex items-center gap-3 transition hover:opacity-80">
             <span className="text-2xl" aria-hidden="true">🔎</span>
-            <span className="text-xl font-bold tracking-tight text-white">PesquisaPromo</span>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+              <span className="text-xl font-bold tracking-tight text-white">PesquisaPromo</span>
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 border border-white/20">
+                <div className="h-1.5 w-1.5 rounded-full bg-white opacity-80" />
+                <span className="text-[10px] font-black uppercase tracking-[0.15em] text-white">
+                  Piloto: Horizonte, CE
+                </span>
+              </div>
+            </div>
           </Link>
           <Link href="/parceiro/login" className="text-sm font-semibold text-white/60 hover:text-white transition">
             Já sou parceiro
@@ -39,7 +47,7 @@ export default function FornecerLandingPage() {
             <span className="text-pp-orange text-3xl sm:text-5xl lg:text-6xl">Deixe que eles te encontrem.</span>
           </h1>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60">
-            O PesquisaPromo é a ponte direta entre quem quer comprar e quem tem o produto. Em Horizonte e região, conectamos você a centenas de orçamentos reais todos os meses.
+            O PesquisaPromo é a ponte direta entre quem quer comprar e quem tem o produto. Em Horizonte e região, conectamos sua empresa a demandas reais de clientes locais.
           </p>
           <div className="mt-12">
             <Link

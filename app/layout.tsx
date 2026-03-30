@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PesquisaPromo",
+  title: "PesquisaPromo | O que você precisa, perto de você",
   description:
-    "Lojas virtuais, promocoes reais. Pesquisa local de precos, pedidos de orcamento e ofertas com contexto.",
+    "Conectamos suas necessidades aos melhores parceiros locais em Horizonte, Ceará. Peça orçamentos e receba propostas reais direto no seu WhatsApp.",
 };
 
 export default function RootLayout({
