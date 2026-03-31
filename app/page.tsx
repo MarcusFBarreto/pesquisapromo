@@ -4,7 +4,6 @@ import { HeroDemandForm } from "@/components/ui/hero-demand-form";
 import { MerchantCTA } from "@/components/ui/merchant-cta";
 import { 
   ChevronRight, 
-  Filter, 
   PenLine, 
   Sparkles, 
   Users, 
@@ -13,8 +12,6 @@ import {
   Store, 
   Target, 
   LifeBuoy,
-  CheckCircle2,
-  MessageCircle,
   Share2
 } from "lucide-react";
 

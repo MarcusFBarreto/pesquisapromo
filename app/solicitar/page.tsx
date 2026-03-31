@@ -6,7 +6,7 @@ import { useState, Suspense } from "react";
 import { DemandForm } from "@/components/ui/demand-form";
 import { DemandChat } from "@/components/ui/demand-chat";
 import { getPartnerBySlug } from "@/lib/partner-data";
-import { ChevronRight, ClipboardCheck, ArrowLeft } from "lucide-react";
+import { ClipboardCheck, ArrowLeft } from "lucide-react";
 
 function SolicitarContent() {
   const searchParams = useSearchParams();
