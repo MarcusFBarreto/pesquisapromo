@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { adminDb } from "@/lib/firebase-admin";
 import { Demand } from "@/lib/mock-demands";
 
