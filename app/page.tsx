@@ -59,9 +59,9 @@ export default function Home() {
             <span className="text-xl font-bold tracking-tight text-slate-900 leading-none shrink-0">
               Pesquisa<span className="text-pp-orange">Promo</span>
             </span>
-            <div className="inline-flex items-center gap-1 rounded-full bg-slate-50/50 px-1.5 py-0.5 border border-slate-100 shrink-0">
-              <div className="h-1 w-1 rounded-full bg-emerald-400" />
-              <span className="text-[8px] font-black uppercase tracking-[0.05em] text-slate-400">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-50/80 px-2 py-1 border border-slate-100 shrink-0 shadow-sm sm:gap-1 sm:px-1.5 sm:py-0.5 sm:bg-slate-50/50 sm:shadow-none">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)] sm:h-1 sm:w-1 sm:shadow-none" />
+              <span className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500 sm:text-[8px] sm:tracking-[0.05em] sm:text-slate-400">
                 Piloto: Horizonte, CE
               </span>
             </div>
@@ -101,18 +101,18 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-x-20 lg:px-10">
           {/* LEFT COLUMN: Section 1 (Headline + Para) */}
           <div className="animate-fade-in-up flex flex-col lg:row-start-1 lg:col-start-1">
-            <p className="text-[10px] uppercase font-bold tracking-[0.4em] text-emerald-600 mb-4">
+            <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-600 mb-4 sm:tracking-[0.4em]">
               Lojas virtuais, promoções reais
             </p>
 
-            <h1 className="max-w-2xl text-5xl font-extrabold leading-[1.05] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
+            <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
               Precisa de algo? <br/>
               <span className="text-emerald-500 italic font-medium">
                 receba propostas.
               </span>
             </h1>
 
-            <p className="mt-4 max-w-xl text-lg leading-relaxed text-slate-500 font-light">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
               Seu desejo em boas mãos. Descreva o que você precisa e parceiros verificados da sua região respondem com propostas reais. Sem intermediários, direto no seu WhatsApp.
             </p>
           </div>
@@ -194,7 +194,7 @@ export default function Home() {
 
           {/* RIGHT COLUMN: Benefits list (Starts at top, ends at bottom of Form Card) */}
           <div className="animate-fade-in-up delay-2 lg:row-start-1 lg:row-span-2 lg:col-start-2">
-            <div className="bg-white border border-emerald-100 rounded-[3rem] p-10 shadow-[0_20px_50px_rgba(16,185,129,0.08)] h-full flex flex-col transition-all hover:shadow-[0_20px_60px_rgba(16,185,129,0.12)] group/benefits">
+            <div className="bg-white border border-emerald-100 rounded-[3rem] p-10 shadow-[0_20px_50px_rgba(16,185,129,0.08)] h-full flex flex-col transition-all hover:shadow-[0_20px_60px_rgba(16,185,129,0.12)] group/benefits glass-container-mobile sm:bg-white sm:border-emerald-100">
               <div className="mb-8 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -210,12 +210,12 @@ export default function Home() {
                 {trustSignals.map((signal, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-5 rounded-2xl bg-white p-6 shadow-sm border border-slate-100 transition-all hover:shadow-md hover:scale-[1.02]"
+                    className="flex items-center gap-5 rounded-2xl bg-white p-6 shadow-sm border border-slate-100 transition-all hover:shadow-md hover:scale-[1.02] sm:bg-white sm:border-slate-100"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-50">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-50/50 border border-emerald-100/50 sm:bg-slate-50 sm:border-none">
                       {signal.icon}
                     </div>
-                    <p className="text-sm font-medium leading-relaxed text-slate-600">
+                    <p className="text-sm font-medium leading-relaxed text-slate-600 mobile-text-anchor">
                       {signal.text}
                     </p>
                   </div>
@@ -226,7 +226,7 @@ export default function Home() {
 
           {/* RIGHT COLUMN: Partner CTA (Below the alignment line) */}
           <div className="animate-fade-in-up delay-3 lg:row-start-3 lg:col-start-2 mt-8">
-            <div className="h-full min-h-[360px] bg-emerald-50 border border-emerald-100 rounded-[3rem] p-10 transition-all hover:scale-[1.01] shadow-xl shadow-emerald-500/5 overflow-hidden relative group">
+            <div className="h-full min-h-[360px] bg-emerald-50/40 border border-emerald-100 rounded-[3rem] p-10 transition-all hover:scale-[1.01] shadow-xl shadow-emerald-500/5 overflow-hidden relative group glass-container-mobile">
               {/* Decorative element */}
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-emerald-500/10 blur-2xl group-hover:bg-emerald-500/20 transition-colors" />
 

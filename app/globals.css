@@ -126,3 +126,51 @@ textarea:-webkit-autofill {
   70% { box-shadow: 0 0 0 10px rgba(229, 93, 58, 0); }
   100% { box-shadow: 0 0 0 0 rgba(229, 93, 58, 0); }
 }
+
+@keyframes solar-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ── Mobile-Only Premium Refinements ── */
+@layer utilities {
+  .mobile-text-anchor {
+    @media (max-width: 1024px) {
+      @apply text-slate-700 font-medium leading-relaxed;
+    }
+  }
+
+  .mobile-btn-soft {
+    @media (max-width: 1024px) {
+      background: linear-gradient(135deg, #e55d3a 0%, #d14d2e 100%);
+      box-shadow: 0 10px 20px -5px rgba(229, 93, 58, 0.3);
+      @apply active:scale-95 transition-all duration-300;
+    }
+  }
+
+  .glass-container-mobile {
+    @media (max-width: 1024px) {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(16, 185, 129, 0.1);
+      @apply rounded-[2.5rem] shadow-[0_15px_35px_-10px_rgba(16,185,129,0.08)];
+    }
+  }
+
+  .solar-shimmer-effect {
+    @apply relative overflow-hidden;
+  }
+
+  .solar-shimmer-effect::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: solar-shimmer 2.5s infinite;
+  }
+}
