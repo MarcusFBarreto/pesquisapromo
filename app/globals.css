@@ -55,12 +55,12 @@ input {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Fix Chrome autofill on dark inputs ── */
+/* ── Fix Chrome autofill on light inputs ── */
 input:-webkit-autofill,
 textarea:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px #162a2e inset !important;
-  -webkit-text-fill-color: #ffffff !important;
-  caret-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #162033 !important;
+  caret-color: #162033;
   transition: background-color 5000s ease-in-out 0s;
 }
 

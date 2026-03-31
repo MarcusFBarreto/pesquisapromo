@@ -84,51 +84,51 @@ export function DemandChat({
     messages.length === 1 && messages[0].role === "assistant" && !isTyping;
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col bg-white">
       {/* Chat header */}
-      <div className="flex items-center gap-3 border-b border-white/10 px-5 py-4">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-pp-teal/20">
+      <div className="flex items-center gap-3 border-b border-slate-100 px-5 py-4 bg-slate-50/50">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 border border-emerald-200">
           <span className="text-lg">🤖</span>
         </div>
         <div>
-          <p className="text-sm font-semibold text-white">Promo</p>
-          <p className="text-xs text-white/40">Assistente PesquisaPromo</p>
+          <p className="text-sm font-bold text-slate-900">Promo</p>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Assistente IA</p>
         </div>
         {isTyping && (
-          <span className="ml-auto text-xs text-pp-teal animate-pulse">
+          <span className="ml-auto text-[10px] font-bold uppercase tracking-widest text-emerald-600 animate-pulse">
             digitando...
           </span>
         )}
         {!isTyping && aiMode && (
           <span
-            className={`ml-auto rounded-full px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] ${
+            className={`ml-auto rounded-md px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.12em] ${
               aiMode === "gemini"
-                ? "bg-pp-teal/15 text-pp-teal-soft"
-                : "bg-amber-500/15 text-amber-400"
+                ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
+                : "bg-slate-100 text-slate-500 border border-slate-200"
             }`}
           >
-            {aiMode === "gemini" ? "⚡ Gemini IA" : "🧪 Simulado"}
+            {aiMode === "gemini" ? "⚡ Gemini" : "🧪 Mock"}
           </span>
         )}
       </div>
 
       {/* Messages */}
-      <div className="flex-1 space-y-4 overflow-y-auto p-5">
+      <div className="flex-1 space-y-6 overflow-y-auto p-5 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
         {messages.map((msg, i) => (
           <div
             key={i}
             className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+              className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                 msg.role === "user"
-                  ? "bg-pp-teal text-white rounded-br-sm"
-                  : "bg-white/[0.08] text-white/80 rounded-bl-sm"
+                  ? "bg-slate-900 text-white rounded-br-none"
+                  : "bg-slate-100 text-slate-700 rounded-bl-none border border-slate-200"
               }`}
             >
               {msg.content.split("**").map((part, j) =>
                 j % 2 === 1 ? (
-                  <strong key={j} className="font-semibold text-white">
+                  <strong key={j} className="font-bold text-emerald-600">
                     {part}
                   </strong>
                 ) : (
@@ -144,15 +144,15 @@ export function DemandChat({
           <div className="flex gap-2 pl-1">
             <button
               onClick={() => handleQuickReply("Sim")}
-              className="rounded-full bg-pp-teal/20 px-4 py-2 text-xs font-semibold text-pp-teal-soft transition hover:bg-pp-teal/30"
+              className="rounded-full bg-emerald-50 border border-emerald-200 px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-emerald-700 transition hover:bg-emerald-100"
             >
-              👍 Sim, me ajuda!
+              ⚡ Sim, me ajuda!
             </button>
             <button
               onClick={() => handleQuickReply("Não, enviar")}
-              className="rounded-full bg-white/[0.06] px-4 py-2 text-xs font-semibold text-white/50 transition hover:bg-white/10"
+              className="rounded-full bg-slate-50 border border-slate-200 px-5 py-2 text-[11px] font-bold uppercase tracking-widest text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
             >
-              Pular
+              Pular →
             </button>
           </div>
         )}
@@ -160,10 +160,10 @@ export function DemandChat({
         {/* Typing indicator */}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="flex gap-1.5 rounded-2xl bg-white/[0.08] px-4 py-3 rounded-bl-sm">
-              <div className="h-2 w-2 animate-bounce rounded-full bg-white/40" style={{ animationDelay: "0ms" }} />
-              <div className="h-2 w-2 animate-bounce rounded-full bg-white/40" style={{ animationDelay: "150ms" }} />
-              <div className="h-2 w-2 animate-bounce rounded-full bg-white/40" style={{ animationDelay: "300ms" }} />
+            <div className="flex gap-1.5 rounded-2xl bg-slate-100 px-5 py-4 rounded-bl-none border border-slate-200 shadow-sm">
+              <div className="h-2 w-2 animate-bounce rounded-full bg-slate-300" style={{ animationDelay: "0ms" }} />
+              <div className="h-2 w-2 animate-bounce rounded-full bg-slate-300" style={{ animationDelay: "150ms" }} />
+              <div className="h-2 w-2 animate-bounce rounded-full bg-slate-300" style={{ animationDelay: "300ms" }} />
             </div>
           </div>
         )}
@@ -174,21 +174,23 @@ export function DemandChat({
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="flex gap-2 border-t border-white/10 p-4"
+        className="flex gap-3 border-t border-slate-100 p-5 bg-slate-50/30"
       >
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Digite sua resposta..."
           disabled={isTyping}
-          className="h-10 flex-1 rounded-full border border-white/10 bg-white/[0.04] px-4 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal disabled:opacity-50"
+          className="h-12 flex-1 rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 disabled:opacity-50 shadow-inner"
         />
         <button
           type="submit"
           disabled={isTyping || !input.trim()}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pp-teal text-white transition hover:bg-pp-teal-soft disabled:opacity-30"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white transition hover:bg-emerald-600 shadow-lg shadow-slate-900/10 disabled:opacity-30"
         >
-          ↑
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
         </button>
       </form>
     </div>

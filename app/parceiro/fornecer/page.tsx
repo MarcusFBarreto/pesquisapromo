@@ -18,11 +18,11 @@ export default function FornecerLandingPage() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
           <Link href="/" className="flex items-center gap-3 transition hover:opacity-80">
             <span className="text-2xl" aria-hidden="true">🔎</span>
-            <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
-              <span className="text-xl font-bold tracking-tight text-white">PesquisaPromo</span>
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-1 border border-white/20">
-                <div className="h-1.5 w-1.5 rounded-full bg-white opacity-80" />
-                <span className="text-[10px] font-black uppercase tracking-[0.15em] text-white">
+            <div className="flex flex-row items-center gap-2 sm:gap-4 flex-nowrap shrink-0">
+              <span className="text-xl font-bold tracking-tight text-white leading-none whitespace-nowrap">PesquisaPromo</span>
+              <div className="inline-flex items-center gap-1 rounded-full bg-white/10 px-1.5 py-0.5 border border-white/20 shrink-0 whitespace-nowrap">
+                <div className="h-1 w-1 rounded-full bg-emerald-400" />
+                <span className="text-[8px] font-black uppercase tracking-[0.05em] text-white">
                   Piloto: Horizonte, CE
                 </span>
               </div>

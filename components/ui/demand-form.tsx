@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent, useEffect, useRef } from "react";
+import { CheckCircle2, ChevronRight } from "lucide-react";
 
 type DemandFormProps = {
   initialDemand?: string;
@@ -81,47 +82,50 @@ export function DemandForm({
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-pp-teal/20 text-3xl">
-          ✅
+      <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
+        <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-[2rem] bg-emerald-50 text-emerald-600 shadow-xl shadow-emerald-500/10 border border-emerald-100">
+          <CheckCircle2 className="h-12 w-12" />
         </div>
-        <h3 className="mb-2 text-2xl font-bold text-white">Tudo certo!</h3>
-        <p className="mx-auto mb-4 max-w-xs text-sm text-white/60">
-          Sua demanda foi enviada.{" "}
+        <h3 className="mb-4 text-3xl font-black text-slate-900 tracking-tight">Tudo pronto!</h3>
+        <p className="mx-auto mb-10 max-w-xs text-base text-slate-500 font-light leading-relaxed">
+          Sua demanda foi enviada com sucesso.{" "}
           {partnerName
             ? `O parceiro ${partnerName}`
-            : "Os nossos parceiros locais"}{" "}
-          em breve entrarão em contato via WhatsApp.
+            : "Nossos parceiros locais"}{" "}
+          entrarão em contato direto no seu WhatsApp.
         </p>
-        {resultInfo?.categories && resultInfo.categories.length > 0 && (
-          <div className="mb-6 flex flex-wrap justify-center gap-2">
-            {resultInfo.categories.map((cat) => (
-              <span
-                key={cat}
-                className="rounded-full bg-pp-orange/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-pp-orange"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-        )}
-        <a
-          href="/"
-          className="rounded-full bg-pp-orange px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover"
-        >
-          Voltar ao início
-        </a>
+        <div className="flex flex-col items-center gap-6 w-full">
+          {resultInfo?.categories && resultInfo.categories.length > 0 && (
+            <div className="flex flex-wrap justify-center gap-2">
+              {resultInfo.categories.map((cat) => (
+                <span
+                  key={cat}
+                  className="rounded-full bg-slate-50 border border-slate-100 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400"
+                >
+                  {cat}
+                </span>
+              ))}
+            </div>
+          )}
+          <a
+            href="/"
+            className="group flex items-center gap-3 rounded-full bg-slate-900 px-10 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:scale-[1.02] shadow-xl shadow-slate-900/10"
+          >
+            Voltar ao Início
+            <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </a>
+        </div>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {/* Request summary */}
       <div>
         <label
           htmlFor="form-request"
-          className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
         >
           O que você precisa?
         </label>
@@ -131,37 +135,37 @@ export function DemandForm({
           type="text"
           value={request}
           onChange={(e) => setRequest(e.target.value)}
-          className="h-12 w-full rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
+          className="h-14 w-full rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
           placeholder="Ex.: 50 sacos de cimento CP2"
         />
       </div>
 
-      {/* Details / context — the field that was missing! */}
+      {/* Details / context */}
       <div>
         <label
           htmlFor="form-details"
-          className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
         >
           Detalhes e contexto{" "}
-          <span className="normal-case tracking-normal text-white/25">(opcional)</span>
+          <span className="normal-case tracking-normal text-slate-300 font-medium">(opcional)</span>
         </label>
         <textarea
           id="form-details"
           rows={3}
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          className="w-full rounded-[1rem] border border-white/10 bg-white/[0.04] p-4 text-sm leading-relaxed text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
-          placeholder="Quantidade, marca, urgência, endereço de entrega, qualquer informação que ajude os parceiros..."
+          className="w-full rounded-xl border border-slate-200 bg-white p-5 text-sm leading-relaxed text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          placeholder="Quantidade, marca, urgência, endereço de entrega..."
         />
       </div>
 
-      <hr className="border-white/[0.06]" />
+      <hr className="border-slate-100" />
 
       {/* WhatsApp */}
       <div>
         <label
           htmlFor="form-whatsapp"
-          className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
         >
           WhatsApp para receber propostas
         </label>
@@ -173,7 +177,7 @@ export function DemandForm({
           autoComplete="tel"
           value={whatsapp}
           onChange={handleWhatsappChange}
-          className="h-12 w-full rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
+          className="h-14 w-full rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
           placeholder="(00) 00000-0000"
         />
       </div>
@@ -182,10 +186,10 @@ export function DemandForm({
       <div>
         <label
           htmlFor="form-name"
-          className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
         >
           Seu nome{" "}
-          <span className="normal-case tracking-normal text-white/25">(opcional)</span>
+          <span className="normal-case tracking-normal text-slate-300 font-medium">(opcional)</span>
         </label>
         <input
           id="form-name"
@@ -193,13 +197,13 @@ export function DemandForm({
           autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="h-12 w-full rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
+          className="h-14 w-full rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
           placeholder="Como devemos lhe chamar"
         />
       </div>
 
       {status === "error" && (
-        <p role="alert" className="text-xs text-red-400">
+        <p role="alert" className="text-xs text-red-500 font-bold">
           Ocorreu um erro ao enviar. Tente novamente.
         </p>
       )}
@@ -207,7 +211,7 @@ export function DemandForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-full bg-pp-orange py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover hover:shadow-lg hover:shadow-pp-orange/20 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-xl bg-slate-900 py-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:shadow-xl shadow-slate-900/10 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "submitting"
           ? "Enviando..."
@@ -216,8 +220,8 @@ export function DemandForm({
             : "Enviar pedido"}
       </button>
 
-      <p className="text-center text-xs text-white/25">
-        Gratuito. Seus dados ficam com você. Parceiros respondem direto.
+      <p className="text-center text-[10px] font-bold uppercase tracking-widest text-slate-300">
+        Gratuito · Direto no WhatsApp
       </p>
     </form>
   );

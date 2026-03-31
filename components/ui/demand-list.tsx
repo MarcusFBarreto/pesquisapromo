@@ -9,6 +9,17 @@ import {
   timeAgo,
 } from "@/lib/mock-demands";
 import { blockClient } from "@/lib/blocklist-service";
+import { 
+  Bell, 
+  CheckCircle2, 
+  Archive, 
+  Clock, 
+  User, 
+  MessageCircle, 
+  Ban, 
+  RotateCcw,
+  Inbox
+} from "lucide-react";
 
 type DemandListProps = {
   demands: Demand[];
@@ -16,10 +27,10 @@ type DemandListProps = {
   partnerSlug: string;
 };
 
-const TABS: { key: DemandStatus; label: string; emoji: string }[] = [
-  { key: "new", label: "Novas", emoji: "🔔" },
-  { key: "responded", label: "Atendidas", emoji: "✅" },
-  { key: "archived", label: "Arquivadas", emoji: "📦" },
+const TABS: { key: DemandStatus; label: string; icon: any }[] = [
+  { key: "new", label: "Novas", icon: Bell },
+  { key: "responded", label: "Atendidas", icon: CheckCircle2 },
+  { key: "archived", label: "Arquivadas", icon: Archive },
 ];
 
 export function DemandList({ demands: initialDemands, partnerName, partnerSlug }: DemandListProps) {
@@ -48,25 +59,26 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
 
   return (
     <div>
-      {/* Tabs */}
-      <div className="flex gap-1 rounded-2xl bg-white/[0.04] p-1.5">
+      {/* Tabs (Solar Style) */}
+      <div className="flex gap-1 rounded-2xl bg-white border border-slate-100 p-1.5 shadow-sm">
         {TABS.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex-1 rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-[10px] font-black uppercase tracking-widest transition ${
               activeTab === tab.key
-                ? "bg-white/10 text-white shadow-sm"
-                : "text-white/40 hover:text-white/60"
+                ? "bg-slate-900 text-white shadow-md"
+                : "text-slate-400 hover:bg-slate-50 hover:text-slate-600"
             }`}
           >
-            {tab.emoji} {tab.label}
+            <tab.icon className={`h-3.5 w-3.5 ${activeTab === tab.key ? "text-emerald-400" : ""}`} />
+            <span className="hidden sm:inline">{tab.label}</span>
             {counts[tab.key] > 0 && (
               <span
-                className={`ml-2 inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold ${
+                className={`ml-1 inline-flex h-4 min-w-[16px] items-center justify-center rounded-full px-1 text-[8px] font-black ${
                   tab.key === "new" && counts.new > 0
                     ? "bg-pp-orange text-white"
-                    : "bg-white/10 text-white/50"
+                    : activeTab === tab.key ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
                 }`}
               >
                 {counts[tab.key]}
@@ -79,8 +91,11 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
       {/* Demand cards */}
       <div className="mt-6 space-y-4">
         {filtered.length === 0 ? (
-          <div className="rounded-[1.75rem] border border-white/[0.06] bg-white/[0.02] px-6 py-12 text-center">
-            <p className="text-sm text-white/30">
+          <div className="rounded-[2.5rem] border border-slate-100 bg-white px-6 py-20 text-center shadow-xl shadow-emerald-500/[0.02]">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
+              <Inbox className="h-8 w-8 text-slate-200" />
+            </div>
+            <p className="text-sm font-medium text-slate-400">
               {activeTab === "new"
                 ? "Nenhuma demanda nova no momento."
                 : activeTab === "responded"
@@ -92,54 +107,57 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
           filtered.map((demand, index) => (
             <article
               key={demand.id}
-              className={`animate-fade-in-up delay-${Math.min(index + 1, 5)} rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6 transition hover:border-white/15`}
+              className={`animate-fade-in-up delay-${Math.min(index + 1, 5)} group relative rounded-[2rem] border border-slate-100 bg-white p-6 transition-all hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-500/[0.06]`}
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">
-                  <h3 className="text-base font-semibold text-white">
+                  <h3 className="text-lg font-black tracking-tight text-slate-900 group-hover:text-emerald-700 transition-colors">
                     {demand.request}
                   </h3>
                   {demand.details && (
-                    <p className="mt-2 text-sm leading-relaxed text-white/50">
+                    <p className="mt-2 text-sm leading-relaxed text-slate-500 font-light">
                       {demand.details}
                     </p>
                   )}
                 </div>
-                <span className="shrink-0 text-xs text-white/25">
-                  {timeAgo(demand.createdAt)}
-                </span>
-              </div>
-
-              {/* Customer info */}
-              <div className="mt-4 flex items-center gap-4">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-pp-teal/20 text-xs">
-                    👤
+                <div className="flex flex-col items-end gap-1 shrink-0">
+                  <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-slate-300">
+                    <Clock className="h-3 w-3" />
+                    {timeAgo(demand.createdAt)}
                   </div>
-                  <span className="text-sm font-medium text-white/70">
-                    {demand.name}
-                  </span>
                 </div>
-                <span className="text-xs text-white/30">
-                  {formatWhatsappDisplay(demand.whatsapp)}
-                </span>
               </div>
 
-              {/* Categories */}
-              <div className="mt-3 flex flex-wrap gap-2">
+              {/* Customer info (Solar) */}
+              <div className="mt-6 flex items-center justify-between border-t border-slate-50 pt-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+                    <User className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-black text-slate-900 leading-tight">{demand.name}</p>
+                    <p className="text-[11px] font-medium text-slate-400">
+                      {formatWhatsappDisplay(demand.whatsapp)}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Categories (Solar Tags) */}
+              <div className="mt-4 flex flex-wrap gap-1.5">
                 {demand.matchedCategories.map((cat) => (
                   <span
                     key={cat}
-                    className="rounded-full bg-pp-orange/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-pp-orange"
+                    className="rounded-lg bg-slate-50 border border-slate-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-slate-500"
                   >
                     {cat}
                   </span>
                 ))}
               </div>
 
-              {/* Actions */}
-              <div className="mt-5 flex flex-wrap gap-2">
+              {/* Actions (Solar Buttons) */}
+              <div className="mt-6 flex flex-wrap gap-2">
                 {demand.status === "new" && (
                   <>
                     <a
@@ -151,29 +169,34 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
                       )}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-pp-teal px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-pp-teal-soft"
+                      className="group inline-flex items-center gap-2 rounded-full bg-pp-orange px-6 py-3 text-[10px] font-black uppercase tracking-widest text-white transition hover:bg-pp-orange-hover hover:scale-[1.02] active:scale-95 shadow-lg shadow-pp-orange/20"
                     >
-                      💬 Responder via WhatsApp
+                      <MessageCircle className="h-4 w-4" />
+                      Responder no WhatsApp
                     </a>
                     <button
                       onClick={() => updateStatus(demand.id, "responded")}
-                      className="rounded-full border border-white/10 px-4 py-2.5 text-xs font-semibold text-white/50 transition hover:border-white/20 hover:text-white/70"
+                      className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-[10px] font-black uppercase tracking-widest text-slate-600 transition hover:border-emerald-200 hover:text-emerald-600"
                     >
-                      ✅ Marcar atendida
+                      <CheckCircle2 className="h-4 w-4" />
+                      Finalizar
                     </button>
-                    <button
-                      onClick={() => updateStatus(demand.id, "archived")}
-                      className="rounded-full border border-white/10 px-4 py-2.5 text-xs font-semibold text-white/50 transition hover:border-white/20 hover:text-white/70"
-                    >
-                      📦 Arquivar
-                    </button>
-                    <button
-                      onClick={() => handleBlock(demand.id, demand.whatsapp)}
-                      className="rounded-full px-3 py-2.5 text-xs text-white/20 transition hover:text-red-400/60"
-                      title="Não receber mais demandas deste cliente"
-                    >
-                      🚫
-                    </button>
+                    <div className="ml-auto flex items-center gap-1">
+                      <button
+                        onClick={() => updateStatus(demand.id, "archived")}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-slate-300 transition hover:bg-slate-50 hover:text-slate-500"
+                        title="Arquivar"
+                      >
+                        <Archive className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handleBlock(demand.id, demand.whatsapp)}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-slate-200 transition hover:bg-red-50 hover:text-red-400"
+                        title="Bloquear cliente"
+                      >
+                        <Ban className="h-4 w-4" />
+                      </button>
+                    </div>
                   </>
                 )}
                 {demand.status === "responded" && (
@@ -187,24 +210,27 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
                       )}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-pp-teal/30 px-4 py-2.5 text-xs font-semibold text-pp-teal transition hover:bg-pp-teal/10"
+                      className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50/50 px-5 py-3 text-[10px] font-black uppercase tracking-widest text-emerald-600 transition hover:bg-emerald-50"
                     >
-                      💬 Retomar conversa
+                      <MessageCircle className="h-4 w-4" />
+                      Retomar conversa
                     </a>
                     <button
                       onClick={() => updateStatus(demand.id, "archived")}
-                      className="rounded-full border border-white/10 px-4 py-2.5 text-xs font-semibold text-white/50 transition hover:border-white/20 hover:text-white/70"
+                      className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-3 text-[10px] font-black uppercase tracking-widest text-slate-400 transition hover:border-slate-300 hover:text-slate-600"
                     >
-                      📦 Arquivar
+                      <Archive className="h-4 w-4" />
+                      Arquivar
                     </button>
                   </>
                 )}
                 {demand.status === "archived" && (
                   <button
                     onClick={() => updateStatus(demand.id, "new")}
-                    className="rounded-full border border-white/10 px-4 py-2.5 text-xs font-semibold text-white/50 transition hover:border-white/20 hover:text-white/70"
+                    className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-[10px] font-black uppercase tracking-widest text-slate-500 transition hover:border-emerald-300 hover:text-emerald-600"
                   >
-                    🔄 Reabrir
+                    <RotateCcw className="h-4 w-4" />
+                    Restaurar Demanda
                   </button>
                 )}
               </div>

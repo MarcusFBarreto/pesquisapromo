@@ -1,16 +1,28 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export function HeroDemandForm() {
   const [inputValue, setInputValue] = useState("");
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
+
+  // Force client-side mount to avoid hydration mismatch with stale SSR cache
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!inputValue.trim()) return;
     router.push(`/solicitar?q=${encodeURIComponent(inputValue.trim())}`);
+  }
+
+  if (!mounted) {
+    return (
+      <div className="h-14 w-full animate-pulse rounded-full bg-slate-100" />
+    );
   }
 
   return (
@@ -19,14 +31,14 @@ export function HeroDemandForm() {
         id="demand-input"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
-        className="h-14 flex-1 rounded-full border border-white/10 bg-white/[0.06] px-6 text-base text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-4 focus:ring-pp-teal/20"
+        className="h-14 flex-1 rounded-full border border-slate-300 bg-white px-6 text-base text-slate-900 font-semibold outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
         placeholder="Ex.: cimento 50 sacos, conserto de ar-condicionado, orçamento de pintura..."
         required
       />
       <button
         id="demand-submit"
         type="submit"
-        className="h-14 shrink-0 rounded-full bg-pp-orange px-8 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover hover:shadow-lg hover:shadow-pp-orange/20 active:scale-[0.98]"
+        className="h-14 shrink-0 rounded-full bg-pp-orange px-8 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-pp-orange-hover hover:shadow-xl hover:shadow-pp-orange/20 active:scale-[0.98]"
       >
         Receber propostas
       </button>

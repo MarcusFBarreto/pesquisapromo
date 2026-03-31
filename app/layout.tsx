@@ -14,9 +14,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PesquisaPromo | O que você precisa, perto de você",
+  title: "PesquisaPromo | Sua demanda nas mãos certas em Horizonte",
   description:
-    "Conectamos suas necessidades aos melhores parceiros locais em Horizonte, Ceará. Peça orçamentos e receba propostas reais direto no seu WhatsApp.",
+    "Conectamos suas necessidades aos melhores parceiros locais em Horizonte, Ceará. Descreva o que precisa e receba propostas reais direto no seu WhatsApp. Simples, rápido e regional.",
+  keywords: ["pesquisapromo", "horizonte ce", "pedidos de orçamento", "serviços locais", "compras horizonte", "marketplace regional", "vendas em horizonte"],
+  openGraph: {
+    title: "PesquisaPromo Horizonte | Onde o seu pedido encontra o parceiro certo",
+    description: "Descreva o que precisa e receba propostas de parceiros locais direto no WhatsApp.",
+    url: "https://pesquisapromo.com.br", // Substituir pelo domínio oficial se disponível
+    siteName: "PesquisaPromo",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PesquisaPromo | Sua demanda nas mãos certas",
+    description: "Encontre o parceiro ideal em Horizonte, Ceará, para orçamentos e serviços.",
+  },
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
