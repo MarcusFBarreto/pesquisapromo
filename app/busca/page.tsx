@@ -17,9 +17,9 @@ export default function BuscaPage({
       <PesquisaPromoHeader />
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="max-w-3xl">
-          <p className="text-sm font-medium text-slate-500">Buscar na cidade</p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-900">Encontramos um bom caminho para você</h1>
-          <p className="mt-3 text-slate-600">
+          <p className="text-sm font-medium text-slate-500 mobile-text-anchor">Buscar na cidade</p>
+          <h1 className="mt-2 text-3xl font-semibold text-slate-900 tracking-tight">Encontramos um bom caminho para você</h1>
+          <p className="mt-3 text-slate-600 mobile-text-anchor">
             Use a busca para ir direto ou explorar outras opções da cidade.
           </p>
         </div>
@@ -30,7 +30,7 @@ export default function BuscaPage({
 
         {result.bestPath ? (
           <section className="mt-10">
-            <p className="text-sm font-medium text-slate-500">Melhor caminho</p>
+            <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Melhor caminho</p>
             <div className="mt-4 grid gap-4">
               <SearchResultCard destination={result.bestPath} />
             </div>
@@ -38,7 +38,7 @@ export default function BuscaPage({
         ) : null}
 
         <section className="mt-10">
-          <p className="text-sm font-medium text-slate-500">Lugares na cidade</p>
+          <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Lugares na cidade</p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {result.destinations.map((destination) => (
               <SearchResultCard key={`${destination.type}-${destination.id}`} destination={destination} />
@@ -47,7 +47,7 @@ export default function BuscaPage({
         </section>
 
         <section className="mt-10">
-          <p className="text-sm font-medium text-slate-500">Ofertas diretas</p>
+          <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Ofertas diretas</p>
           <div className="mt-4 grid gap-4">
             {result.relatedOffers.map((offer) => (
               <ProductCard key={offer.id} offer={offer} />

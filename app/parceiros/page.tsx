@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllPartners } from "@/lib/partner-data";
 import { adminDb } from "@/lib/firebase-admin";
+import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
 
 async function getDynamicPartners() {
   try {
@@ -39,31 +40,13 @@ export default async function PartnersDirectoryPage() {
   const allPartners = Array.from(allPartnersMap.values());
 
   return (
-    <div className="min-h-screen bg-pp-cream">
-      {/* ─── NAVBAR ─── */}
-      <nav className="sticky top-0 z-50 border-b border-white/[0.06] bg-pp-dark backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-pp-teal bg-pp-dark-surface">
-              <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
-            </div>
-            <span className="text-lg font-semibold tracking-tight text-white">
-              Pesquisa<span className="text-pp-orange">Promo</span>
-            </span>
-          </Link>
-          <Link
-            href="/"
-            className="rounded-full border border-white/15 px-5 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/60 transition hover:border-white/30 hover:text-white"
-          >
-            Voltar ao início
-          </Link>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-slate-50/50">
+      <PesquisaPromoHeader />
 
       <main className="mx-auto max-w-7xl px-6 py-12 lg:px-10">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-pp-ink sm:text-5xl">Nossos Parceiros</h1>
-          <p className="mt-4 text-lg text-pp-muted">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Nossos Parceiros</h1>
+          <p className="mt-4 text-lg text-slate-500 font-light mobile-text-anchor">
             Encontre as melhores lojas e serviços de Horizonte verificados pelo PesquisaPromo.
           </p>
         </div>
@@ -74,25 +57,25 @@ export default async function PartnersDirectoryPage() {
             <Link
               href={`/parceiros/${partner.slug}`}
               key={partner.slug}
-              className="group flex flex-col rounded-[2rem] border border-pp-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-pp-teal hover:shadow-md"
+              className="group flex flex-col rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-emerald-500 hover:shadow-xl glass-container-mobile sm:bg-white sm:shadow-sm"
             >
               <div className="mb-4 flex items-center justify-between">
-                <span className="inline-flex items-center rounded-full bg-pp-surface px-2.5 py-0.5 text-xs font-semibold text-pp-teal">
+                <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest text-emerald-600">
                   {partner.category}
                 </span>
                 {partner.featured && (
-                  <span className="text-xs font-bold text-pp-orange">★ Destaque</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest text-pp-orange">★ Destaque</span>
                 )}
               </div>
               
-              <h3 className="text-xl font-bold text-pp-ink group-hover:text-pp-teal transition">{partner.name}</h3>
-              <p className="mt-2 text-sm text-pp-muted line-clamp-2 leading-relaxed">
+              <h3 className="text-xl font-bold text-slate-900 group-hover:text-emerald-600 transition tracking-tight">{partner.name}</h3>
+              <p className="mt-2 text-sm text-slate-500 font-light mobile-text-anchor line-clamp-2 leading-relaxed">
                 {partner.tagline}
               </p>
               
-              <div className="mt-auto pt-6 flex items-center justify-between border-t border-pp-line">
-                <span className="text-xs text-pp-muted">{partner.city}/{partner.region}</span>
-                <span className="text-xs font-bold text-pp-teal group-hover:underline">Ver Perfil →</span>
+              <div className="mt-auto pt-6 flex items-center justify-between border-t border-slate-100 mt-6">
+                <span className="text-xs text-slate-400 font-medium mobile-text-anchor">{partner.city}/{partner.region}</span>
+                <span className="text-xs font-black uppercase tracking-widest text-emerald-600 group-hover:underline">Ver Perfil →</span>
               </div>
             </Link>
           ))}

@@ -59,29 +59,29 @@ export default async function StorePage({ params }: PageProps) {
         ];
 
   return (
-    <main className="min-h-screen bg-[var(--pp-cream)] px-6 py-8 text-[var(--pp-ink)] sm:px-10 lg:px-12">
+    <main className="min-h-screen bg-slate-50/30 px-6 py-8 text-slate-900 sm:px-10 lg:px-12">
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <div className="sticky top-4 z-20">
-          <div className="flex flex-col gap-3 rounded-[1.75rem] border border-[var(--pp-line)] bg-white/92 p-4 shadow-[0_18px_40px_rgba(16,37,74,0.08)] backdrop-blur md:flex-row md:items-center md:justify-between">
+        <div className="sticky top-4 z-50">
+          <div className="flex flex-col gap-3 rounded-[1.75rem] border border-slate-200 bg-white/80 p-4 shadow-xl backdrop-blur-xl md:flex-row md:items-center md:justify-between glass-container-mobile sm:bg-white/92 sm:shadow-2xl">
             <div className="flex items-center gap-3">
-              <span className="inline-flex rounded-full bg-[var(--pp-orange)] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-white">
+              <span className="inline-flex rounded-full bg-emerald-500 px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-white">
                 Lojinha aberta
               </span>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)] md:text-base">
+              <p className="text-xs font-black uppercase tracking-widest text-slate-900 md:text-sm mobile-text-anchor">
                 {shop.name}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               <Link
                 href={`/${district.type}/${district.slug}`}
-                className="inline-flex rounded-full border border-[var(--pp-line)] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)] transition hover:border-[var(--pp-blue)]"
+                className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-[9px] font-black uppercase tracking-widest text-slate-500 transition hover:border-slate-900 hover:text-slate-900"
               >
                 Voltar para {district.title}
               </Link>
               <Link
                 href="/"
-                className="inline-flex rounded-full bg-[var(--pp-blue)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-[#123a7e]"
+                className="inline-flex h-10 items-center rounded-full bg-slate-900 px-4 text-[9px] font-black uppercase tracking-widest text-white transition hover:bg-emerald-600 mobile-btn-soft-dark solar-shimmer-effect"
               >
                 Sair da lojinha
               </Link>
@@ -91,13 +91,13 @@ export default async function StorePage({ params }: PageProps) {
 
         <header className="grid gap-6 rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] lg:grid-cols-[1.1fr_0.9fr] md:p-8">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-orange)]">
+            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-pp-orange mobile-text-anchor">
               {district.title}
             </p>
-            <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] md:text-6xl">
+            <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 md:text-6xl">
               {shop.name}
             </h1>
-            <p className="mt-4 max-w-3xl text-lg leading-8 text-[var(--pp-muted)]">
+            <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
               {shop.vibe}
             </p>
 
@@ -115,14 +115,14 @@ export default async function StorePage({ params }: PageProps) {
             </div>
           </div>
 
-          <div className="rounded-[1.8rem] bg-[var(--pp-surface)] p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)]">
-              {shop.services?.length ? "Servico em foco" : "Oferta em destaque"}
+          <div className="rounded-[1.8rem] bg-slate-50/50 p-6 border border-slate-100 glass-container-mobile sm:bg-slate-50/50">
+            <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mobile-text-anchor">
+              {shop.services?.length ? "Serviço em foco" : "Oferta em destaque"}
             </p>
-            <p className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
+            <p className="mt-3 text-2xl font-extrabold tracking-tight text-slate-900">
               {shop.offer}
             </p>
-            <p className="mt-4 text-sm leading-7 text-[var(--pp-muted)]">
+            <p className="mt-4 text-sm leading-relaxed text-slate-500 font-light mobile-text-anchor">
               {verification.detail}
             </p>
 

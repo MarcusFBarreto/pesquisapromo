@@ -109,7 +109,7 @@ export function DemandForm({
           )}
           <a
             href="/"
-            className="group flex items-center gap-3 rounded-full bg-slate-900 px-10 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:scale-[1.02] shadow-xl shadow-slate-900/10"
+            className="group flex items-center gap-3 rounded-full bg-slate-900 px-10 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:scale-[1.02] shadow-xl shadow-slate-900/10 mobile-btn-soft-dark solar-shimmer-effect"
           >
             Voltar ao Início
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -125,7 +125,7 @@ export function DemandForm({
       <div>
         <label
           htmlFor="form-request"
-          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor"
         >
           O que você precisa?
         </label>
@@ -135,7 +135,7 @@ export function DemandForm({
           type="text"
           value={request}
           onChange={(e) => setRequest(e.target.value)}
-          className="h-14 w-full rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="h-14 w-full rounded-xl border border-emerald-100 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
           placeholder="Ex.: 50 sacos de cimento CP2"
         />
       </div>
@@ -144,17 +144,17 @@ export function DemandForm({
       <div>
         <label
           htmlFor="form-details"
-          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor"
         >
           Detalhes e contexto{" "}
-          <span className="normal-case tracking-normal text-slate-300 font-medium">(opcional)</span>
+          <span className="normal-case tracking-normal text-slate-300 font-medium sm:text-slate-200">(opcional)</span>
         </label>
         <textarea
           id="form-details"
           rows={3}
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          className="w-full rounded-xl border border-slate-200 bg-white p-5 text-sm leading-relaxed text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="w-full rounded-xl border border-emerald-100 bg-white p-5 text-sm leading-relaxed text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
           placeholder="Quantidade, marca, urgência, endereço de entrega..."
         />
       </div>
@@ -165,7 +165,7 @@ export function DemandForm({
       <div>
         <label
           htmlFor="form-whatsapp"
-          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor"
         >
           WhatsApp para receber propostas
         </label>
@@ -177,7 +177,7 @@ export function DemandForm({
           autoComplete="tel"
           value={whatsapp}
           onChange={handleWhatsappChange}
-          className="h-14 w-full rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="h-14 w-full rounded-xl border border-emerald-100 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
           placeholder="(00) 00000-0000"
         />
       </div>
@@ -186,10 +186,10 @@ export function DemandForm({
       <div>
         <label
           htmlFor="form-name"
-          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor"
         >
           Seu nome{" "}
-          <span className="normal-case tracking-normal text-slate-300 font-medium">(opcional)</span>
+          <span className="normal-case tracking-normal text-slate-300 font-medium sm:text-slate-200">(opcional)</span>
         </label>
         <input
           id="form-name"
@@ -197,7 +197,7 @@ export function DemandForm({
           autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="h-14 w-full rounded-xl border border-slate-200 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+          className="h-14 w-full rounded-xl border border-emerald-100 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
           placeholder="Como devemos lhe chamar"
         />
       </div>
@@ -211,7 +211,7 @@ export function DemandForm({
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-xl bg-slate-900 py-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:shadow-xl shadow-slate-900/10 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-xl bg-slate-900 py-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-emerald-600 hover:shadow-xl hover:shadow-emerald-500/20 active:scale-[0.98] mobile-btn-soft-dark solar-shimmer-effect"
       >
         {status === "submitting"
           ? "Enviando..."

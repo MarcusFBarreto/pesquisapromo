@@ -43,12 +43,12 @@ export function SearchBar({
           value={value}
           onChange={(event) => setValue(event.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none ring-0 placeholder:text-slate-400"
+          className="h-14 w-full rounded-2xl border border-emerald-100 bg-white px-5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
         />
         <div className="flex gap-3">
           <button
             type="submit"
-            className="rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white"
+            className="h-14 rounded-2xl bg-slate-900 px-6 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-emerald-600 hover:shadow-xl hover:shadow-emerald-500/20 active:scale-[0.98] mobile-btn-soft-dark solar-shimmer-effect"
           >
             Buscar
           </button>
@@ -56,7 +56,7 @@ export function SearchBar({
             <button
               type="button"
               onClick={() => router.push(`/taxi-virtual?q=${encodeURIComponent(value.trim())}`)}
-              className="rounded-2xl border border-slate-300 px-4 py-3 text-sm font-medium text-slate-900"
+              className="h-14 rounded-2xl border border-slate-200 bg-white px-6 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 transition-all hover:border-slate-900 hover:text-slate-900 hover:bg-slate-50 active:scale-[0.98] shadow-sm"
             >
               Táxi Virtual
             </button>

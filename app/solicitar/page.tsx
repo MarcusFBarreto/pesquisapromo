@@ -41,10 +41,10 @@ function SolicitarContent() {
           </Link>
           <Link
             href="/"
-            className="group flex items-center gap-2 rounded-xl border border-slate-200 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 transition hover:border-slate-900 hover:bg-slate-50 shadow-sm bg-white"
+            className="group flex h-10 items-center gap-2 rounded-xl border border-slate-200 px-4 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-900 transition-all hover:border-slate-900 hover:bg-slate-50 active:scale-95 shadow-sm bg-white sm:h-auto sm:px-5 sm:py-2"
           >
-            <ArrowLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" />
-            Voltar
+            <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
+            <span className="hidden sm:inline">Voltar</span>
           </Link>
         </div>
       </nav>
@@ -60,7 +60,7 @@ function SolicitarContent() {
               <h1 className="text-2xl font-extrabold text-slate-900 sm:text-3xl tracking-tight">
                 {partner ? `Solicitar para ${partner.name}` : "Nova solicitação"}
               </h1>
-              <p className="text-base text-slate-500 font-light mt-1">
+              <p className="text-base text-slate-500 font-light mt-1 mobile-text-anchor">
                 {partner
                   ? `${partner.category} · ${partner.city}/${partner.region}`
                   : "Descreva o que precisa e receba propostas de parceiros locais"
@@ -79,12 +79,12 @@ function SolicitarContent() {
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           {/* LEFT: Form */}
           <div className="animate-fade-in-up order-2 lg:order-1">
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/50">
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/50 glass-container-mobile sm:shadow-2xl">
               <div className="mb-8 flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 font-bold border border-emerald-100">
                   <span className="text-xs">1</span>
                 </div>
-                <p className="text-xs font-bold uppercase tracking-widest text-slate-900">Seu pedido</p>
+                <p className="text-xs font-bold uppercase tracking-widest text-slate-900 mobile-text-anchor">Seu pedido</p>
               </div>
 
               <DemandForm
@@ -98,9 +98,9 @@ function SolicitarContent() {
 
           {/* RIGHT: Chat */}
           <div className="animate-fade-in-up delay-1 order-1 lg:order-2">
-            <div className="flex h-[500px] flex-col rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/30 lg:h-[650px] sticky top-24 overflow-hidden">
+            <div className="flex h-[500px] flex-col rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/30 lg:h-[650px] sticky top-24 overflow-hidden glass-container-mobile sm:bg-white sm:shadow-xl">
               <div className="p-5 border-b border-slate-100 bg-slate-50/50">
-                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Assistente PesquisaPromo</p>
+                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor">Assistente PesquisaPromo</p>
               </div>
               <DemandChat
                 demand={demand}

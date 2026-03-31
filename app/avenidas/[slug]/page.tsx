@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
 import {
   districts,
   getDistrict,
@@ -27,29 +28,30 @@ export default async function AvenuePage({ params }: PageProps) {
   );
 
   return (
-    <main className="min-h-screen bg-[var(--pp-cream)] px-6 py-8 text-[var(--pp-ink)] sm:px-10 lg:px-12">
+    <main className="min-h-screen bg-slate-50/30 px-6 py-8 text-slate-900 sm:px-10 lg:px-12">
+      <PesquisaPromoHeader />
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <div className="sticky top-4 z-20">
-          <div className="flex flex-col gap-3 rounded-[1.75rem] border border-[var(--pp-line)] bg-[var(--pp-blue)]/94 p-4 text-white shadow-[0_18px_40px_rgba(16,37,74,0.12)] backdrop-blur md:flex-row md:items-center md:justify-between">
+        <div className="sticky top-20 z-50">
+          <div className="flex flex-col gap-3 rounded-[1.75rem] border border-emerald-500/20 bg-emerald-600/90 p-4 text-white shadow-xl backdrop-blur-xl md:flex-row md:items-center md:justify-between sm:bg-emerald-600 sm:shadow-2xl">
             <div className="flex items-center gap-3">
-              <span className="inline-flex rounded-full bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-[var(--pp-blue)]">
+              <span className="inline-flex rounded-full bg-white/20 px-3 py-1 text-[9px] font-black uppercase tracking-[0.2em] text-white">
                 Placa da avenida
               </span>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white md:text-base">
+              <p className="text-xs font-black uppercase tracking-widest text-white md:text-sm mobile-text-anchor">
                 {district.title}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3">
               <Link
                 href="/"
-                className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white/18"
+                className="inline-flex h-10 items-center rounded-full border border-white/20 bg-white/10 px-4 text-[9px] font-black uppercase tracking-widest text-white transition hover:bg-white/20"
               >
                 Voltar ao mapa
               </Link>
               <Link
                 href="/"
-                className="inline-flex rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)] transition hover:bg-white/90"
+                className="inline-flex h-10 items-center rounded-full bg-white px-4 text-[9px] font-black uppercase tracking-widest text-emerald-600 transition hover:bg-white/90"
               >
                 Sair da avenida
               </Link>
@@ -57,14 +59,14 @@ export default async function AvenuePage({ params }: PageProps) {
           </div>
         </div>
 
-        <header className="rounded-[2rem] border border-[var(--pp-line)] bg-[var(--pp-blue)] p-6 text-white shadow-[0_20px_60px_rgba(16,37,74,0.12)] md:p-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">
+        <header className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl md:p-10 glass-container-mobile sm:bg-white sm:shadow-xl">
+          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600 mobile-text-anchor">
             {district.count}
           </p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] md:text-6xl">
+          <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 md:text-6xl">
             {district.title}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-white/82">
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
             {district.intro}
           </p>
 
@@ -92,27 +94,27 @@ export default async function AvenuePage({ params }: PageProps) {
           {district.shops.map((shop) => (
             <article
               key={shop.name}
-              className="rounded-[1.75rem] border border-[var(--pp-line)] bg-white p-5 shadow-[0_16px_40px_rgba(16,37,74,0.04)]"
+              className="rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm glass-container-mobile sm:bg-white sm:shadow-sm"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-2xl font-semibold">{shop.name}</p>
-                  <p className="mt-1 text-sm text-[var(--pp-muted)]">{shop.street}</p>
+                  <p className="text-xl font-bold tracking-tight text-slate-900">{shop.name}</p>
+                  <p className="mt-1 text-xs text-slate-400 font-medium mobile-text-anchor">{shop.street}</p>
                 </div>
-                <span className="inline-flex rounded-full bg-[rgba(229,93,58,0.12)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--pp-orange)]">
+                <span className="inline-flex rounded-full bg-pp-orange/10 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest text-pp-orange border border-pp-orange/20">
                   {shop.badge}
                 </span>
               </div>
 
-              <p className="mt-5 text-sm leading-8 text-[var(--pp-muted)]">
+              <p className="mt-5 text-sm leading-relaxed text-slate-500 font-light mobile-text-anchor">
                 {shop.vibe}
               </p>
 
-              <div className="mt-4 rounded-[1.3rem] bg-[var(--pp-surface)] p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--pp-blue)]">
-                  Oferta chamando atencao
+              <div className="mt-6 rounded-[1.3rem] bg-slate-50/80 border border-slate-100 p-5">
+                <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mobile-text-anchor">
+                  Oferta chamando atenção
                 </p>
-                <p className="mt-2 text-lg font-medium">{shop.offer}</p>
+                <p className="mt-2 text-lg font-extrabold tracking-tight text-slate-900">{shop.offer}</p>
               </div>
             </article>
           ))}
