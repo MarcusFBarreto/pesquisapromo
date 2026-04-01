@@ -8,7 +8,7 @@ import {
   generateWhatsappLink,
   timeAgo,
 } from "@/lib/mock-demands";
-import { blockClient } from "@/lib/blocklist-service";
+// import { blockClient } from "@/lib/blocklist-service";
 import { 
   Bell, 
   CheckCircle2, 
@@ -18,7 +18,8 @@ import {
   MessageCircle, 
   Ban, 
   RotateCcw,
-  Inbox
+  Inbox,
+  ShieldAlert
 } from "lucide-react";
 
 type DemandListProps = {
@@ -50,11 +51,51 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
     );
   }
 
-  function handleBlock(demandId: string, clientWhatsapp: string) {
-    // Silently block this client — they'll never know
-    blockClient(partnerSlug, clientWhatsapp);
-    // Remove from the list immediately
-    setDemands((prev) => prev.filter((d) => d.id !== demandId));
+  async function handleBlock(demandId: string, clientWhatsapp: string) {
+    try {
+      const res = await fetch("/api/user/block", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          partnerSlug,
+          clientWhatsapp,
+        }),
+      });
+
+      if (res.ok) {
+        // Remove from the list immediately
+        setDemands((prev) => prev.filter((d) => d.id !== demandId));
+      } else {
+        alert("Erro ao bloquear cliente.");
+      }
+    } catch (err) {
+      console.error("Erro ao bloquear:", err);
+    }
+  }
+
+  async function handlePNG(demandId: string, clientWhatsapp: string) {
+    if (!confirm("Marcar como Persona Non Grata? Este usuário não verá mais suas ofertas e sua reputação global será penalizada.")) return;
+
+    try {
+      const res = await fetch("/api/user/persona-non-grata", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          partnerSlug,
+          clientWhatsapp,
+          reason: "Marcado via Painel do Parceiro"
+        }),
+      });
+
+      if (res.ok) {
+        // Remove from the list immediately
+        setDemands((prev) => prev.filter((d) => d.id !== demandId));
+      } else {
+        alert("Erro ao marcar como Persona Non Grata.");
+      }
+    } catch (err) {
+      console.error("Erro PNG:", err);
+    }
   }
 
   return (
@@ -91,7 +132,7 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
       {/* Demand cards */}
       <div className="mt-6 space-y-4">
         {filtered.length === 0 ? (
-          <div className="rounded-[2.5rem] border border-slate-100 bg-white px-6 py-20 text-center shadow-xl shadow-emerald-500/[0.02]">
+          <div className="rounded-2xl border border-slate-100 bg-white px-6 py-20 text-center shadow-xl shadow-emerald-500/[0.02]">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
               <Inbox className="h-8 w-8 text-slate-200" />
             </div>
@@ -107,7 +148,7 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
           filtered.map((demand, index) => (
             <article
               key={demand.id}
-              className={`animate-fade-in-up delay-${Math.min(index + 1, 5)} group relative rounded-[2rem] border border-slate-100 bg-white p-6 transition-all hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-500/[0.06]`}
+              className={`animate-fade-in-up delay-${Math.min(index + 1, 5)} group relative rounded-2xl border border-slate-100 bg-white p-6 transition-all hover:border-emerald-200 hover:shadow-2xl hover:shadow-emerald-500/[0.06]`}
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-4">
@@ -149,7 +190,7 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
                 {demand.matchedCategories.map((cat) => (
                   <span
                     key={cat}
-                    className="rounded-lg bg-slate-50 border border-slate-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-slate-500"
+                    className="rounded-xl bg-slate-50 border border-slate-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.1em] text-slate-500"
                   >
                     {cat}
                   </span>
@@ -191,10 +232,17 @@ export function DemandList({ demands: initialDemands, partnerName, partnerSlug }
                       </button>
                       <button
                         onClick={() => handleBlock(demand.id, demand.whatsapp)}
-                        className="flex h-11 w-11 items-center justify-center rounded-full text-slate-200 transition hover:bg-red-50 hover:text-red-400"
-                        title="Bloquear cliente"
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-slate-200 transition hover:bg-slate-50 hover:text-slate-500"
+                        title="Bloquear cliente (Silencioso)"
                       >
                         <Ban className="h-4 w-4" />
+                      </button>
+                      <button
+                        onClick={() => handlePNG(demand.id, demand.whatsapp)}
+                        className="flex h-11 w-11 items-center justify-center rounded-full text-red-200 transition hover:bg-red-50 hover:text-red-500"
+                        title="Persona Non Grata (The Shield)"
+                      >
+                        <ShieldAlert className="h-4 w-4" />
                       </button>
                     </div>
                   </>

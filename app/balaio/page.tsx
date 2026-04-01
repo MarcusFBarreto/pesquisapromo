@@ -19,7 +19,11 @@ import {
   Clock, 
   MapPin, 
   CheckCircle2, 
-  ChevronRight 
+  ChevronRight,
+  Search,
+  PlusCircle,
+  LayoutGrid,
+  List
 } from "lucide-react";
 import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
 
@@ -37,9 +41,24 @@ interface Demand {
   matchedCategories?: string[];
 }
 
-const BalaioCard = ({ demand }: { demand: Demand }) => {
+const BalaioCard = ({ demand, viewMode = "list" }: { demand: Demand; viewMode?: "list" | "grid" }) => {
   const [claiming, setClaiming] = useState(false);
   const [myClaim, setMyClaim] = useState(false);
+
+  // Sistema de Cores Solar (Accents)
+  const getAccent = () => {
+    const accents = [
+      { name: "emerald", bg: "bg-emerald-500", text: "text-emerald-600", border: "border-emerald-200", shadow: "shadow-emerald-500/10", glow: "group-hover:shadow-emerald-400/20" },
+      { name: "amber", bg: "bg-amber-500", text: "text-amber-600", border: "border-amber-200", shadow: "shadow-amber-500/10", glow: "group-hover:shadow-amber-400/20" },
+      { name: "violet", bg: "bg-violet-500", text: "text-violet-600", border: "border-violet-200", shadow: "shadow-violet-500/10", glow: "group-hover:shadow-violet-400/20" },
+      { name: "rose", bg: "bg-rose-500", text: "text-rose-600", border: "border-rose-200", shadow: "shadow-rose-500/10", glow: "group-hover:shadow-rose-400/20" },
+    ];
+    // Rotação simples baseada no ID para dar "vida"
+    const index = (demand.id.length + (demand.viewCount || 0)) % accents.length;
+    return accents[index];
+  };
+
+  const accent = getAccent();
 
   // Simulação de ID de parceiro para o Piloto
   useEffect(() => {
@@ -97,56 +116,63 @@ const BalaioCard = ({ demand }: { demand: Demand }) => {
   };
 
   return (
-    <article className={`group relative rounded-[2rem] border p-8 transition-all duration-500 glass-container-mobile ${
+    <article className={`group relative transition-all duration-500 glass-container-mobile ${
+      viewMode === "grid" ? "rounded-lg p-3 text-center" : "rounded-xl p-5"
+    } border ${
       myClaim 
-        ? "bg-emerald-50 border-emerald-200 shadow-xl shadow-emerald-500/5 scale-[1.02] sm:bg-emerald-50" 
-        : "bg-white border-slate-200 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-slate-200/50 sm:bg-white"
+        ? "bg-emerald-50 border-emerald-200 shadow-lg scale-[1.02] sm:bg-emerald-50" 
+        : `bg-white border-slate-200 shadow-xl ${accent.shadow} ${accent.glow} sm:bg-white`
     }`}>
-      {/* Badge e Views */}
-      <div className="flex items-center justify-between mb-8">
-        <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.2em] ${
+      {/* Glow Decorativo de Fundo */}
+      <div className={`absolute -inset-px rounded-xl opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none ${accent.bg}`} />
+
+      {/* Badge e Views (Compact) */}
+      <div className={`relative flex items-center justify-between ${viewMode === "grid" ? "mb-2" : "mb-4"}`}>
+        <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-[0.1em] ${
           demand.status === "pending" 
-            ? "bg-emerald-500 text-white shadow-sm" 
+            ? `${accent.bg} text-white` 
             : myClaim
               ? "bg-emerald-600 text-white shadow-md shadow-emerald-200"
               : "bg-slate-100 text-slate-500 border border-slate-200"
         }`}>
-          {demand.status === "pending" ? "Disponível" : myClaim ? "Resgatado" : "Em Negociação"}
+          {demand.status === "pending" ? "Disp." : "Ocup."}
         </span>
         
-        <div className="flex items-center gap-2 text-slate-400">
-          <Eye className="w-3.5 h-3.5" />
-          <span className="text-[10px] font-black font-mono tracking-tight mobile-text-anchor">{demand.viewCount || 0}</span>
+        <div className="flex items-center gap-1 text-slate-400">
+          <Eye className="w-2.5 h-2.5" />
+          <span className="text-[9px] font-black font-mono tracking-tight mobile-text-anchor">{demand.viewCount || 0}</span>
         </div>
       </div>
 
-      {/* Título e Descrição */}
-      <h3 className={`text-xl font-bold mb-4 tracking-tight leading-tight transition-colors mobile-text-anchor ${
-        myClaim ? "text-emerald-700" : "text-slate-900 group-hover:text-emerald-600"
+      {/* Título e Descrição (Compact) */}
+      <h3 className={`${viewMode === "grid" ? "text-sm" : "text-lg"} font-bold mb-1 tracking-tight leading-snug transition-colors mobile-text-anchor line-clamp-1 ${
+        myClaim ? "text-emerald-700" : `text-slate-900 group-hover:${accent.text}`
       }`}>
         {demand.request}
       </h3>
-      <p className="text-slate-500 text-sm font-light leading-relaxed mb-10 line-clamp-2 mobile-text-anchor">
-        {demand.details || "O cliente não forneceu detalhes adicionais nesta solicitação."}
-      </p>
+      {viewMode !== "grid" && (
+        <p className="text-slate-500 text-xs font-light leading-relaxed mb-6 line-clamp-2 mobile-text-anchor">
+          {demand.details || "Sem detalhes adicionais."}
+        </p>
+      )}
 
-      {/* Info Grid */}
-      <div className="grid grid-cols-2 gap-6 mb-12 pt-8 border-t border-slate-100/50">
-        <div className="flex flex-col gap-1.5">
-          <span className="text-[9px] uppercase text-slate-400 font-extrabold tracking-[0.2em] mobile-text-anchor">
-            Cidade/Região
+      {/* Info Grid (Tight) */}
+      <div className={`${viewMode === "grid" ? "hidden" : "grid grid-cols-2 shadow-sm bg-slate-50/50 rounded-xl p-2.5 mb-8"} gap-4 pt-4 border-t border-slate-100/50`}>
+        <div className="flex flex-col gap-1">
+          <span className="text-[8px] uppercase text-slate-400 font-extrabold tracking-[0.15em] mobile-text-anchor">
+            Cidade
           </span>
-          <div className="flex items-center gap-1.5 text-slate-700 text-[11px] font-bold mobile-text-anchor">
-            <MapPin className="w-3.5 h-3.5 text-emerald-500" />
+          <div className="flex items-center gap-1 text-slate-700 text-[10px] font-bold mobile-text-anchor">
+            <MapPin className={`w-3 h-3 ${accent.text}`} />
             Horizonte
           </div>
         </div>
-        <div className="flex flex-col gap-1.5">
-          <span className="text-[9px] uppercase text-slate-400 font-extrabold tracking-[0.2em] mobile-text-anchor">
-            Tempo Decorrido
+        <div className="flex flex-col gap-1">
+          <span className="text-[8px] uppercase text-slate-400 font-extrabold tracking-[0.15em] mobile-text-anchor">
+            Tempo
           </span>
-          <div className="flex items-center gap-1.5 text-slate-700 text-[11px] font-bold mobile-text-anchor">
-            <Clock className="w-3.5 h-3.5 text-emerald-500" />
+          <div className="flex items-center gap-1 text-slate-700 text-[10px] font-bold mobile-text-anchor">
+            <Clock className={`w-3 h-3 ${accent.text}`} />
             {demand.createdAt 
               ? formatDistanceToNow(demand.createdAt.toDate(), { locale: ptBR, addSuffix: true }) 
               : "agora"}
@@ -154,32 +180,34 @@ const BalaioCard = ({ demand }: { demand: Demand }) => {
         </div>
       </div>
 
-      {/* CTA Button */}
-      <button 
-        onClick={handleClaim}
-        disabled={demand.status !== "pending" || claiming}
-        className={`w-full py-5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 flex items-center justify-center gap-2 solar-shimmer-effect ${
-          demand.status === "pending"
-            ? "bg-slate-900 text-white hover:bg-emerald-600 shadow-lg shadow-slate-900/10 active:scale-95 mobile-btn-soft-dark"
-            : myClaim
-              ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
-              : "bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100"
-        }`}
-      >
-        {claiming ? "Carregando..." : myClaim ? (
-          <>
-            <CheckCircle2 className="w-4 h-4" />
-            Ver Negociação
-          </>
-        ) : demand.status === "pending" ? (
-          <>
-            Capturar Oportunidade
-            <ChevronRight className="w-4 h-4" />
-          </>
-        ) : (
-          "Já Ocupada"
-        )}
-      </button>
+      {/* CTA Button (Compact) */}
+      <div className="flex items-center gap-2">
+        <button 
+          onClick={handleClaim}
+          disabled={demand.status !== "pending" || claiming}
+          className={`flex-1 ${viewMode === "grid" ? "py-2.5 text-[9px]" : "py-4 text-[10px]"} rounded-full font-black uppercase tracking-[0.15em] transition-all duration-300 flex items-center justify-center gap-2 solar-shimmer-effect ${
+            demand.status === "pending"
+              ? `bg-slate-900 text-white group-hover:${accent.bg} shadow-md active:scale-95 mobile-btn-soft-dark`
+              : myClaim
+                ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
+                : "bg-slate-50 text-slate-300 cursor-not-allowed border border-slate-100"
+          }`}
+        >
+          {claiming ? "..." : myClaim ? (viewMode === "grid" ? "Ver" : "Ver Negociação") : demand.status === "pending" ? (viewMode === "grid" ? "Capt." : "Capturar") : "Ocup."}
+        </button>
+
+        <button 
+          title="Denunciar Fake"
+          className="h-10 w-10 flex items-center justify-center rounded-full border border-slate-100 text-slate-300 hover:text-red-500 hover:border-red-100 transition-all active:scale-90"
+          onClick={() => {
+            if(confirm("Deseja denunciar esta demanda como falsa ou spam?")) {
+              alert("Denúncia enviada para moderação.");
+            }
+          }}
+        >
+          <Filter className="w-4 h-4 rotate-180" />
+        </button>
+      </div>
     </article>
   );
 };
@@ -187,15 +215,21 @@ const BalaioCard = ({ demand }: { demand: Demand }) => {
 export default function BalaioPage() {
   const [demands, setDemands] = useState<Demand[]>([]);
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<"list" | "grid">("list");
 
   useEffect(() => {
-    const q = query(collection(db, "demands"), orderBy("createdAt", "desc"));
+    const q = query(
+      collection(db, "demands"), 
+      orderBy("createdAt", "desc")
+    );
     
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const docs = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Demand[];
+      const docs = snapshot.docs
+        .map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }))
+        .filter((d: any) => d.status === "pending") as Demand[]; // Somente verificados
       setDemands(docs);
       setLoading(false);
     });
@@ -204,65 +238,88 @@ export default function BalaioPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50/30 text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-slate-50/20 text-slate-900 font-sans selection:bg-emerald-100 selection:text-emerald-900">
       <PesquisaPromoHeader />
 
-      {/* Background Decorativo Sutil */}
-      <div className="fixed inset-0 bg-[radial-gradient(at_top_right,rgba(16,185,129,0.03),transparent_50%)] pointer-events-none" />
+      {/* Background Decorativo Discreto */}
+      <div className="fixed inset-0 bg-[radial-gradient(at_top_right,rgba(16,185,129,0.02),transparent_50%)] pointer-events-none" />
 
-      {/* Header do Balaio */}
-      <header className="relative max-w-6xl mx-auto mb-12 px-6 pt-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-10 rounded-[2.5rem] border border-slate-200 bg-white/60 p-8 shadow-xl backdrop-blur-xl glass-container-mobile sm:bg-white/80 sm:shadow-2xl">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.5)] animate-pulse" />
-              <span className="text-[10px] text-emerald-600 font-black uppercase tracking-[0.25em] leading-none mobile-text-anchor">
-                Mercado em Tempo Real
-              </span>
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black tracking-tight text-slate-900 leading-tight mobile-text-anchor">
-              Balaio de <span className="text-emerald-600 italic font-serif">Demandas</span>
-            </h1>
-            <p className="text-slate-500 mt-6 text-lg font-light max-w-xl leading-relaxed mobile-text-anchor">
-              Acompanhe as necessidades dos clientes em tempo real. <br className="hidden md:block" />
-              Capture oportunidades e expanda seu terreno.
-            </p>
-          </div>
-          
+      {/* Header da myLupa (Compacto/Vitrine) */}
+      <header className="relative max-w-6xl mx-auto mb-6 px-6 pt-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 rounded-xl border border-slate-100 bg-white/40 p-6 shadow-sm backdrop-blur-xl glass-container-mobile sm:bg-white/60">
           <div className="flex items-center gap-4">
-            <button className="group flex items-center gap-3 px-8 py-4 bg-slate-900 text-white rounded-full text-[11px] font-black uppercase tracking-[0.2em] transition-all duration-300 shadow-xl shadow-slate-900/10 hover:bg-emerald-600 mobile-btn-soft-dark solar-shimmer-effect">
-              <Filter className="w-4 h-4 text-emerald-400 group-hover:text-white" />
-              Filtrar Categorias
-            </button>
+            <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] animate-pulse" />
+            <h1 className="text-xl md:text-4xl font-black tracking-tighter text-slate-900 leading-none mobile-text-anchor flex items-center gap-2">
+              myLupa <span className="text-emerald-500 text-sm font-black uppercase tracking-[0.2em] mb-auto">v1.1</span>
+            </h1>
+            <p className="text-[10px] uppercase font-extrabold tracking-[0.15em] text-slate-400 mobile-text-anchor">
+              Onde vendedores encontram oportunidades
+            </p>
           </div>
         </div>
       </header>
 
-      {/* Grid de Cards (Estilo Light PREMIUM) */}
-      <main className="relative max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-6 pb-20">
+      {/* Grid de Cards (Alta Densidade) */}
+      <main className={`relative max-w-6xl mx-auto grid ${viewMode === "grid" ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-5" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"} gap-4 px-6 pb-32`}>
         {loading ? (
           Array(6).fill(0).map((_, i) => (
-            <div key={i} className="h-96 bg-white/40 rounded-[2rem] animate-pulse border border-slate-100 backdrop-blur-sm" />
+            <div key={i} className={`${viewMode === "grid" ? "h-40" : "h-64"} bg-white/40 rounded-xl animate-pulse border border-slate-100 backdrop-blur-sm`} />
           ))
         ) : demands.length === 0 ? (
-          <div className="col-span-full py-40 text-center rounded-[2.5rem] border border-dashed border-slate-200 bg-white/40 backdrop-blur-sm">
-            <p className="text-slate-400 font-light text-xl mobile-text-anchor">Nenhum chamado aberto no momento.</p>
-            <p className="text-slate-500 text-xs mt-3 font-bold uppercase tracking-widest mobile-text-anchor">Assim que um cliente pedir algo, ele aparecerá aqui.</p>
+          <div className="col-span-full py-40 text-center rounded-xl border border-dashed border-slate-200 bg-white/20 backdrop-blur-sm">
+            <p className="text-slate-400 font-light text-lg mobile-text-anchor">Vazio no momento.</p>
           </div>
         ) : (
           demands.map((demand) => (
-            <BalaioCard key={demand.id} demand={demand} />
+            <BalaioCard key={demand.id} demand={demand} viewMode={viewMode} />
           ))
         )}
       </main>
+
+      {/* Painel de Comandos (Minimalista / Rodapé) */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-lg z-50">
+        <div className="bg-slate-900/90 backdrop-blur-2xl rounded-2xl border border-white/10 p-2 shadow-2xl flex items-center gap-2">
+          {/* Botão de Toggle List/Grid */}
+          <button 
+            onClick={() => setViewMode(prev => prev === "list" ? "grid" : "list")}
+            className={`h-10 w-10 flex items-center justify-center rounded-full border transition-all ${
+              viewMode === "grid" 
+                ? "bg-emerald-500 border-white/20 text-slate-900" 
+                : "bg-white/5 border-white/10 text-emerald-400 hover:text-white"
+            }`}>
+            {viewMode === "list" ? <LayoutGrid className="w-5 h-5" /> : <List className="w-5 h-5" />}
+          </button>
+
+          {/* Barra de Busca Minimalista */}
+          <div className="flex-1 relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <input 
+              type="text" 
+              placeholder="Buscar na myLupa..." 
+              className="w-full h-11 bg-white/5 border border-white/10 rounded-full pl-11 pr-4 text-[13px] text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
+            />
+          </div>
+
+          {/* Ação Primária (Placeholder) */}
+          <button className="h-11 px-6 rounded-full bg-emerald-500 text-slate-900 text-[11px] font-black uppercase tracking-[0.1em] hover:bg-emerald-400 active:scale-95 transition-all flex items-center gap-2">
+            <PlusCircle className="w-4 h-4" />
+            <span className="hidden sm:inline">Criar</span>
+          </button>
+        </div>
+        
+        {/* Indicador de Swipe/Scroll Sutil */}
+        <div className="mt-3 flex justify-center">
+          <div className="h-1 w-12 rounded-full bg-slate-300/20" />
+        </div>
+      </div>
       
       {/* Footer / Stats */}
       <footer className="max-w-6xl mx-auto mt-32 text-center pb-20 border-t border-slate-100 pt-12">
         <p className="text-slate-400 text-[10px] font-bold tracking-[0.2em] uppercase">
-          Ambiente Seguro PesquisaPromo
+          myLupa <span className="mx-2 text-slate-300">|</span> Powered by PesquisaPromo
         </p>
         <p className="text-slate-500 text-xs mt-3 font-light">
-          Horizonte, Ceará. Todos os direitos reservados aos parceiros verificados.
+          Horizonte, Ceará. {new Date().getFullYear()} — Inteligência de Mercado.
         </p>
       </footer>
     </div>

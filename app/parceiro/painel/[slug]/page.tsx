@@ -135,7 +135,7 @@ export default function PartnerDashboard() {
       <section className="px-6 py-10 lg:px-10">
         <div className="mx-auto max-w-5xl">
           {/* PERFIL LINK BOX (SOLAR) */}
-          <div className="mb-10 rounded-[2rem] border border-emerald-100 bg-white p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl shadow-emerald-500/[0.03]">
+          <div className="mb-10 rounded-2xl border border-emerald-100 bg-white p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-xl shadow-emerald-500/[0.03]">
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 border border-emerald-100">
                 <Globe className="h-6 w-6" />
@@ -176,21 +176,21 @@ export default function PartnerDashboard() {
 
             {/* Quick stats (Solar version) */}
             <div className="flex gap-4">
-              <div className="rounded-[1.5rem] bg-white border border-slate-100 p-4 min-w-[100px] text-center shadow-sm">
+              <div className="rounded-2xl bg-white border border-slate-100 p-4 min-w-[100px] text-center shadow-sm">
                 <p className="text-2xl font-black text-pp-orange">{newCount}</p>
                 <div className="mt-1 flex items-center justify-center gap-1.5">
                   <Zap className="h-3 w-3 text-pp-orange" />
                   <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Novas</p>
                 </div>
               </div>
-              <div className="rounded-[1.5rem] bg-white border border-slate-100 p-4 min-w-[100px] text-center shadow-sm">
+              <div className="rounded-2xl bg-white border border-slate-100 p-4 min-w-[100px] text-center shadow-sm">
                 <p className="text-2xl font-black text-emerald-600">{respondedCount}</p>
                 <div className="mt-1 flex items-center justify-center gap-1.5">
                   <CheckCircle2 className="h-3 w-3 text-emerald-600" />
                   <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Atendidas</p>
                 </div>
               </div>
-              <div className="rounded-[1.5rem] bg-slate-900 border border-slate-800 p-4 min-w-[100px] text-center shadow-lg shadow-slate-900/10">
+              <div className="rounded-2xl bg-slate-900 border border-slate-800 p-4 min-w-[100px] text-center shadow-lg shadow-slate-900/10">
                 <p className="text-2xl font-black text-white">{demands.length}</p>
                 <div className="mt-1 flex items-center justify-center gap-1.5">
                   <BarChart3 className="h-3 w-3 text-white/40" />

@@ -41,6 +41,9 @@ export const adminDb = new Proxy({} as admin.firestore.Firestore, {
   }
 });
 
+// For atomic increments and server timestamps
+export const FieldValue = admin.firestore.FieldValue;
+
 export const adminAuth = new Proxy({} as admin.auth.Auth, {
   get(target, prop) {
     ensureFirebaseAdmin();

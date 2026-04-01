@@ -59,7 +59,7 @@ export default async function AvenuePage({ params }: PageProps) {
           </div>
         </div>
 
-        <header className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl md:p-10 glass-container-mobile sm:bg-white sm:shadow-xl">
+        <header className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl md:p-10 glass-container-mobile sm:bg-white sm:shadow-xl">
           <p className="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-600 mobile-text-anchor">
             {district.count}
           </p>
@@ -121,7 +121,7 @@ export default async function AvenuePage({ params }: PageProps) {
         </section>
 
         {nearbyDistricts.length > 0 ? (
-          <section className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
+          <section className="rounded-2xl border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
               Vire a esquina
             </p>

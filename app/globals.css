@@ -162,7 +162,7 @@ textarea:-webkit-autofill {
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(16, 185, 129, 0.1);
-      @apply rounded-[2.5rem] shadow-[0_15px_35px_-10px_rgba(16,185,129,0.08)];
+      @apply rounded-xl shadow-[0_15px_35px_-10px_rgba(16,185,129,0.08)];
     }
   }
 

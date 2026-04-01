@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
       success: true,
       id: demand.id,
       matchedCategories: demand.matchedCategories,
+      verificationRequired: demand.verificationRequired,
     });
   } catch (error) {
     console.error("[PesquisaPromo] Erro ao criar demanda:", error);

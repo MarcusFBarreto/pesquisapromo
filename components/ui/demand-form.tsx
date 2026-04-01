@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, FormEvent, useEffect, useRef } from "react";
-import { CheckCircle2, ChevronRight } from "lucide-react";
+import { CheckCircle2, ChevronRight, Tag, Sparkles } from "lucide-react";
+import { findMatchesForDemand } from "@/lib/match-service";
+import { MatchCard } from "./match-card";
 
 type DemandFormProps = {
   initialDemand?: string;
@@ -71,6 +73,12 @@ export function DemandForm({
 
       if (data.success) {
         setResultInfo({ categories: data.matchedCategories, id: data.id });
+        
+        // Se NÃO for necessário verificar (Trusted User), pulamos direto para o fim
+        if (data.verificationRequired === false) {
+          setVerified(true);
+        }
+        
         setStatus("success");
       } else {
         setStatus("error");
@@ -80,41 +88,122 @@ export function DemandForm({
     }
   }
 
+  const [verifyCode, setVerifyCode] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [verified, setVerified] = useState(false);
+
+  async function handleVerify(e: React.FormEvent) {
+    e.preventDefault();
+    if (!resultInfo?.id || !verifyCode) return;
+    setVerifying(true);
+    try {
+      const res = await fetch("/api/demands/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: resultInfo.id, code: verifyCode }),
+      });
+      if (res.ok) {
+        setVerified(true);
+      } else {
+        alert("Código incorreto. Verifique no seu WhatsApp.");
+      }
+    } catch {
+      alert("Erro na verificação.");
+    } finally {
+      setVerifying(false);
+    }
+  }
+
   if (status === "success") {
+    // Apollo Match Engine (v1.3.0)
+    const matches = findMatchesForDemand(request, resultInfo?.categories?.[0]);
+
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
-        <div className="mb-8 flex h-24 w-24 items-center justify-center rounded-[2rem] bg-emerald-50 text-emerald-600 shadow-xl shadow-emerald-500/10 border border-emerald-100">
-          <CheckCircle2 className="h-12 w-12" />
-        </div>
-        <h3 className="mb-4 text-3xl font-black text-slate-900 tracking-tight">Tudo pronto!</h3>
-        <p className="mx-auto mb-10 max-w-xs text-base text-slate-500 font-light leading-relaxed">
-          Sua demanda foi enviada com sucesso.{" "}
-          {partnerName
-            ? `O parceiro ${partnerName}`
-            : "Nossos parceiros locais"}{" "}
-          entrarão em contato direto no seu WhatsApp.
-        </p>
-        <div className="flex flex-col items-center gap-6 w-full">
-          {resultInfo?.categories && resultInfo.categories.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-2">
-              {resultInfo.categories.map((cat) => (
-                <span
-                  key={cat}
-                  className="rounded-full bg-slate-50 border border-slate-100 px-4 py-2 text-[10px] font-black uppercase tracking-widest text-slate-400"
-                >
-                  {cat}
-                </span>
-              ))}
+      <div className="flex flex-col items-center justify-center py-8 text-center animate-fade-in">
+        {!verified ? (
+          <>
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-amber-50 text-amber-600 shadow-xl shadow-amber-500/10 border border-amber-100">
+              <CheckCircle2 className="h-10 w-10" />
             </div>
-          )}
-          <a
-            href="/"
-            className="group flex items-center gap-3 rounded-full bg-slate-900 px-10 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:scale-[1.02] shadow-xl shadow-slate-900/10 mobile-btn-soft-dark solar-shimmer-effect"
-          >
-            Voltar ao Início
-            <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </a>
-        </div>
+            <h3 className="mb-2 text-2xl font-black text-slate-900 tracking-tight">Quase lá!</h3>
+            <p className="mx-auto mb-6 max-w-xs text-sm text-slate-500 font-light leading-relaxed">
+              Enviamos um código de segurança para o seu WhatsApp para validar sua solicitação.
+            </p>
+            
+            <form onSubmit={handleVerify} className="w-full max-w-xs mb-8">
+              <input 
+                type="text" 
+                maxLength={4}
+                placeholder="0000"
+                value={verifyCode}
+                onChange={(e) => setVerifyCode(e.target.value)}
+                className="w-full h-14 text-center text-2xl font-black tracking-[0.5em] rounded-xl border border-slate-200 bg-slate-50 mb-4 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all"
+              />
+              <button 
+                type="submit"
+                disabled={verifying}
+                className="w-full py-4 bg-emerald-500 text-slate-900 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-emerald-400 active:scale-95 transition-all shadow-lg shadow-emerald-500/20"
+              >
+                {verifying ? "Verificando..." : "Validar Pedido"}
+              </button>
+            </form>
+
+            {matches.length > 0 && (
+               <div className="w-full border-t border-slate-100 pt-8 mt-4 text-left">
+                  <div className="flex items-center gap-2 mb-6">
+                    <Sparkles className="h-4 w-4 text-pp-orange animate-pulse" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">
+                      O Apollo encontrou ofertas para você!
+                    </p>
+                  </div>
+                  <div className="grid gap-3">
+                    {matches.map(m => <MatchCard key={m.id} match={m} />)}
+                  </div>
+               </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 shadow-xl shadow-emerald-500/10 border border-emerald-100">
+              <CheckCircle2 className="h-10 w-10" />
+            </div>
+            <h3 className="mb-2 text-2xl font-black text-slate-900 tracking-tight">Validado com Sucesso!</h3>
+            <p className="mx-auto mb-10 max-w-xs text-sm text-slate-500 font-light leading-relaxed">
+              Sua demanda já está visível na **myLupa**. Enquanto aguarda os orçamentos, que tal ver o que tem de novo?
+            </p>
+            
+            {matches.length > 0 && (
+               <div className="w-full mb-10 text-left">
+                  <div className="flex items-center gap-2 mb-6">
+                    <Sparkles className="h-4 w-4 text-emerald-500" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">
+                      BOOM! Encontramos ofertas similares:
+                    </p>
+                  </div>
+                  <div className="grid gap-3">
+                    {matches.map(m => <MatchCard key={m.id} match={m} />)}
+                  </div>
+               </div>
+            )}
+
+            <div className="flex flex-col gap-3 w-full max-w-xs">
+              <a
+                href="/mypromos"
+                className="group flex items-center justify-center gap-3 rounded-2xl bg-slate-900 px-10 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:scale-[1.02] shadow-xl shadow-slate-900/10 mobile-btn-soft-dark solar-shimmer-effect"
+              >
+                <Tag className="h-4 w-4" />
+                Explorar mais no myPromos
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+              <Link
+                href="/"
+                className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors py-2"
+              >
+                Voltar à página inicial
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     );
   }

@@ -55,7 +55,7 @@ export default async function StreetPage({ params }: PageProps) {
           </div>
         </div>
 
-        <header className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-xl md:p-10 glass-container-mobile sm:bg-white sm:shadow-xl">
+        <header className="rounded-2xl border border-slate-200 bg-white p-8 shadow-xl md:p-10 glass-container-mobile sm:bg-white sm:shadow-xl">
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mobile-text-anchor">
             {district.count}
           </p>
@@ -87,7 +87,7 @@ export default async function StreetPage({ params }: PageProps) {
         </header>
 
         {district.slug === "testes" ? (
-          <section className="rounded-[2rem] border border-[var(--pp-blue)]/20 bg-[linear-gradient(135deg,_rgba(25,76,160,0.08),_rgba(229,93,58,0.08))] p-6 shadow-[0_16px_40px_rgba(16,37,74,0.05)] md:p-7">
+          <section className="rounded-2xl border border-[var(--pp-blue)]/20 bg-[linear-gradient(135deg,_rgba(25,76,160,0.08),_rgba(229,93,58,0.08))] p-6 shadow-[0_16px_40px_rgba(16,37,74,0.05)] md:p-7">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div className="max-w-2xl">
                 <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
@@ -114,7 +114,7 @@ export default async function StreetPage({ params }: PageProps) {
           </section>
         ) : null}
 
-        <section className="rounded-[2rem] border border-slate-200 bg-slate-50/50 p-4 shadow-xl md:p-6 glass-container-mobile sm:bg-slate-50/50">
+        <section className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 shadow-xl md:p-6 glass-container-mobile sm:bg-slate-50/50">
           <div className="mb-6 flex items-center justify-between rounded-[1.5rem] bg-white px-5 py-4 border border-slate-100 shadow-sm">
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.22em] text-emerald-600 mobile-text-anchor">
@@ -256,7 +256,7 @@ export default async function StreetPage({ params }: PageProps) {
         </section>
 
         {nearbyDistricts.length > 0 ? (
-          <section className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
+          <section className="rounded-2xl border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
               Continue passeando
             </p>

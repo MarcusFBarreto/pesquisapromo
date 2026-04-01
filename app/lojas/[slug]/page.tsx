@@ -89,7 +89,7 @@ export default async function StorePage({ params }: PageProps) {
           </div>
         </div>
 
-        <header className="grid gap-6 rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] lg:grid-cols-[1.1fr_0.9fr] md:p-8">
+        <header className="grid gap-6 rounded-2xl border border-[var(--pp-line)] bg-white p-6 shadow-[0_20px_60px_rgba(16,37,74,0.05)] lg:grid-cols-[1.1fr_0.9fr] md:p-8">
           <div>
             <p className="text-[10px] font-black uppercase tracking-[0.3em] text-pp-orange mobile-text-anchor">
               {district.title}
@@ -141,7 +141,7 @@ export default async function StorePage({ params }: PageProps) {
         </header>
 
         <section className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <article className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
+          <article className="rounded-2xl border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-blue)]">
               {shop.services?.length ? "Atalhos desta porta" : "Area de testes"}
             </p>
@@ -168,7 +168,7 @@ export default async function StorePage({ params }: PageProps) {
             </div>
           </article>
 
-          <article className="rounded-[2rem] border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
+          <article className="rounded-2xl border border-[var(--pp-line)] bg-white p-6 shadow-[0_16px_40px_rgba(16,37,74,0.04)] md:p-7">
             <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--pp-orange)]">
               Leitura da vitrine
             </p>

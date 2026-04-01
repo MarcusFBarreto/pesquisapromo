@@ -55,7 +55,7 @@ export default function PartnerLoginPage() {
         </div>
 
         {/* Login card */}
-        <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm">
           <div className="mb-6">
             <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">
               <div className="h-2 w-2 rounded-full bg-pp-teal" />

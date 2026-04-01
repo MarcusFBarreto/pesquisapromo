@@ -134,7 +134,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* MARKET INTELLIGENCE (NEW) */}
-        <div className="mb-10 bg-pp-dark rounded-[2.5rem] p-8 lg:p-10 relative overflow-hidden">
+        <div className="mb-10 bg-pp-dark rounded-2xl p-8 lg:p-10 relative overflow-hidden">
           <div className="absolute top-0 right-0 p-10 opacity-10">
             <ChartBarIcon className="h-32 w-32 text-pp-teal" />
           </div>

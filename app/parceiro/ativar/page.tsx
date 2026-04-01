@@ -107,7 +107,7 @@ export default function PartnerActivationPage() {
           </Link>
         </div>
 
-        <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm">
+        <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-sm">
           {success ? (
             <div className="text-center py-8">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-pp-teal/20 text-3xl">🎉</div>

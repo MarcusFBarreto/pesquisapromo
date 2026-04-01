@@ -104,7 +104,7 @@ export default function FornecerLandingPage() {
       {/* ─── VANTAGENS ─── */}
       <section className="py-24 border-t border-white/5 bg-pp-dark">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="rounded-[3rem] bg-pp-orange/5 border border-pp-orange/10 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12">
+          <div className="rounded-2xl bg-pp-orange/5 border border-pp-orange/10 p-8 lg:p-16 flex flex-col lg:flex-row items-center gap-12">
             <div className="flex-1">
               <h2 className="text-3xl font-bold text-white mb-6">Por que se tornar um Parceiro Verificado?</h2>
               <ul className="space-y-6">
@@ -137,7 +137,7 @@ export default function FornecerLandingPage() {
                 </li>
               </ul>
             </div>
-            <div className="flex-1 bg-pp-dark-surface p-10 rounded-[2rem] border border-white/10 text-center">
+            <div className="flex-1 bg-pp-dark-surface p-10 rounded-2xl border border-white/10 text-center">
               <UserGroupIcon className="mx-auto h-16 w-16 text-pp-orange mb-6" />
               <p className="text-2xl font-bold text-white mb-4">Pronto para começar?</p>
               <p className="text-white/40 mb-8">O cadastro leva menos de 2 minutos.</p>

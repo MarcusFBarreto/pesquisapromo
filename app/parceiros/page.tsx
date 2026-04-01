@@ -57,7 +57,7 @@ export default async function PartnersDirectoryPage() {
             <Link
               href={`/parceiros/${partner.slug}`}
               key={partner.slug}
-              className="group flex flex-col rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-emerald-500 hover:shadow-xl glass-container-mobile sm:bg-white sm:shadow-sm"
+              className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-emerald-500 hover:shadow-xl glass-container-mobile sm:bg-white sm:shadow-sm"
             >
               <div className="mb-4 flex items-center justify-between">
                 <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-100 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-widest text-emerald-600">

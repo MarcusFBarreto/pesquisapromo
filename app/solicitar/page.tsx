@@ -79,7 +79,7 @@ function SolicitarContent() {
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           {/* LEFT: Form */}
           <div className="animate-fade-in-up order-2 lg:order-1">
-            <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/50 glass-container-mobile sm:shadow-2xl">
+            <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-200/50 glass-container-mobile sm:shadow-2xl">
               <div className="mb-8 flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600 font-bold border border-emerald-100">
                   <span className="text-xs">1</span>
@@ -98,7 +98,7 @@ function SolicitarContent() {
 
           {/* RIGHT: Chat */}
           <div className="animate-fade-in-up delay-1 order-1 lg:order-2">
-            <div className="flex h-[500px] flex-col rounded-[2rem] border border-slate-200 bg-white shadow-xl shadow-slate-200/30 lg:h-[650px] sticky top-24 overflow-hidden glass-container-mobile sm:bg-white sm:shadow-xl">
+            <div className="flex h-[500px] flex-col rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 lg:h-[650px] sticky top-24 overflow-hidden glass-container-mobile sm:bg-white sm:shadow-xl">
               <div className="p-5 border-b border-slate-100 bg-slate-50/50">
                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor">Assistente PesquisaPromo</p>
               </div>

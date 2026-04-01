@@ -12,7 +12,8 @@ import {
   Store, 
   Target, 
   LifeBuoy,
-  Share2
+  Share2,
+  Tag
 } from "lucide-react";
 
 const howItWorks = [
@@ -42,53 +43,12 @@ const trustSignals = [
   { icon: <Search className="w-5 h-5 text-slate-400" />, text: "Não está encontrando algo? Consulte nossa rede de parceiros." },
 ] as const;
 
-export default function Home() {
+import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
 
+export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* ─── NAVBAR ─── */}
-      <nav className="animate-fade-in sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-          <Link href="/" className="flex items-center gap-2 sm:gap-4 shrink-0 whitespace-nowrap">
-            {/* Logo Solar */}
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border-[3px] border-emerald-500 bg-white shrink-0">
-              <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
-            </div>
-            
-            {/* Marca e Badge como SIBLINGS (Lado a Lado sempre) */}
-            <span className="text-xl font-bold tracking-tight text-slate-900 leading-none shrink-0">
-              Pesquisa<span className="text-pp-orange">Promo</span>
-            </span>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-50/80 px-2 py-1 border border-slate-100 shrink-0 shadow-sm sm:gap-1 sm:px-1.5 sm:py-0.5 sm:bg-slate-50/50 sm:shadow-none">
-              <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)] sm:h-1 sm:w-1 sm:shadow-none" />
-              <span className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500 sm:text-[8px] sm:tracking-[0.05em] sm:text-slate-400">
-                Piloto: Horizonte, CE
-              </span>
-            </div>
-          </Link>
-
-          <div className="hidden items-center gap-10 md:flex">
-            <a
-              href="#como-funciona"
-              className="text-xs font-bold uppercase tracking-widest text-slate-500 transition hover:text-slate-900"
-            >
-              Como funciona
-            </a>
-            <Link
-              href="/parceiro/login"
-              className="text-xs font-bold uppercase tracking-widest text-slate-500 transition hover:text-slate-900"
-            >
-              Acesso Parceiro
-            </Link>
-            <Link
-              href="/parceiro/fornecer"
-              className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition hover:text-slate-900 underline underline-offset-8 decoration-slate-200"
-            >
-              Quer fornecer?
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <PesquisaPromoHeader />
 
       {/* ─── Hero Solar Compacto ─── */}
       <section className="relative overflow-hidden bg-white pb-20 pt-0 lg:pb-24 lg:pt-2">
@@ -102,7 +62,7 @@ export default function Home() {
           {/* LEFT COLUMN: Section 1 (Headline + Para) */}
           <div className="animate-fade-in-up flex flex-col lg:row-start-1 lg:col-start-1">
             <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-600 mb-4 sm:tracking-[0.4em]">
-              Lojas virtuais, promoções reais
+              Sua vitrine de ofertas verificadas
             </p>
 
             <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
@@ -119,7 +79,7 @@ export default function Home() {
 
           {/* LEFT COLUMN: Section 2 (Form Card) */}
           <div className="animate-fade-in-up lg:row-start-2 lg:col-start-1 mt-8 lg:mt-10 self-end">
-            <div className="rounded-[3rem] border border-emerald-100 bg-white p-10 shadow-[0_20px_50px_rgba(16,185,129,0.1)] relative transition-all hover:shadow-[0_20px_60px_rgba(16,185,129,0.15)] group/card">
+            <div className="rounded-2xl border border-emerald-100 bg-white p-10 shadow-[0_20px_50px_rgba(16,185,129,0.1)] relative transition-all hover:shadow-[0_20px_60px_rgba(16,185,129,0.15)] group/card">
               <div className="mb-8 flex items-center justify-between">
                  <div className="flex items-center gap-3">
                    <div className="h-2 w-2 rounded-full bg-pp-orange animate-pulse" />
@@ -138,7 +98,7 @@ export default function Home() {
 
           {/* LEFT COLUMN: Share Panel (Equivalent to MerchantCTA) */}
           <div className="animate-fade-in-up delay-3 lg:row-start-3 lg:col-start-1 mt-8 hidden lg:block">
-            <div className="h-full min-h-[360px] bg-white border border-slate-100 rounded-[3rem] p-10 transition-all hover:scale-[1.01] shadow-xl shadow-slate-500/5 overflow-hidden relative group">
+            <div className="h-full min-h-[360px] bg-white border border-slate-100 rounded-2xl p-10 transition-all hover:scale-[1.01] shadow-xl shadow-slate-500/5 overflow-hidden relative group">
               {/* Decorative element */}
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-slate-500/5 blur-2xl group-hover:bg-slate-500/10 transition-colors" />
 
@@ -163,10 +123,13 @@ export default function Home() {
                   </div>
 
                   <div className="mt-auto">
-                    <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest leading-loose">
-                      Ajude-nos a consolidar <br/>
-                      esta rede em Horizonte.
-                    </p>
+                    <Link 
+                      href="/mypromos"
+                      className="group flex items-center justify-between rounded-2xl bg-slate-900 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-white transition-all hover:bg-emerald-600 shadow-xl shadow-slate-900/10 active:scale-95"
+                    >
+                      Visitar myPromos
+                      <Tag className="w-4 h-4" />
+                    </Link>
                   </div>
                 </div>
 
@@ -194,7 +157,7 @@ export default function Home() {
 
           {/* RIGHT COLUMN: Benefits list (Starts at top, ends at bottom of Form Card) */}
           <div className="animate-fade-in-up delay-2 lg:row-start-1 lg:row-span-2 lg:col-start-2">
-            <div className="bg-white border border-emerald-100 rounded-[3rem] p-10 shadow-[0_20px_50px_rgba(16,185,129,0.08)] h-full flex flex-col transition-all hover:shadow-[0_20px_60px_rgba(16,185,129,0.12)] group/benefits glass-container-mobile sm:bg-white sm:border-emerald-100">
+            <div className="bg-white border border-emerald-100 rounded-2xl p-10 shadow-[0_20px_50px_rgba(16,185,129,0.08)] h-full flex flex-col transition-all hover:shadow-[0_20px_60px_rgba(16,185,129,0.12)] group/benefits glass-container-mobile sm:bg-white sm:border-emerald-100">
               <div className="mb-8 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -226,7 +189,7 @@ export default function Home() {
 
           {/* RIGHT COLUMN: Partner CTA (Below the alignment line) */}
           <div className="animate-fade-in-up delay-3 lg:row-start-3 lg:col-start-2 mt-8">
-            <div className="h-full min-h-[360px] bg-emerald-50/40 border border-emerald-100 rounded-[3rem] p-10 transition-all hover:scale-[1.01] shadow-xl shadow-emerald-500/5 overflow-hidden relative group glass-container-mobile">
+            <div className="h-full min-h-[360px] bg-emerald-50/40 border border-emerald-100 rounded-2xl p-10 transition-all hover:scale-[1.01] shadow-xl shadow-emerald-500/5 overflow-hidden relative group glass-container-mobile">
               {/* Decorative element */}
               <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-emerald-500/10 blur-2xl group-hover:bg-emerald-500/20 transition-colors" />
 
@@ -299,11 +262,11 @@ export default function Home() {
       {/* ─── COMPRADORES PARCEIROS (Suporte VIP) ─── */}
       <section id="compradores" className="bg-white py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="relative isolate overflow-hidden rounded-[3rem] bg-emerald-50/50 px-6 py-20 text-center sm:px-16 sm:py-32 border border-emerald-100 shadow-xl shadow-emerald-500/5">
+          <div className="relative isolate overflow-hidden rounded-2xl bg-emerald-50/50 px-6 py-20 text-center sm:px-16 sm:py-32 border border-emerald-100 shadow-xl shadow-emerald-500/5">
             {/* Ambient glow sutil */}
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05),transparent_70%)]" />
             
-            <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-[2rem] bg-white shadow-xl shadow-emerald-500/10 border border-emerald-100/50 text-emerald-600">
+            <div className="mx-auto mb-8 flex h-20 w-20 items-center justify-center rounded-xl bg-white shadow-xl shadow-emerald-500/10 border border-emerald-100/50 text-emerald-600">
               <LifeBuoy className="h-10 w-10 animate-spin-slow" />
             </div>
             
@@ -352,12 +315,12 @@ export default function Home() {
           </div>
 
           <p className="mt-6 text-xs leading-relaxed text-slate-400 max-w-md mx-auto font-light">
-            Lojas virtuais, promoções reais. A inteligência local que conecta quem precisa com quem tem a melhor oferta.
+            Sua vitrine de ofertas e demandas. A inteligência local que conecta quem precisa com quem tem a melhor proposta.
           </p>
 
           <div className="mt-12 flex justify-center gap-10">
-            <Link href="/balaio" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Balaio de Demandas</Link>
-            <a href="#como-funciona" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Processo</a>
+            <Link href="/balaio" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Oportunidades (myLupa)</Link>
+            <Link href="/mypromos" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Vitrine (myPromos)</Link>
             <Link href="/parceiro/fornecer" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Seja Parceiro</Link>
           </div>
         </div>
