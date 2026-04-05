@@ -11,17 +11,17 @@ export default function ComparadorDeGeladeirasPage() {
       <PesquisaPromoHeader />
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="max-w-3xl">
-          <p className="text-sm font-medium text-slate-500">Lojinha da Rua da Casa</p>
+          <p className="text-sm font-medium text-slate-500">Consultoria de Eletro</p>
           <h1 className="mt-2 text-3xl font-semibold text-slate-900">Comparador de Geladeiras</h1>
           <p className="mt-3 text-slate-600">
             Uma leitura sóbria para comparar modelos, preços atuais e quedas reais dentro da própria loja.
           </p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
-            <Link href="/ruas/casa" className="rounded-xl border border-slate-300 px-3 py-2 text-slate-900">
-              Voltar para a Rua da Casa
+            <Link href="/busca" className="rounded-xl border border-slate-300 px-3 py-2 text-slate-900">
+              Pesquisar Ofertas
             </Link>
-            <Link href="/avenidas/grandes-promocoes" className="rounded-xl border border-slate-300 px-3 py-2 text-slate-900">
-              Ver destaques da avenida
+            <Link href="/mypromos" className="rounded-xl border border-slate-300 px-3 py-2 text-slate-900">
+              Ver Vitrine
             </Link>
           </div>
         </div>

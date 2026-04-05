@@ -164,7 +164,7 @@ const BalaioCard = ({ demand, viewMode = "list" }: { demand: Demand; viewMode?: 
           </span>
           <div className="flex items-center gap-1 text-slate-700 text-[10px] font-bold mobile-text-anchor">
             <MapPin className={`w-3 h-3 ${accent.text}`} />
-            Horizonte
+            Área Piloto
           </div>
         </div>
         <div className="flex flex-col gap-1">
@@ -319,7 +319,7 @@ export default function BalaioPage() {
           myLupa <span className="mx-2 text-slate-300">|</span> Inteligência de Mercado Local
         </p>
         <p className="text-slate-500 text-xs mt-3 font-light">
-          Horizonte, Ceará. {new Date().getFullYear()} — Inteligência de Mercado.
+          Área Piloto, Ceará. {new Date().getFullYear()} — Inteligência de Mercado.
         </p>
       </footer>
     </div>

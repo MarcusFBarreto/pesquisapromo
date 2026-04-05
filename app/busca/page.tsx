@@ -17,10 +17,10 @@ export default function BuscaPage({
       <PesquisaPromoHeader />
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="max-w-3xl">
-          <p className="text-sm font-medium text-slate-500 mobile-text-anchor">Buscar na cidade</p>
-          <h1 className="mt-2 text-3xl font-semibold text-slate-900 tracking-tight">Encontramos um bom caminho para você</h1>
+          <p className="text-sm font-medium text-slate-500 mobile-text-anchor">Busca de Ofertas</p>
+          <h1 className="mt-2 text-3xl font-semibold text-slate-900 tracking-tight">Encontramos o que você procura</h1>
           <p className="mt-3 text-slate-600 mobile-text-anchor">
-            Use a busca para ir direto ou explorar outras opções da cidade.
+            Use a busca para encontrar ofertas diretas ou descobrir novos parceiros.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export default function BuscaPage({
 
         {result.bestPath ? (
           <section className="mt-10">
-            <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Melhor caminho</p>
+            <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Melhor Correspondência</p>
             <div className="mt-4 grid gap-4">
               <SearchResultCard destination={result.bestPath} />
             </div>
@@ -38,7 +38,7 @@ export default function BuscaPage({
         ) : null}
 
         <section className="mt-10">
-          <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Lugares na cidade</p>
+          <p className="text-sm font-medium text-slate-500 mobile-text-anchor uppercase tracking-widest text-[10px]">Parceiros Disponíveis</p>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             {result.destinations.map((destination) => (
               <SearchResultCard key={`${destination.type}-${destination.id}`} destination={destination} />

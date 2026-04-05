@@ -1,34 +1,34 @@
 @import "tailwindcss";
 
 :root {
-  --pp-cream: #f7f4ee;
-  --pp-surface: #fbf8f3;
-  --pp-warm: #efe3cf;
-  --pp-ink: #162033;
-  --pp-muted: #6b7a8d;
-  --pp-blue: #194ca0;
-  --pp-blue-soft: #6f92ca;
-  --pp-orange: #e55d3a;
-  --pp-line: rgba(22, 32, 51, 0.1);
+  --pp-cream: #ffffff;
+  --pp-surface: #f8fafc;
+  --pp-warm: #f1f5f9;
+  --pp-ink: #0f172a;
+  --pp-muted: #64748b;
+  --pp-blue: #020617;
+  --pp-blue-soft: #94a3b8;
+  --pp-orange: #f97316;
+  --pp-line: rgba(15, 23, 42, 0.05);
 }
 
 @theme inline {
-  --color-background: #f7f4ee;
-  --color-foreground: #162033;
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-pp-dark: #0f1c1e;
-  --color-pp-dark-surface: #162a2e;
-  --color-pp-teal: #1a6b5a;
-  --color-pp-teal-soft: #2a917b;
-  --color-pp-cream: #f7f4ee;
+  --color-pp-dark: #020617;
+  --color-pp-dark-surface: #0f172a;
+  --color-pp-teal: #10b981;
+  --color-pp-teal-soft: #34d399;
+  --color-pp-cream: #ffffff;
   --color-pp-surface: #ffffff;
-  --color-pp-ink: #162033;
-  --color-pp-muted: #6b7a8d;
-  --color-pp-orange: #e55d3a;
-  --color-pp-orange-hover: #cc4f2f;
-  --color-pp-line: #e2e0db;
+  --color-pp-ink: #0f172a;
+  --color-pp-muted: #64748b;
+  --color-pp-orange: #f97316;
+  --color-pp-orange-hover: #ea580c;
+  --color-pp-line: #f1f5f9;
 }
 
 * {
@@ -41,8 +41,8 @@ html {
 }
 
 body {
-  background: #f7f4ee;
-  color: #162033;
+  background: #ffffff;
+  color: #0f172a;
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;

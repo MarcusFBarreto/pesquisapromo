@@ -104,8 +104,8 @@ export async function PATCH(req: Request) {
         updatedAt: new Date(),
         featured: false,
         services: [],
-        tagline: `Sua loja de ${appData.category} em Horizonte`,
-        city: "Horizonte",
+        tagline: `Sua loja de ${appData.category} na Área Piloto`,
+        city: "Área Piloto",
         region: "CE"
       }, { merge: true });
 

@@ -59,7 +59,7 @@ export default function MyPromosPage() {
                 </div>
                 <h1 className="text-3xl font-black text-slate-900 tracking-tight">myPromos</h1>
               </div>
-              <p className="text-sm text-slate-400 font-medium">As melhores ofertas verificadas de Horizonte.</p>
+              <p className="text-sm text-slate-400 font-medium">As melhores ofertas verificadas da Área Piloto.</p>
             </div>
 
             <div className="flex flex-wrap gap-3">

@@ -11,11 +11,10 @@ export function PesquisaPromoHeader() {
 
   const menuItems = [
     { icon: Home, label: "Início", href: "/" },
-    { icon: Search, label: "Buscar na Cidade", href: "/busca" },
-    { icon: Telescope, label: "Oportunidades", href: "/balaio" },
     { icon: Tag, label: "Vitrine (myPromos)", href: "/mypromos" },
+    { icon: Search, label: "Pesquisar Ofertas", href: "/busca" },
+    { icon: Telescope, label: "Oportunidades", href: "/balaio" },
     { icon: User, label: "Portal do Parceiro", href: "/parceiro/login" },
-    { icon: Info, label: "Sobre o Piloto", href: "/sobre" },
     { icon: MessageSquare, label: "Fale Conosco", href: "/contato" },
   ];
 
@@ -31,20 +30,21 @@ export function PesquisaPromoHeader() {
             <span className="text-lg font-bold tracking-tight text-slate-900 leading-none shrink-0">
               my<span className="text-pp-orange">Lupa</span>
             </span>
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-50/80 px-2 py-1 border border-slate-100 shrink-0 shadow-sm sm:gap-1 sm:px-1.5 sm:py-0.5 sm:bg-slate-50/50 sm:shadow-none">
+            <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-1 border border-emerald-100 shrink-0 shadow-sm sm:gap-1 sm:px-1.5 sm:py-0.5 sm:bg-emerald-50/50 sm:shadow-none">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)] sm:h-1 sm:w-1 sm:shadow-none" />
-              <span className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500 sm:text-[8px] sm:tracking-[0.05em] sm:text-slate-400">
-                Piloto de Testes
+              <span className="text-[9px] font-black uppercase tracking-[0.1em] text-emerald-600 sm:text-[8px] sm:tracking-[0.05em] sm:text-emerald-500">
+                Área Piloto
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-500 md:flex">
-            <Link href="/mypromos" className="flex items-center gap-2 text-slate-900 hover:text-pp-orange transition-colors">
+            <Link href="/mypromos" className="flex items-center gap-2 text-slate-900 hover:text-emerald-600 transition-colors">
               <Tag className="h-3 w-3" />
               myPromos
             </Link>
+            <Link href="/busca" className="hover:text-slate-900 transition-colors">Pesquisa</Link>
             <Link href="/balaio" className="hover:text-slate-900 transition-colors">Oportunidades</Link>
           </nav>
 
@@ -92,15 +92,15 @@ export function PesquisaPromoHeader() {
                   <Link 
                     href={item.href}
                     onClick={() => setIsSidebarOpen(false)}
-                    className="flex items-center justify-between rounded-xl p-4 text-slate-600 transition-all hover:bg-slate-50 hover:text-pp-orange group"
+                    className="flex items-center justify-between rounded-xl p-4 text-slate-600 transition-all hover:bg-emerald-50 hover:text-emerald-600 group"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 text-slate-400 group-hover:bg-pp-orange/10 group-hover:text-pp-orange transition-colors">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
                         <item.icon className="h-4.5 w-4.5" />
                       </div>
                       <span className="text-xs font-bold tracking-tight">{item.label}</span>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-slate-200 group-hover:text-pp-orange/40 transition-colors" />
+                    <ChevronRight className="h-4 w-4 text-slate-200 group-hover:text-emerald-600/40 transition-colors" />
                   </Link>
                 </li>
               ))}
@@ -109,9 +109,9 @@ export function PesquisaPromoHeader() {
 
           {/* Sidebar Footer */}
           <div className="border-t border-slate-50 p-6 bg-slate-50/50">
-             <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">myLupa v1.1.5</p>
+             <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">myLupa v2.1.0</p>
              <p className="text-[9px] text-slate-400 leading-relaxed font-light">
-               Sua demanda nas mãos certas em Horizonte.
+               Sua demanda nas mãos certas.
              </p>
           </div>
         </div>

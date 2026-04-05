@@ -74,10 +74,10 @@ export default async function StorePage({ params }: PageProps) {
 
             <div className="flex flex-wrap gap-2 sm:gap-3">
               <Link
-                href={`/${district.type}/${district.slug}`}
+                href="/parceiros"
                 className="inline-flex h-10 items-center rounded-full border border-slate-200 bg-white px-4 text-[9px] font-black uppercase tracking-widest text-slate-500 transition hover:border-slate-900 hover:text-slate-900"
               >
-                Voltar para {district.title}
+                Ver todos os parceiros
               </Link>
               <Link
                 href="/"
@@ -185,7 +185,7 @@ export default async function StorePage({ params }: PageProps) {
 
               <div className="rounded-[1.3rem] bg-[var(--pp-surface)] p-4">
                 <p className="text-sm font-semibold text-[var(--pp-ink)]">
-                  Rua de origem
+                  Origem do Destaque
                 </p>
                 <p className="mt-2 text-sm leading-7 text-[var(--pp-muted)]">
                   {district.title}
