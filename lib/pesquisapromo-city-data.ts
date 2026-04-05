@@ -12,7 +12,7 @@ export const stores: Store[] = [
 export const streets: Street[] = [
   {
     id: "avenida-grandes-promocoes",
-    name: "Avenida Grandes Promoções",
+    name: "Vitrine de Grandes Promoções",
     slug: "grandes-promocoes",
     kind: "avenue",
     summary: "Destaques em evidência calculados por engajamento e confiança.",
@@ -21,7 +21,7 @@ export const streets: Street[] = [
   },
   {
     id: "rua-da-casa",
-    name: "Rua da Casa",
+    name: "Setor da Casa",
     slug: "casa",
     kind: "street",
     summary: "Eletrodomésticos e itens de casa com foco em utilidade real.",
@@ -30,7 +30,7 @@ export const streets: Street[] = [
   },
   {
     id: "rua-dos-calcados",
-    name: "Rua dos Calçados",
+    name: "Setor de Calçados",
     slug: "calcados",
     kind: "street",
     summary: "Tênis, sandálias e vitrines para quem quer comparar antes de decidir.",
@@ -39,7 +39,7 @@ export const streets: Street[] = [
   },
   {
     id: "rua-dos-testes",
-    name: "Rua dos Testes",
+    name: "Ambiente de Testes",
     slug: "testes",
     kind: "street",
     summary: "Ambiente de experimentação onde novas experiências e vitrines são validadas.",
@@ -48,7 +48,7 @@ export const streets: Street[] = [
   },
   {
     id: "rua-dos-servicos",
-    name: "Rua dos Serviços",
+    name: "Setor de Serviços",
     slug: "servicos",
     kind: "street",
     summary: "Apoios, conveniências e atalhos úteis para quem quer resolver rápido.",

@@ -59,7 +59,7 @@ export const districts: District[] = [
   {
     slug: "calcados",
     type: "setores",
-    title: "Rua dos Calcados",
+    title: "Setor de Calcados",
     subtitle: "Tenis, sandalias, chinelos e vitrines para toda a familia",
     count: "38 lojinhas",
     intro:
@@ -69,7 +69,7 @@ export const districts: District[] = [
     shops: [
       {
         name: "Passo Leve",
-        street: "Rua dos Calcados",
+        street: "Setor de Calcados",
         vibe: "Tenis, sandalias e achados para o dia a dia",
         badge: "vitrine aberta",
         offer: "Sandalia rasteira por R$ 79",
@@ -104,7 +104,7 @@ export const districts: District[] = [
   {
     slug: "casa",
     type: "setores",
-    title: "Rua da Casa",
+    title: "Setor da Casa",
     subtitle: "Moveis, eletros, reforma e achados para o lar",
     count: "52 lojinhas",
     intro:
@@ -115,7 +115,7 @@ export const districts: District[] = [
       {
         slug: "comparador-de-geladeiras",
         name: "Comparador de Geladeiras",
-        street: "Rua da Casa",
+        street: "Setor da Casa",
         vibe: "Comparação mais serena, inspirada em lojas reais como J Erivaldo & Cia e Zenir Móveis.",
         badge: "mais verificavel",
         offer: "Geladeira Brastemp Frost Free 375L por R$ 2.899",
@@ -159,7 +159,7 @@ export const districts: District[] = [
   {
     slug: "testes",
     type: "setores",
-    title: "Rua dos Testes",
+    title: "Setor de Testes",
     subtitle: "Laboratorio para ideias, layouts e experiencias simuladas",
     count: "12 lojinhas de teste",
     intro:
@@ -221,7 +221,7 @@ export const districts: District[] = [
   {
     slug: "servicos",
     type: "setores",
-    title: "Rua dos Servicos",
+    title: "Setor de Servicos",
     subtitle: "Atalhos confiaveis para utilidades, cidadania e links oficiais",
     count: "8 portas uteis",
     intro:
@@ -281,7 +281,7 @@ export const districts: District[] = [
   {
     slug: "grandes-promocoes",
     type: "vitrines",
-    title: "Avenida Grandes Promocoes",
+    title: "Vitrine de Grandes Promocoes",
     subtitle: "Ofertas chamativas, quedas fortes e vitrines em destaque",
     count: "41 lojinhas",
     intro:
