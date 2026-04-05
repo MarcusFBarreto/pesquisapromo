@@ -58,7 +58,7 @@ export const steps = [
 export const districts: District[] = [
   {
     slug: "calcados",
-    type: "ruas",
+    type: "setores",
     title: "Rua dos Calcados",
     subtitle: "Tenis, sandalias, chinelos e vitrines para toda a familia",
     count: "38 lojinhas",
@@ -103,7 +103,7 @@ export const districts: District[] = [
   },
   {
     slug: "casa",
-    type: "ruas",
+    type: "setores",
     title: "Rua da Casa",
     subtitle: "Moveis, eletros, reforma e achados para o lar",
     count: "52 lojinhas",
@@ -158,7 +158,7 @@ export const districts: District[] = [
   },
   {
     slug: "testes",
-    type: "ruas",
+    type: "setores",
     title: "Rua dos Testes",
     subtitle: "Laboratorio para ideias, layouts e experiencias simuladas",
     count: "12 lojinhas de teste",
@@ -220,7 +220,7 @@ export const districts: District[] = [
   },
   {
     slug: "servicos",
-    type: "ruas",
+    type: "setores",
     title: "Rua dos Servicos",
     subtitle: "Atalhos confiaveis para utilidades, cidadania e links oficiais",
     count: "8 portas uteis",
@@ -280,7 +280,7 @@ export const districts: District[] = [
   },
   {
     slug: "grandes-promocoes",
-    type: "avenidas",
+    type: "vitrines",
     title: "Avenida Grandes Promocoes",
     subtitle: "Ofertas chamativas, quedas fortes e vitrines em destaque",
     count: "41 lojinhas",
