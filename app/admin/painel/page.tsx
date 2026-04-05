@@ -179,7 +179,7 @@ export default function AdminDashboardPage() {
                     <div className="text-2xl">⚡</div>
                     <div>
                       <p className="text-sm font-bold text-white">Próxima Onda: Construção Civil</p>
-                      <p className="mt-1 text-xs text-white/50 leading-relaxed">Historicamente, as demandas por materiais de construção em Horizonte crescem 25% no próximo mês. Recomendado reforçar parcerias nesta categoria.</p>
+                      <p className="mt-1 text-xs text-white/50 leading-relaxed">Historicamente, as demandas por materiais de construção em nossa Área Piloto crescem 25% no próximo mês. Recomendado reforçar parcerias nesta categoria.</p>
                     </div>
                   </div>
                 </div>

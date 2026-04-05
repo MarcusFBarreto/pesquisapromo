@@ -34,7 +34,7 @@ export function PesquisaPromoHeader() {
             <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-50/80 px-2 py-1 border border-slate-100 shrink-0 shadow-sm sm:gap-1 sm:px-1.5 sm:py-0.5 sm:bg-slate-50/50 sm:shadow-none">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)] sm:h-1 sm:w-1 sm:shadow-none" />
               <span className="text-[9px] font-black uppercase tracking-[0.1em] text-slate-500 sm:text-[8px] sm:tracking-[0.05em] sm:text-slate-400">
-                Piloto: Horizonte, CE
+                Piloto de Testes
               </span>
             </div>
           </Link>

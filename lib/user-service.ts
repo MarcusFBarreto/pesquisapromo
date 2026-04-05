@@ -1,15 +1,52 @@
 import { adminDb, FieldValue } from "./firebase-admin";
+import { User, UserReputation } from "./types";
 
 /**
- * Reputation Service (Trust Graph)
- * - Global: Starts at 100 (Max), loses points for bad behavior (Fake/Spam).
- * - Peer: Bilateral status (Persona Non Grata) between Provider and User.
+ * User Service (Trust Graph & Profile)
+ * - Managed in the "users" collection.
+ * - Reputation score starts at 100.
  */
-export async function getUserReputation(userId: string) {
-  const userRef = adminDb.collection("user_reputation").doc(userId);
+
+export async function getUser(userId: string): Promise<User | null> {
+  const userRef = adminDb.collection("users").doc(userId);
   const userDoc = await userRef.get();
 
-  if (!userDoc.exists) {
+  if (!userDoc.exists) return null;
+  
+  const data = userDoc.data();
+  return {
+    ...data,
+    createdAt: data?.createdAt?.toDate() || new Date(),
+  } as User;
+}
+
+export async function getOrCreateUser(whatsapp: string, name?: string): Promise<User> {
+  const cleanWa = whatsapp.replace(/\D/g, "");
+  const existing = await getUser(cleanWa);
+  
+  if (existing) return existing;
+
+  const newUser: User = {
+    id: cleanWa,
+    whatsapp: cleanWa,
+    name: name || "Anônimo",
+    role: "buyer",
+    reputation: {
+      score: 100,
+      isTrusted: true,
+      totalDemands: 0,
+      status: "new"
+    },
+    createdAt: new Date(),
+  };
+
+  await adminDb.collection("users").doc(cleanWa).set(newUser);
+  return newUser;
+}
+
+export async function getUserReputation(userId: string): Promise<UserReputation> {
+  const user = await getUser(userId);
+  if (!user) {
     return {
       score: 100,
       isTrusted: true,
@@ -17,16 +54,23 @@ export async function getUserReputation(userId: string) {
       status: "new"
     };
   }
+  return user.reputation;
+}
 
-  const data = userDoc.data();
-  const score = data?.score ?? 100;
+export async function penalizeUser(userId: string, penalty: number) {
+  const userRef = adminDb.collection("users").doc(userId);
+  await userRef.update({
+    "reputation.score": FieldValue.increment(-penalty),
+    "reputation.lastIncident": new Date()
+  });
+}
 
-  return {
-    score,
-    isTrusted: score >= 80,
-    totalDemands: data?.totalDemands ?? 0,
-    status: data?.status ?? "active"
-  };
+export async function rewardUser(userId: string, reward: number) {
+  const userRef = adminDb.collection("users").doc(userId);
+  await userRef.update({
+    "reputation.score": FieldValue.increment(reward),
+    "reputation.totalDemands": FieldValue.increment(1)
+  });
 }
 
 /**
@@ -53,20 +97,4 @@ export async function markPersonaNonGrata(providerId: string, userId: string) {
     status: "persona_non_grata",
     createdAt: new Date()
   });
-}
-
-export async function penalizeUser(userId: string, penalty: number) {
-  const userRef = adminDb.collection("user_reputation").doc(userId);
-  await userRef.set({
-    score: FieldValue.increment(-penalty),
-    lastIncident: new Date()
-  }, { merge: true });
-}
-
-export async function rewardUser(userId: string, reward: number) {
-  const userRef = adminDb.collection("user_reputation").doc(userId);
-  await userRef.set({
-    score: FieldValue.increment(reward),
-    totalDemands: FieldValue.increment(1)
-  }, { merge: true });
 }

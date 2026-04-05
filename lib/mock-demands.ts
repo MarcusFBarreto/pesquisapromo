@@ -20,7 +20,7 @@ const mockDemands: Demand[] = [
   {
     id: "d-001",
     request: "50 sacos de cimento CP2",
-    details: "Preciso de entrega em Horizonte, obra residencial no bairro Paz. Pode ser CP2 ou CP5 se tiver melhor preço.",
+    details: "Preciso de entrega em Cidade Piloto, obra residencial no bairro Paz. Pode ser CP2 ou CP5 se tiver melhor preço.",
     name: "Marcus",
     whatsapp: "85999991111",
     status: "new",
@@ -50,7 +50,7 @@ const mockDemands: Demand[] = [
   {
     id: "d-004",
     request: "Fogão 5 bocas com forno",
-    details: "Pode ser qualquer marca boa, mesa de vidro. Entrega no centro de Horizonte.",
+    details: "Pode ser qualquer marca boa, mesa de vidro. Entrega no centro de Cidade Piloto.",
     name: "João Marcos",
     whatsapp: "85966664444",
     status: "responded",

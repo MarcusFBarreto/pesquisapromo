@@ -1,15 +1,15 @@
 import { adminDb } from "./firebase-admin";
-import { Demand, DemandStatus } from "./mock-demands";
+import { Demand as MockDemand, DemandStatus as MockStatus } from "./mock-demands";
+import { Demand } from "./types";
 import { classifyDemand } from "./category-router";
 import { isBlocked } from "./blocklist-service";
 import { getAllPartners } from "./partner-data";
+import { getOrCreateUser, getUserReputation } from "./user-service";
 
 /**
  * Firestore-backed demand store.
  * Replaces the old in-memory array.
  */
-
-import { getUserReputation } from "./user-service";
 
 export async function addDemand(payload: {
   request: string;
@@ -18,57 +18,53 @@ export async function addDemand(payload: {
   whatsapp: string;
 }): Promise<Demand & { verificationRequired: boolean }> {
   const categories = classifyDemand(payload.request, payload.details);
-  const reputation = await getUserReputation(payload.whatsapp);
+  
+  // 1. Ensure user exists and get reputation
+  const user = await getOrCreateUser(payload.whatsapp, payload.name);
+  const reputation = user.reputation;
   
   const demandsRef = adminDb.collection('demands');
   const docRef = demandsRef.doc();
 
   const isTrusted = reputation.isTrusted;
+  const createdAt = new Date();
+  const expiresAt = new Date(createdAt.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
-  const demandData = {
-    id: docRef.id,
-    request: payload.request,
-    details: payload.details || "",
-    name: payload.name || "Anônimo",
-    whatsapp: payload.whatsapp.replace(/\D/g, ""),
-    status: isTrusted ? "pending" : "verifying",
-    vCode: isTrusted ? null : Math.floor(1000 + Math.random() * 9000).toString(),
-    matchedCategories: categories,
-    createdAt: new Date(),
-  };
-
-  await docRef.set({
-    ...demandData,
-    createdAt: new Date(), // Saved correctly in Firestore
-  });
-
-  const demand = demandData as Demand;
-
+  // 2. Initial matching to get targetPartnerIds
   const partners = getAllPartners().filter((p) => categories.includes(p.category));
   const blockChecks = await Promise.all(
     partners.map(async (p) => ({
       ...p,
-      blocked: await isBlocked(p.slug, demand.whatsapp),
+      blocked: await isBlocked(p.slug, user.whatsapp),
     }))
   );
-  const staticTargets = blockChecks.filter((p) => !p.blocked);
+  const targetPartnerIds = blockChecks.filter((p) => !p.blocked).map(p => p.id || p.slug);
 
-  // Count Firestore targets
-  const firestoreSnapshot = await adminDb.collection('partners')
-    .where('category', 'in', categories.length > 0 ? categories : ["none"])
-    .get();
-  
-  const firestoreTargetsCount = firestoreSnapshot.size;
-  const totalTargets = staticTargets.length + firestoreTargetsCount;
-  
-  console.info(`[myLupa] 🔥 Demanda salva no Firestore: #${demand.id} (Status: ${demand.status})`);
-  return { ...demand, verificationRequired: !isTrusted };
+  const demandData: Demand = {
+    id: docRef.id,
+    userId: user.id,
+    request: payload.request,
+    details: payload.details || "",
+    name: payload.name || user.name,
+    whatsapp: user.whatsapp,
+    status: isTrusted ? "pending" : "verifying",
+    vCode: isTrusted ? null : Math.floor(1000 + Math.random() * 9000).toString(),
+    matchedCategories: categories,
+    targetPartnerIds,
+    createdAt,
+    expiresAt,
+  };
+
+  await docRef.set(demandData);
+
+  console.info(`[myLupa] 🔥 Demanda salva no Firestore: #${demandData.id} (Status: ${demandData.status})`);
+  return { ...demandData, verificationRequired: !isTrusted };
 }
 
 export async function getDemandsForPartner(partnerSlug: string, partnerCategory: string): Promise<Demand[]> {
   const snapshot = await adminDb.collection('demands')
     .where('matchedCategories', 'array-contains', partnerCategory)
-    .where('status', '==', 'pending') // Only show pending demands to partners
+    .where('status', '==', 'pending') 
     .get();
 
   // Fetch Persona Non Grata list for this partner
@@ -91,6 +87,7 @@ export async function getDemandsForPartner(partnerSlug: string, partnerCategory:
         ...data,
         id: doc.id,
         createdAt: data.createdAt?.toDate() || new Date(),
+        expiresAt: data.expiresAt?.toDate() || new Date(),
       } as Demand);
     }
   }
@@ -101,7 +98,7 @@ export async function getDemandsForPartner(partnerSlug: string, partnerCategory:
   return demands;
 }
 
-export async function updateDemandStatus(id: string, status: DemandStatus): Promise<void> {
+export async function updateDemandStatus(id: string, status: Demand["status"]): Promise<void> {
   await adminDb.collection('demands').doc(id).update({ status });
 }
 
@@ -114,6 +111,7 @@ export async function getAllDemands(): Promise<Demand[]> {
       ...data,
       id: doc.id,
       createdAt: data.createdAt?.toDate() || new Date(),
+      expiresAt: data.expiresAt?.toDate() || new Date(),
     } as Demand);
   });
   return demands;

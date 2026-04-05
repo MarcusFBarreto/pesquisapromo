@@ -35,7 +35,7 @@ function SolicitarContent() {
             <div className="inline-flex items-center gap-1 rounded-full bg-slate-50/50 px-1.5 py-0.5 border border-slate-100 shrink-0">
               <div className="h-1 w-1 rounded-full bg-emerald-400" />
               <span className="text-[8px] font-black uppercase tracking-[0.05em] text-slate-400">
-                Piloto: Horizonte, CE
+                Piloto de Testes
               </span>
             </div>
           </Link>

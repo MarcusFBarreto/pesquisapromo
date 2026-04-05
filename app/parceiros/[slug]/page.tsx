@@ -30,7 +30,7 @@ export default async function PartnerPage({ params }: PageProps) {
           name: data.name,
           tagline: data.tagline || `Sua loja de ${data.category}`,
           category: data.category,
-          city: data.city || "Horizonte",
+          city: data.city || "Cidade Piloto",
           region: data.region || "CE",
           description: data.description || "",
           services: data.services || [],
@@ -215,7 +215,7 @@ export default async function PartnerPage({ params }: PageProps) {
             ← Voltar ao myLupa
           </Link>
           <p className="mt-3 text-xs text-white/25">
-            Lojas virtuais, promoções reais. Horizonte, Ceará.
+            Lojas virtuais, promoções reais. Área Piloto.
           </p>
         </div>
       </footer>

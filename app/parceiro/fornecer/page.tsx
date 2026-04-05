@@ -23,7 +23,7 @@ export default function FornecerLandingPage() {
               <div className="inline-flex items-center gap-1 rounded-full bg-white/10 px-1.5 py-0.5 border border-white/20 shrink-0 whitespace-nowrap">
                 <div className="h-1 w-1 rounded-full bg-emerald-400" />
                 <span className="text-[8px] font-black uppercase tracking-[0.05em] text-white">
-                  Piloto: Horizonte, CE
+                  Piloto de Testes
                 </span>
               </div>
             </div>
@@ -47,7 +47,7 @@ export default function FornecerLandingPage() {
             <span className="text-pp-orange text-3xl sm:text-5xl lg:text-6xl">Deixe que eles te encontrem.</span>
           </h1>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60">
-            O myLupa é a ponte direta entre quem quer comprar e quem tem o produto. Em Horizonte e região, conectamos sua empresa a demandas reais de clientes locais.
+            O myLupa é a ponte direta entre quem quer comprar e quem tem o produto. Em nossa Área Piloto, conectamos sua empresa a demandas reais de clientes locais.
           </p>
           <div className="mt-12">
             <Link
@@ -76,7 +76,7 @@ export default function FornecerLandingPage() {
               </div>
               <h3 className="text-xl font-bold">1. Receba a Demanda</h3>
               <p className="text-pp-muted text-sm leading-relaxed">
-                Quando um cliente em Horizonte solicita um produto ou serviço na sua categoria, você é notificado instantaneamente no seu painel.
+                Quando um cliente em nossa área piloto solicita um produto ou serviço na sua categoria, você é notificado instantaneamente no seu painel.
               </p>
             </div>
             <div className="flex flex-col gap-4">
@@ -123,7 +123,7 @@ export default function FornecerLandingPage() {
                   </div>
                   <div>
                     <p className="font-bold text-white">Visibilidade Regional</p>
-                    <p className="text-sm text-white/50">Apareça no nosso diretório de parceiros exclusivo para Horizonte e região.</p>
+                    <p className="text-sm text-white/50">Apareça no nosso diretório de parceiros exclusivo para nossa área piloto.</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-4">

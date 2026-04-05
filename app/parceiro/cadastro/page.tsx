@@ -4,7 +4,7 @@ import { PartnerOnboardingForm } from "@/components/ui/partner-onboarding-form";
 
 export const metadata = {
   title: "Sou Lojista | myLupa",
-  description: "Cadastre sua loja para receber orçamentos hiper-segmentados de Horizonte.",
+  description: "Cadastre sua loja para receber orçamentos hiper-segmentados em nossa Área Piloto.",
   robots: {
     index: false,
     follow: false,
@@ -44,7 +44,7 @@ export default function PartnerRegistrationPage() {
               Mais orçamentos, zero esforço.
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-white/60">
-              Receba pedidos de orçamento segmentados direto no seu painel. Preencha seus dados comerciais e junte-se aos verificados da cidade.
+              Receba pedidos de orçamento segmentados direto no seu painel. Preencha seus dados comerciais e junte-se aos verificados da nossa Área Piloto.
             </p>
           </div>
         </section>

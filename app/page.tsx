@@ -199,7 +199,7 @@ export default function Home() {
                     <Store className="w-7 h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-black leading-tight text-slate-900">Vende em Horizonte? <br/><span className="text-emerald-600 italic font-medium">Receba orçamentos.</span></h3>
+                    <h3 className="text-xl font-black leading-tight text-slate-900">Vende aqui? <br/><span className="text-emerald-600 italic font-medium">Receba orçamentos.</span></h3>
                     <p className="mt-2 text-[10px] text-emerald-600 uppercase tracking-[0.25em] font-black">Inscrições Abertas</p>
                   </div>
                 </div>
@@ -288,7 +288,7 @@ export default function Home() {
               </a>
             </div>
             <p className="mt-8 text-[11px] text-slate-400 font-bold uppercase tracking-widest">
-              * Atendimento direto via WhatsApp em Horizonte
+              * Atendimento direto via WhatsApp em nossa Área Piloto
             </p>
           </div>
         </div>
@@ -301,7 +301,7 @@ export default function Home() {
           <div className="mb-10 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-6 py-2.5 shadow-sm">
             <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             <span className="text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase">
-              Horizonte, Ceará — Piloto Ativo
+              Área Piloto — Piloto Ativo
             </span>
           </div>
 

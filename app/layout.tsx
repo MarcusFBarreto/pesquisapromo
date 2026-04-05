@@ -14,12 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "myLupa | Sua demanda nas mãos certas em Horizonte",
+  title: "myLupa | Sua demanda nas mãos certas",
   description:
-    "Conectamos suas necessidades aos melhores parceiros locais em Horizonte, Ceará. Descreva o que precisa e receba propostas reais direto no seu WhatsApp. Simples, rápido e regional.",
-  keywords: ["mylupa", "myLupa", "horizonte ce", "pedidos de orçamento", "serviços locais", "compras horizonte", "marketplace regional", "vendas em horizonte"],
+    "Conectamos suas necessidades aos melhores parceiros locais. Descreva o que precisa e receba propostas reais direto no seu WhatsApp. Simples, rápido e regional.",
+  keywords: ["mylupa", "myLupa", "pedidos de orçamento", "serviços locais", "marketplace regional"],
   openGraph: {
-    title: "myLupa Horizonte | Onde o seu pedido encontra o parceiro certo",
+    title: "myLupa | Onde o seu pedido encontra o parceiro certo",
     description: "Descreva o que precisa e receba propostas de parceiros locais direto no WhatsApp.",
     url: "https://pesquisapromo.com.br",
     siteName: "myLupa",
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "myLupa | Sua demanda nas mãos certas",
-    description: "Encontre o parceiro ideal em Horizonte, Ceará, para orçamentos e serviços.",
+    description: "Encontre o parceiro ideal para orçamentos e serviços localmente.",
   },
   themeColor: "#ffffff",
 };

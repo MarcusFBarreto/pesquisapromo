@@ -1,143 +1,53 @@
-export interface Partner {
-  slug: string;
-  name: string;
-  tagline: string;
-  category: string;
-  city: string;
-  region: string;
-  description: string;
-  services: string[];
-  contact: {
-    phone?: string;
-    whatsapp?: string;
-    email?: string;
-  };
-  featured: boolean;
-}
+import { Partner } from "./types";
 
-export const partners: Partner[] = [
+/**
+ * Static partner data (Legacy/Seeded)
+ */
+const staticPartners: Partner[] = [
   {
-    slug: "j-erivaldo-cia",
-    name: "J Erivaldo & Cia",
-    tagline: "Eletrodomésticos e utilidades para o lar",
+    id: "p1",
+    slug: "loja-eletro-piloto",
+    name: "Eletro Piloto",
+    tagline: "Eletrodomesticos e utilidades para o lar",
     category: "Casa e Eletro",
-    city: "Horizonte",
+    city: "Cidade Piloto",
     region: "CE",
-    description:
-      "Loja referência no eixo da Castelo Branco em Horizonte. Trabalha com geladeiras, fogões, lavadoras e utilidades domésticas com preço de cidade pequena e atendimento de vizinho.",
-    services: [
-      "Geladeiras e refrigeradores",
-      "Fogões e cooktops",
-      "Lavadoras e tanquinhos",
-      "Micro-ondas e air fryers",
-      "Móveis para cozinha e sala",
-    ],
-    contact: {
-      phone: "(85) 3336-1234",
-      whatsapp: "5585933361234",
-    },
+    description: "Loja referência no eixo da Castelo Branco em Cidade Piloto. Trabalha com geladeiras, fogões, lavadoras e utilidades domésticas com preço de cidade pequena e atendimento de vizinho.",
+    services: ["Geladeiras", "Fogões", "Lavadoras", "Utilidades"],
+    whatsapp: "85999990001",
+    contact: { whatsapp: "85999990001" },
     featured: true,
+    verified: true,
+    brands: ["b1", "b2"],
+    staffIds: [],
+    reputationScore: 100
   },
   {
-    slug: "art-ton-papelaria",
-    name: "Art & Ton Papelaria",
+    id: "p2",
+    slug: "papelaria-central-piloto",
+    name: "Papelaria Central",
     tagline: "Material escolar, escritório e gráfica rápida",
     category: "Papelaria e Gráfica",
-    city: "Horizonte",
+    city: "Cidade Piloto",
     region: "CE",
-    description:
-      "Papelaria completa no centro de Horizonte. Atende escolas, escritórios e quem precisa de impressão, encadernação ou material de última hora.",
-    services: [
-      "Kits escolares completos",
-      "Material de escritório",
-      "Impressão e cópias",
-      "Encadernação e plastificação",
-      "Presentes e lembrancinhas",
-    ],
-    contact: {
-      phone: "(85) 3336-5678",
-      whatsapp: "5585933365678",
-    },
+    description: "Papelaria completa no centro de Cidade Piloto. Atende escolas, escritórios e quem precisa de impressão, encadernação ou material de última hora.",
+    services: ["Material Escolar", "Escritório", "Gráfica Rápida"],
+    whatsapp: "85999990002",
+    contact: { whatsapp: "85999990002" },
     featured: true,
-  },
-  {
-    slug: "farmacia-caminho-popular",
-    name: "Farmácia Caminho Popular",
-    tagline: "Medicamentos, perfumaria e atendimento próximo",
-    category: "Saúde e Bem-estar",
-    city: "Horizonte",
-    region: "CE",
-    description:
-      "Farmácia de bairro com preço acessível. Localizada na Castelo Branco, atende com conveniência e proximidade quem precisa de medicamentos, higiene e perfumaria.",
-    services: [
-      "Medicamentos com e sem receita",
-      "Vitaminas e suplementos",
-      "Higiene pessoal e perfumaria",
-      "Fraldas e cuidados infantis",
-      "Aferição de pressão",
-    ],
-    contact: {
-      phone: "(85) 3336-9012",
-      whatsapp: "5585933369012",
-    },
-    featured: true,
-  },
-  {
-    slug: "zenir-moveis",
-    name: "Zenir Móveis",
-    tagline: "Móveis planejados e eletros com entrega local",
-    category: "Móveis e Decoração",
-    city: "Horizonte",
-    region: "CE",
-    description:
-      "Uma das lojas mais conhecidas da Castelo Branco. Referência em móveis para casa e eletrodomésticos, com condições de pagamento acessíveis e entrega na região.",
-    services: [
-      "Móveis para sala e quarto",
-      "Cozinhas planejadas",
-      "Eletrodomésticos em geral",
-      "Colchões e estofados",
-      "Entrega e montagem local",
-    ],
-    contact: {
-      phone: "(85) 4020-5050",
-      whatsapp: "5585940205050",
-    },
-    featured: true,
-  },
-  {
-    slug: "construtora-horizonte",
-    name: "Depósito Horizonte",
-    tagline: "Material de construção com preço de obra",
-    category: "Construção e Reforma",
-    city: "Horizonte",
-    region: "CE",
-    description:
-      "Depósito de material de construção que atende desde o pedreiro até a construtora. Cimento, areia, tintas, ferragens e tudo que a obra precisa, com entrega rápida na região.",
-    services: [
-      "Cimento, cal e argamassa",
-      "Tintas e acabamentos",
-      "Ferragens e ferramentas",
-      "Material hidráulico e elétrico",
-      "Entrega em obra",
-    ],
-    contact: {
-      phone: "(85) 3336-3456",
-      whatsapp: "5585933363456",
-    },
-    featured: false,
-  },
+    verified: true,
+    brands: ["b3"],
+    staffIds: [],
+    reputationScore: 100
+  }
 ];
 
-export function getPartnerBySlug(slug: string): Partner | null {
-  return partners.find((p) => p.slug === slug) ?? null;
-}
-
-export function getFeaturedPartners(): Partner[] {
-  return partners.filter((p) => p.featured);
-}
-
 export function getAllPartners(): Partner[] {
-  return partners;
+  return staticPartners;
+}
+
+export function getPartnerBySlug(slug: string): Partner | undefined {
+  return staticPartners.find((p) => p.slug === slug);
 }
 
 export async function getPartnerBySlugAsync(slug: string): Promise<Partner | null> {
@@ -149,10 +59,13 @@ export async function getPartnerBySlugAsync(slug: string): Promise<Partner | nul
   if (typeof window === "undefined") {
     try {
       const { adminDb } = await import("./firebase-admin");
-      // Use where('slug', '==', slug) because Firestore doc IDs might not be slugs
       const snapshot = await adminDb.collection("partners").where("slug", "==", slug).limit(1).get();
       if (!snapshot.empty) {
-        return snapshot.docs[0].data() as Partner;
+        const data = snapshot.docs[0].data();
+        return {
+          ...data,
+          id: snapshot.docs[0].id,
+        } as Partner;
       }
     } catch (err) {
       console.error("Error fetching partner from Firestore:", err);
@@ -161,3 +74,4 @@ export async function getPartnerBySlugAsync(slug: string): Promise<Partner | nul
 
   return null;
 }
+

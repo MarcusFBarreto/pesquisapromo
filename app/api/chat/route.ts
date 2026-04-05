@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const OPENAI_KEY = process.env.OPENAI_API_KEY;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
-const SYSTEM_PROMPT = `Você é o Promo, assistente virtual do myLupa em Horizonte/CE.
+const SYSTEM_PROMPT = `Você é o Promo, assistente virtual do myLupa em nossa Área Piloto.
 Seu papel é ajudar o usuário a detalhar melhor seu pedido para que os parceiros locais possam responder com propostas mais certeiras.
 
 Regras:
