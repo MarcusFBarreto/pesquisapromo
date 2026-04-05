@@ -1,4 +1,4 @@
-import { partners } from "./partner-data";
+import { getAllPartners } from "./partner-data";
 
 export interface Offer {
   id: string;
@@ -66,7 +66,7 @@ export const mockOffers: Offer[] = [
     brand: "Mondial",
     producer: "Mondial",
     endDate: new Date("2026-04-05"),
-    supplierSlug: "j-erivaldo-cia",
+    supplierSlug: "loja-eletro-piloto",
     category: "Casa e Eletro",
   },
   {
@@ -79,7 +79,7 @@ export const mockOffers: Offer[] = [
     brand: "Zebu",
     producer: "Votorantim",
     endDate: new Date("2026-04-20"),
-    supplierSlug: "construtora-horizonte",
+    supplierSlug: "loja-eletro-piloto",
     category: "Construção e Reforma",
   }
 ];
@@ -127,6 +127,7 @@ export function getOffers(sort: OfferSort = "promo", filters?: OfferFilters): Of
 }
 
 export function getSupplierName(slug: string): string {
-  const partner = partners.find(p => p.slug === slug);
+  const partner = getAllPartners().find(p => p.slug === slug);
   return partner ? partner.name : slug;
 }
+
