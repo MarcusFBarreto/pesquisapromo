@@ -12,7 +12,7 @@ const staticPartners: Partner[] = [
     category: "Casa e Eletro",
     city: "Piloto",
     region: "CE",
-    description: "Loja referência no eixo da Castelo Branco em Piloto. Trabalha com geladeiras, fogões, lavadoras e utilidades domésticas com preço de cidade pequena e atendimento de vizinho.",
+    description: "Loja referência no eixo da Castelo Branco em Piloto. Trabalha com geladeiras, fogões, lavadoras e utilidades domésticas com preço justo e atendimento de vizinho.",
     services: ["Geladeiras", "Fogões", "Lavadoras", "Utilidades"],
     whatsapp: "85999990001",
     contact: { whatsapp: "85999990001" },
