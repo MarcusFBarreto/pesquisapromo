@@ -61,7 +61,7 @@ export default async function PartnerPage({ params }: PageProps) {
               <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
             </div>
             <span className="text-lg font-semibold tracking-tight text-white">
-              Pesquisa<span className="text-pp-orange">Promo</span>
+              my<span className="text-pp-orange">Lupa</span>
             </span>
           </Link>
           <Link
@@ -197,7 +197,7 @@ export default async function PartnerPage({ params }: PageProps) {
               </div>
               <div>
                 <p className="text-xs font-semibold text-pp-ink">
-                  Parceiro verificado PesquisaPromo
+                  Parceiro verificado myLupa
                 </p>
                 <p className="text-xs text-pp-muted">
                   Verificado pela nossa equipe em {partner.city}/{partner.region}
@@ -212,7 +212,7 @@ export default async function PartnerPage({ params }: PageProps) {
       <footer className="mt-20 bg-pp-dark py-10">
         <div className="mx-auto max-w-4xl px-6 text-center lg:px-10">
           <Link href="/" className="text-sm font-semibold text-white/60 transition hover:text-white">
-            ← Voltar ao PesquisaPromo
+            ← Voltar ao myLupa
           </Link>
           <p className="mt-3 text-xs text-white/25">
             Lojas virtuais, promoções reais. Horizonte, Ceará.

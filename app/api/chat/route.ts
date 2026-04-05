@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 const OPENAI_KEY = process.env.OPENAI_API_KEY;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
-const SYSTEM_PROMPT = `Você é o Promo, assistente virtual do PesquisaPromo em Horizonte/CE.
+const SYSTEM_PROMPT = `Você é o Promo, assistente virtual do myLupa em Horizonte/CE.
 Seu papel é ajudar o usuário a detalhar melhor seu pedido para que os parceiros locais possam responder com propostas mais certeiras.
 
 Regras:
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
 
     const contextLine = partnerName
       ? `O usuário está na página do parceiro "${partnerName}".`
-      : "O usuário está na página geral do PesquisaPromo.";
+      : "O usuário está na página geral do myLupa.";
     const demandLine = demand
       ? `O pedido inicial do usuário foi: "${demand}".`
       : "O usuário ainda não descreveu o que precisa.";
@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ content, provider });
   } catch (error) {
-    console.error("[PesquisaPromo] AI API error:", error);
+    console.error("[myLupa] AI API error:", error);
     return NextResponse.json({ fallback: true });
   }
 }

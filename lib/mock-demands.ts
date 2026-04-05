@@ -109,7 +109,7 @@ export function generateWhatsappLink(
   partnerName: string
 ): string {
   const msg = encodeURIComponent(
-    `Olá ${customerName}! Aqui é a ${partnerName} do PesquisaPromo. Sobre sua demanda "${request}" — temos uma proposta pra você! Posso enviar os detalhes?`
+    `Olá ${customerName}! Aqui é a ${partnerName} do myLupa. Sobre sua demanda "${request}" — temos uma proposta pra você! Posso enviar os detalhes?`
   );
   const digits = whatsapp.replace(/\D/g, "");
   const fullNumber = digits.startsWith("55") ? digits : `55${digits}`;

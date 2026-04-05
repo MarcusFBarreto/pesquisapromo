@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       verificationRequired: demand.verificationRequired,
     });
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao criar demanda:", error);
+    console.error("[myLupa] Erro ao criar demanda:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }

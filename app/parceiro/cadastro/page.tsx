@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { PartnerOnboardingForm } from "@/components/ui/partner-onboarding-form";
 
 export const metadata = {
-  title: "Sou Lojista | PesquisaPromo",
+  title: "Sou Lojista | myLupa",
   description: "Cadastre sua loja para receber orçamentos hiper-segmentados de Horizonte.",
   robots: {
     index: false,
@@ -19,7 +19,7 @@ export default function PartnerRegistrationPage() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
           <Link href="/" className="flex items-center gap-2 transition hover:opacity-80">
             <span className="text-2xl" aria-hidden="true">🔎</span>
-            <span className="text-xl font-bold tracking-tight text-white">PesquisaPromo</span>
+            <span className="text-xl font-bold tracking-tight text-white">myLupa</span>
           </Link>
           <Link
             href="/"

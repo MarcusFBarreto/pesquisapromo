@@ -19,7 +19,7 @@ export function MerchantCTA() {
             </h2>
             
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-500 font-light">
-              Pare de procurar clientes e comece a ser encontrado. O PesquisaPromo conecta você com quem já decidiu comprar e está apenas esperando o melhor orçamento.
+              Pare de procurar clientes e comece a ser encontrado. O myLupa conecta você com quem já decidiu comprar e está apenas esperando o melhor orçamento.
             </p>
             
             <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6">

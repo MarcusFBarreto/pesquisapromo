@@ -110,7 +110,7 @@ export default function Home() {
                         <Share2 className="w-7 h-7" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-black leading-tight text-slate-900">Gostou da ideia? <br/><span className="text-slate-400 italic font-medium">compartilhe o PesquisaPromo.</span></h3>
+                        <h3 className="text-xl font-black leading-tight text-slate-900">Gostou da ideia? <br/><span className="text-slate-400 italic font-medium">compartilhe o myLupa.</span></h3>
                         <p className="mt-2 text-[10px] text-emerald-600 uppercase tracking-[0.25em] font-black">Ecossistema em expansão</p>
                       </div>
                     </div>
@@ -278,7 +278,7 @@ export default function Home() {
             </p>
             <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <a
-                href="https://wa.me/558599999999?text=Olá! Não encontrei o que procurava no PesquisaPromo, podem me ajudar?"
+                href="https://wa.me/558599999999?text=Olá! Não encontrei o que procurava no myLupa, podem me ajudar?"
                 target="_blank"
                 rel="noreferrer"
                 className="group flex w-full items-center justify-center gap-3 rounded-2xl bg-pp-orange px-10 py-5 text-[10px] font-bold tracking-widest uppercase text-white shadow-xl shadow-pp-orange/20 transition-all hover:scale-105 hover:bg-pp-orange-hover active:scale-95 sm:w-auto"
@@ -310,7 +310,7 @@ export default function Home() {
               <div className="h-2 w-2 rounded-full bg-pp-orange" />
             </div>
             <p className="text-sm font-bold text-slate-900 tracking-tight">
-              Pesquisa<span className="text-pp-orange">Promo</span>
+              my<span className="text-pp-orange">Lupa</span>
             </p>
           </div>
 
@@ -319,7 +319,7 @@ export default function Home() {
           </p>
 
           <div className="mt-12 flex justify-center gap-10">
-            <Link href="/balaio" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Oportunidades (myLupa)</Link>
+            <Link href="/balaio" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Oportunidades</Link>
             <Link href="/mypromos" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Vitrine (myPromos)</Link>
             <Link href="/parceiro/fornecer" className="text-xs font-bold text-slate-500 uppercase tracking-widest hover:text-emerald-600 transition-colors">Seja Parceiro</Link>
           </div>

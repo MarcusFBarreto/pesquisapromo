@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Código inválido" }, { status: 400 });
     }
   } catch (error) {
-    console.error("[PesquisaPromo] Erro na verificação:", error);
+    console.error("[myLupa] Erro na verificação:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }

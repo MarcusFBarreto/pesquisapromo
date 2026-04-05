@@ -67,7 +67,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, applicationId: applicationRef.id });
   } catch (error: any) {
-    console.error("[PesquisaPromo] Erro ao cadastrar parceiro:", error);
+    console.error("[myLupa] Erro ao cadastrar parceiro:", error);
     return NextResponse.json({ error: error.message || "Erro interno" }, { status: 500 });
   }
 }

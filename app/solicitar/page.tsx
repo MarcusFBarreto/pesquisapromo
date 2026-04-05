@@ -30,7 +30,7 @@ function SolicitarContent() {
             
             {/* Marca e Badge como SIBLINGS (Lado a Lado sempre) */}
             <span className="text-lg font-bold tracking-tight text-slate-900 leading-none shrink-0">
-              Pesquisa<span className="text-pp-orange">Promo</span>
+              my<span className="text-pp-orange">Lupa</span>
             </span>
             <div className="inline-flex items-center gap-1 rounded-full bg-slate-50/50 px-1.5 py-0.5 border border-slate-100 shrink-0">
               <div className="h-1 w-1 rounded-full bg-emerald-400" />
@@ -100,7 +100,7 @@ function SolicitarContent() {
           <div className="animate-fade-in-up delay-1 order-1 lg:order-2">
             <div className="flex h-[500px] flex-col rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 lg:h-[650px] sticky top-24 overflow-hidden glass-container-mobile sm:bg-white sm:shadow-xl">
               <div className="p-5 border-b border-slate-100 bg-slate-50/50">
-                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor">Assistente PesquisaPromo</p>
+                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor">Assistente myLupa</p>
               </div>
               <DemandChat
                 demand={demand}

@@ -12,7 +12,7 @@ export function PesquisaPromoHeader() {
   const menuItems = [
     { icon: Home, label: "Início", href: "/" },
     { icon: Search, label: "Buscar na Cidade", href: "/busca" },
-    { icon: Telescope, label: "Oportunidades (myLupa)", href: "/balaio" },
+    { icon: Telescope, label: "Oportunidades", href: "/balaio" },
     { icon: Tag, label: "Vitrine (myPromos)", href: "/mypromos" },
     { icon: User, label: "Portal do Parceiro", href: "/parceiro/login" },
     { icon: Info, label: "Sobre o Piloto", href: "/sobre" },
@@ -29,7 +29,7 @@ export function PesquisaPromoHeader() {
             </div>
             
             <span className="text-lg font-bold tracking-tight text-slate-900 leading-none shrink-0">
-              Pesquisa<span className="text-pp-orange">Promo</span>
+              my<span className="text-pp-orange">Lupa</span>
             </span>
             <div className="inline-flex items-center gap-1.5 rounded-full bg-slate-50/80 px-2 py-1 border border-slate-100 shrink-0 shadow-sm sm:gap-1 sm:px-1.5 sm:py-0.5 sm:bg-slate-50/50 sm:shadow-none">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)] sm:h-1 sm:w-1 sm:shadow-none" />

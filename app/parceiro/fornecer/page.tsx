@@ -2,8 +2,8 @@ import Link from "next/link";
 import { CheckBadgeIcon, RocketLaunchIcon, UserGroupIcon, ChatBubbleLeftRightIcon } from "@heroicons/react/24/outline";
 
 export const metadata = {
-  title: "Seja um Fornecedor | PesquisaPromo",
-  description: "Traga sua loja para o PesquisaPromo e comece a receber pedidos de orçamento reais da sua região.",
+  title: "Seja um Fornecedor | myLupa",
+  description: "Traga sua loja pro myLupa e comece a receber pedidos de orçamento reais da sua região.",
   robots: {
     index: false,
     follow: false,
@@ -19,7 +19,7 @@ export default function FornecerLandingPage() {
           <Link href="/" className="flex items-center gap-3 transition hover:opacity-80">
             <span className="text-2xl" aria-hidden="true">🔎</span>
             <div className="flex flex-row items-center gap-2 sm:gap-4 flex-nowrap shrink-0">
-              <span className="text-xl font-bold tracking-tight text-white leading-none whitespace-nowrap">PesquisaPromo</span>
+              <span className="text-xl font-bold tracking-tight text-white leading-none whitespace-nowrap">myLupa</span>
               <div className="inline-flex items-center gap-1 rounded-full bg-white/10 px-1.5 py-0.5 border border-white/20 shrink-0 whitespace-nowrap">
                 <div className="h-1 w-1 rounded-full bg-emerald-400" />
                 <span className="text-[8px] font-black uppercase tracking-[0.05em] text-white">
@@ -47,7 +47,7 @@ export default function FornecerLandingPage() {
             <span className="text-pp-orange text-3xl sm:text-5xl lg:text-6xl">Deixe que eles te encontrem.</span>
           </h1>
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-white/60">
-            O PesquisaPromo é a ponte direta entre quem quer comprar e quem tem o produto. Em Horizonte e região, conectamos sua empresa a demandas reais de clientes locais.
+            O myLupa é a ponte direta entre quem quer comprar e quem tem o produto. Em Horizonte e região, conectamos sua empresa a demandas reais de clientes locais.
           </p>
           <div className="mt-12">
             <Link
@@ -65,7 +65,7 @@ export default function FornecerLandingPage() {
       <section className="bg-pp-surface py-24 text-pp-ink">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="mb-16 text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Como o PesquisaPromo ajuda você</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Como o myLupa ajuda você</h2>
             <p className="mt-4 text-pp-muted">Simples, prático e focado no seu fechamento de venda.</p>
           </div>
 
@@ -154,7 +154,7 @@ export default function FornecerLandingPage() {
 
       {/* ─── FOOTER ─── */}
       <footer className="border-t border-white/10 py-10 text-center text-xs text-white/30">
-        <p>&copy; 2026 PesquisaPromo - Todos os direitos reservados.</p>
+        <p>&copy; 2026 myLupa - Todos os direitos reservados.</p>
       </footer>
     </div>
   );

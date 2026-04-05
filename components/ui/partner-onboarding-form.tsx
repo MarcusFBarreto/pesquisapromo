@@ -83,8 +83,8 @@ export function PartnerOnboardingForm() {
         <CheckCircleIcon className="h-16 w-16 text-pp-teal" />
         <h2 className="mt-6 text-2xl font-bold text-pp-ink">Solicitação Enviada!</h2>
         <p className="mt-4 max-w-md text-sm leading-6 text-pp-muted">
-          Sua requisição foi enviada para a curadoria do PesquisaPromo e encontra-se em análise. 
-          Assim que for aprovada, você receberá o acesso exclusivo ao painel via WhatsApp.
+          Sua solicitação foi enviada pra equipe do myLupa e já está sendo analisada. 
+          Assim que for aprovada, você recebe o acesso ao painel pelo WhatsApp.
         </p>
         <Link
           href="/"

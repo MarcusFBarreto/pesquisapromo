@@ -39,7 +39,7 @@ export async function PATCH(req: NextRequest) {
     await updateDemandStatus(demandId, status);
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao atualizar demanda:", error);
+    console.error("[myLupa] Erro ao atualizar demanda:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }

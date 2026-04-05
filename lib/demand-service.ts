@@ -1,6 +1,6 @@
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { classifyDemand, getTargetPartners } from "./category-router";
-import { filterBlockedPartners } from "./blocklist-service";
+import { isBlocked } from "./blocklist-service";
 
 export type DemandSubmitPayload = {
   request: string;
@@ -40,10 +40,13 @@ export async function submitDemand(payload: DemandSubmitPayload): Promise<Demand
     const allTargets = getTargetPartners(categories);
 
     // 7D: Filter out blocked partners for this client
-    const allowedSlugs = filterBlockedPartners(
-      allTargets.map((p) => p.slug),
-      cleanWa
+    const blockChecks = await Promise.all(
+      allTargets.map(async (p) => ({
+        slug: p.slug,
+        blocked: await isBlocked(p.slug, cleanWa),
+      }))
     );
+    const allowedSlugs = blockChecks.filter((c) => !c.blocked).map((c) => c.slug);
 
     const cleanPayload = {
       ...payload,
@@ -54,11 +57,11 @@ export async function submitDemand(payload: DemandSubmitPayload): Promise<Demand
 
     if (IS_MOCK_MODE) {
       console.warn(
-        "[PesquisaPromo] 🟡 Modo demo — demanda salva localmente."
+        "[myLupa] 🟡 Modo demo — demanda salva localmente."
       );
-      console.info("[PesquisaPromo] Demanda (mock):", cleanPayload);
+      console.info("[myLupa] Demanda (mock):", cleanPayload);
       console.info(
-        `[PesquisaPromo] Roteamento: ${categories.join(", ")} → ${allowedSlugs.length} parceiro(s)`
+        `[myLupa] Roteamento: ${categories.join(", ")} → ${allowedSlugs.length} parceiro(s)`
       );
       await new Promise((resolve) => setTimeout(resolve, 800));
       return {
@@ -83,7 +86,7 @@ export async function submitDemand(payload: DemandSubmitPayload): Promise<Demand
       targetPartnerCount: allowedSlugs.length,
     };
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao salvar demanda:", error);
+    console.error("[myLupa] Erro ao salvar demanda:", error);
     return { success: false, error };
   }
 }

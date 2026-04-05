@@ -316,7 +316,7 @@ export default function BalaioPage() {
       {/* Footer / Stats */}
       <footer className="max-w-6xl mx-auto mt-32 text-center pb-20 border-t border-slate-100 pt-12">
         <p className="text-slate-400 text-[10px] font-bold tracking-[0.2em] uppercase">
-          myLupa <span className="mx-2 text-slate-300">|</span> Powered by PesquisaPromo
+          myLupa <span className="mx-2 text-slate-300">|</span> Inteligência de Mercado Local
         </p>
         <p className="text-slate-500 text-xs mt-3 font-light">
           Horizonte, Ceará. {new Date().getFullYear()} — Inteligência de Mercado.

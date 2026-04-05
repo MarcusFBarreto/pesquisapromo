@@ -21,7 +21,7 @@ export async function GET() {
 
     return NextResponse.json({ applications });
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao buscar solicitações de parceiros:", error);
+    console.error("[myLupa] Erro ao buscar solicitações de parceiros:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }
@@ -135,7 +135,7 @@ export async function PATCH(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao atualizar solicitação:", error);
+    console.error("[myLupa] Erro ao atualizar solicitação:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }

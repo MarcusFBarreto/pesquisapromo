@@ -1,7 +1,7 @@
 import { getAllPartners, Partner } from "./partner-data";
 
 /**
- * All known partner categories in PesquisaPromo.
+ * All known partner categories in myLupa.
  * Used for classification matching.
  */
 const CATEGORY_KEYWORDS: Record<string, string[]> = {

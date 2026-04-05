@@ -21,7 +21,7 @@ export async function GET() {
 
     return NextResponse.json({ demands });
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao buscar todas as demandas:", error);
+    console.error("[myLupa] Erro ao buscar todas as demandas:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }
@@ -38,7 +38,7 @@ export async function DELETE(req: Request) {
     await adminDb.collection('demands').doc(id).delete();
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("[PesquisaPromo] Erro ao deletar demanda:", error);
+    console.error("[myLupa] Erro ao deletar demanda:", error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }

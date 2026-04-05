@@ -47,7 +47,7 @@ export default async function PartnersDirectoryPage() {
         <div className="mb-12">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">Nossos Parceiros</h1>
           <p className="mt-4 text-lg text-slate-500 font-light mobile-text-anchor">
-            Encontre as melhores lojas e serviços de Horizonte verificados pelo PesquisaPromo.
+            Encontre as melhores lojas e serviços de Horizonte verificados pelo myLupa.
           </p>
         </div>
 

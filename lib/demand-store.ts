@@ -56,7 +56,7 @@ export async function addDemand(payload: {
   const firestoreTargetsCount = firestoreSnapshot.size;
   const totalTargets = staticTargets.length + firestoreTargetsCount;
   
-  console.info(`[PesquisaPromo] 🔥 Demanda salva no Firestore: #${demand.id} (Status: ${demand.status})`);
+  console.info(`[myLupa] 🔥 Demanda salva no Firestore: #${demand.id} (Status: ${demand.status})`);
   return { ...demand, verificationRequired: !isTrusted };
 }
 

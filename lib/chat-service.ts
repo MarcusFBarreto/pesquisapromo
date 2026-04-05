@@ -19,13 +19,13 @@ export function getInitialMessage(context: ChatContext): ChatMessage {
   if (!context.demand.trim()) {
     return {
       role: "assistant",
-      content: `Olá! 👋 Sou o **Promo**, assistente do PesquisaPromo${partnerRef}. Me conta o que você tá precisando que eu te ajudo a montar um pedido bem descrito pra você receber as melhores propostas!`,
+      content: `Olá! 👋 Sou o **Promo**, assistente do myLupa${partnerRef}. Me conta o que você tá precisando que eu te ajudo a montar um pedido bem descrito pra você receber as melhores propostas!`,
     };
   }
 
   return {
     role: "assistant",
-    content: `Olá! 👋 Sou o **Promo**, assistente do PesquisaPromo${partnerRef}. Vi que você precisa de **"${context.demand}"**. Posso te fazer umas perguntinhas rápidas pra deixar seu pedido mais completo e você receber propostas melhores. Topa?`,
+    content: `Olá! 👋 Sou o **Promo**, assistente do myLupa${partnerRef}. Vi que você precisa de **"${context.demand}"**. Posso te fazer umas perguntinhas rápidas pra deixar seu pedido mais completo e você receber propostas melhores. Topa?`,
   };
 }
 

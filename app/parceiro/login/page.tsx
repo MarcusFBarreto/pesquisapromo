@@ -49,7 +49,7 @@ export default function PartnerLoginPage() {
               <div className="h-3 w-3 rounded-full bg-pp-orange" />
             </div>
             <span className="text-xl font-semibold tracking-tight text-white">
-              Pesquisa<span className="text-pp-orange">Promo</span>
+              my<span className="text-pp-orange">Lupa</span>
             </span>
           </Link>
         </div>
@@ -146,7 +146,7 @@ export default function PartnerLoginPage() {
         <p className="mt-6 text-center text-xs text-white/25">
           Não é parceiro?{" "}
           <Link href="/" className="text-pp-teal-soft transition hover:text-pp-teal">
-            Voltar para o PesquisaPromo
+            Voltar para o myLupa
           </Link>
         </p>
       </div>
