@@ -60,18 +60,18 @@ export default function Home() {
           {/* LEFT COLUMN: Section 1 (Headline + Para) */}
           <div className="animate-fade-in-up flex flex-col lg:row-start-1 lg:col-start-1">
             <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-600 mb-4 sm:tracking-[0.4em]">
-              O seu Concierge de Compras
+              Especialistas em encontrar o que você procura
             </p>
 
             <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
               Dificuldade na busca?<br/>
               <span className="text-emerald-500 italic font-medium">
-                deixe a myLupa achar.
+                deixe myLupa achar.
               </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
-              Encontramos o difícil. Negociamos o caro. myLupar é poupar seu tempo. Descreva o que precisa e deixe a frustração de lado.
+              Encontramos o difícil. Dispensamos o caro. myLupar é poupar seu tempo. Informe o que precisa - simples assim.
             </p>
           </div>
 
