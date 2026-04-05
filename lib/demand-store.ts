@@ -44,9 +44,14 @@ export async function addDemand(payload: {
 
   const demand = demandData as Demand;
 
-  const staticTargets = getAllPartners()
-    .filter((p) => categories.includes(p.category))
-    .filter((p) => !isBlocked(p.slug, demand.whatsapp));
+  const partners = getAllPartners().filter((p) => categories.includes(p.category));
+  const blockChecks = await Promise.all(
+    partners.map(async (p) => ({
+      ...p,
+      blocked: await isBlocked(p.slug, demand.whatsapp),
+    }))
+  );
+  const staticTargets = blockChecks.filter((p) => !p.blocked);
 
   // Count Firestore targets
   const firestoreSnapshot = await adminDb.collection('partners')
