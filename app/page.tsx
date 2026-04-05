@@ -288,7 +288,7 @@ export default function Home() {
               </a>
             </div>
             <p className="mt-8 text-[11px] text-slate-400 font-bold uppercase tracking-widest">
-              * Atendimento direto via WhatsApp em nossa Área Piloto
+              * Atendimento direto via WhatsApp em nossa Região Piloto
             </p>
           </div>
         </div>
@@ -301,7 +301,7 @@ export default function Home() {
           <div className="mb-10 inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-6 py-2.5 shadow-sm">
             <div className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
             <span className="text-[10px] font-bold tracking-[0.2em] text-slate-500 uppercase">
-              Área Piloto — Piloto Ativo
+              Piloto Ativo — Fase de Testes
             </span>
           </div>
 

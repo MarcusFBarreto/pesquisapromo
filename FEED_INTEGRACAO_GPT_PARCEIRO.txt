@@ -45,22 +45,22 @@ Arquivos principais criados/adaptados nessa fase:
 
 3. O que foi definido na cidade
 Ruas/areas conceituais ja registradas:
-- Rua dos Calcados
-- Rua da Casa
-- Rua dos Testes
-- Rua dos Servicos
-- Avenida Grandes Promocoes
+- Setor de Calcados
+- Setor da Casa
+- Setor de Testes
+- Setor de Servicos
+- Vitrine de Grandes Promocoes
 
 Conceitos importantes ja preservados:
 - desconto verificado
 - Taxi Virtual
 - exploracao gamificada
 - eggs no futuro
-- Rua dos Brinquedos no futuro
+- Setor de Brinquedos no futuro
 - segundo site para testes maiores
 
-4. Rua dos Testes e laboratorio
-Foi criada a Rua dos Testes como ambiente seguro para experimentacao dentro da cidade principal.
+4. Setor de Testes e laboratorio
+Foi criada a Setor de Testes como ambiente seguro para experimentacao dentro da cidade principal.
 
 Objetivo:
 - testar layouts
@@ -76,7 +76,7 @@ Na Lojinha Alfa foram simulados:
 - CTA
 - mini gamificacao
 - area de testes
-- bloco conceitual da futura Rua dos Brinquedos
+- bloco conceitual da futura Setor de Brinquedos
 - espaco para ensaiar joguinhos gratis e experiencia mais ludica
 
 5. Segundo site paralelo

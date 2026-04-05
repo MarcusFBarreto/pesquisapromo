@@ -14,7 +14,7 @@ export function CitySectionCard({ title, summary, href }: Props) {
     >
       <h3 className="text-base font-semibold text-slate-900">{title}</h3>
       <p className="mt-2 text-sm text-slate-600">{summary}</p>
-      <span className="mt-4 inline-block text-sm font-medium text-slate-900">Ir para a rua</span>
+      <span className="mt-4 inline-block text-sm font-medium text-slate-900">Ver setor</span>
     </Link>
   );
 }

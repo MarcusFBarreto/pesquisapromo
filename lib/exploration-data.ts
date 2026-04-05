@@ -63,7 +63,7 @@ export const districts: District[] = [
     subtitle: "Tenis, sandalias, chinelos e vitrines para toda a familia",
     count: "38 lojinhas",
     intro:
-      "Uma rua para quem gosta de bater perna atras de tenis, sandalia, sapato e achados que resolvem o dia a dia.",
+      "Um setor para quem gosta de explorar variedade de tênis, sandálias, sapatos e achados que resolvem o dia a dia.",
     highlight: "Vitrines mais visitadas da semana",
     pulse: "Movimento bom e oferta aparecendo toda hora",
     shops: [
@@ -77,7 +77,7 @@ export const districts: District[] = [
       },
       {
         name: "Pisa Fofo",
-        street: "Rua dos Calcados",
+        street: "Setor de Calcados",
         vibe: "Calcados infantis e escolhas confortaveis para a familia",
         badge: "mais visitada",
         offer: "Tenis infantil por R$ 119",
@@ -85,7 +85,7 @@ export const districts: District[] = [
       },
       {
         name: "Seu Passo",
-        street: "Rua dos Calcados",
+        street: "Setor de Calcados",
         vibe: "Sapatos sociais, mocassins e vitrines mais arrumadas",
         badge: "acabou de baixar",
         offer: "Mocassim por R$ 139",
@@ -93,7 +93,7 @@ export const districts: District[] = [
       },
       {
         name: "Ponto do Tenis",
-        street: "Rua dos Calcados",
+        street: "Setor de Calcados",
         vibe: "Tenis casuais, esportivos e aquele achado inesperado",
         badge: "movimento forte",
         offer: "Tenis urbano por R$ 169",
@@ -108,7 +108,7 @@ export const districts: District[] = [
     subtitle: "Moveis, eletros, reforma e achados para o lar",
     count: "52 lojinhas",
     intro:
-      "Uma rua para olhar com calma e ir montando a casa aos poucos, sem perder uma boa oportunidade.",
+      "Um setor para olhar com calma e ir montando o lar aos poucos, sem perder uma boa oportunidade.",
     highlight: "Achados para cozinha, sala e cantinhos da casa",
     pulse: "Sempre tem alguma vitrine chamando atencao",
     shops: [
@@ -122,25 +122,25 @@ export const districts: District[] = [
         products: ["geladeira frost free", "geladeira brastemp", "geladeira electrolux"],
         verification: "mais verificavel",
         address: "Av. Presidente Castelo Branco, Centro, Piloto/CE",
-        sourceLabel: "Diario Cidade",
+        sourceLabel: "Guia Piloto",
         sourceUrl: "https://www.diariocidade.com/ce/horizonte/guia/j-erivaldo-cia-ltda-06001044003480/",
       },
       {
         name: "Zenir Moveis",
-        street: "Rua da Casa",
+        street: "Setor da Casa",
         vibe: "Uma vitrine mais conhecida, boa para moveis, eletros e leitura limpa do preco local.",
         badge: "mais verificavel",
         offer: "Air fryer por R$ 299",
         products: ["air fryer", "moveis", "eletrodomesticos"],
         verification: "mais verificavel",
-        address: "Av. Presidente Castelo Branco, 4718, Centro, Cidade Piloto/CE",
+        address: "Av. Presidente Castelo Branco, 4718, Centro, Piloto/CE",
         contact: "(85) 4020-5050",
         sourceLabel: "Diario Cidade",
         sourceUrl: "https://www.diariocidade.com/ce/horizonte/guia/zenir-moveis-41426966004160/",
       },
       {
         name: "Casa Bonita",
-        street: "Rua da Casa",
+        street: "Setor da Casa",
         vibe: "Utilidades, pequenos moveis e promos da semana",
         badge: "vitrine de apoio",
         offer: "Organizador por R$ 39",
@@ -148,7 +148,7 @@ export const districts: District[] = [
       },
       {
         name: "Jeito de Lar",
-        street: "Rua da Casa",
+        street: "Setor da Casa",
         vibe: "Mesa posta, decoracao leve e detalhes que mudam o ambiente",
         badge: "nova vitrine",
         offer: "Conjunto de pratos por R$ 89",
@@ -163,14 +163,14 @@ export const districts: District[] = [
     subtitle: "Laboratorio para ideias, layouts e experiencias simuladas",
     count: "12 lojinhas de teste",
     intro:
-      "Esta rua existe para nossos experimentos. Aqui podemos testar vitrines, interacoes, gamificacao e ideias novas sem mexer nas ruas principais.",
+      "Este setor existe para nossos experimentos. Aqui podemos testar vitrines, interações, gamificacao e ideias novas sem mexer nos setores principais.",
     highlight: "Territorio livre para montar, desmontar e validar",
     pulse: "Tudo aqui pode mudar rapido, e esse e justamente o objetivo",
     shops: [
       {
         slug: "lojinha-alfa",
         name: "Lojinha Alfa",
-        street: "Rua dos Testes",
+        street: "Setor de Testes",
         vibe: "Primeira vitrine para testar formatos, selos e chamadas",
         badge: "modo laboratorio",
         offer: "Produto piloto por R$ 59",
@@ -178,7 +178,7 @@ export const districts: District[] = [
       },
       {
         name: "Beta & Cia",
-        street: "Rua dos Testes",
+        street: "Setor de Testes",
         vibe: "Espaco para brincar com cards, comparacoes e destaque visual",
         badge: "teste visual",
         offer: "Oferta beta por R$ 129",
@@ -186,15 +186,15 @@ export const districts: District[] = [
       },
       {
         name: "Oficina Gamma",
-        street: "Rua dos Testes",
-        vibe: "Vitrine pensada para ensaiar novas interacoes da rua",
+        street: "Setor de Testes",
+        vibe: "Vitrine pensada para ensaiar novas interações deste setor",
         badge: "em observacao",
         offer: "Kit experimental por R$ 89",
         products: ["kit experimental", "brinquedo surpresa", "bloco criativo"],
       },
       {
         name: "Vitrine Delta",
-        street: "Rua dos Testes",
+        street: "Setor de Testes",
         vibe: "Lugar para validar textos, caminhos e mini jornadas",
         badge: "fluxo novo",
         offer: "Pacote demo por R$ 149",
@@ -202,7 +202,7 @@ export const districts: District[] = [
       },
       {
         name: "Estudio Epsilon",
-        street: "Rua dos Testes",
+        street: "Setor de Testes",
         vibe: "Ambiente para testar cores, hierarquia e sensacao de passeio",
         badge: "ensaio aberto",
         offer: "Combo prototipo por R$ 99",
@@ -210,7 +210,7 @@ export const districts: District[] = [
       },
       {
         name: "Lab Zeta",
-        street: "Rua dos Testes",
+        street: "Setor de Testes",
         vibe: "Uma lojinha feita para testar a terceira camada do mapa",
         badge: "proximo passo",
         offer: "Oferta sandbox por R$ 179",
@@ -225,54 +225,54 @@ export const districts: District[] = [
     subtitle: "Atalhos confiaveis para utilidades, cidadania e links oficiais",
     count: "8 portas uteis",
     intro:
-      "Uma rua pensada para reunir servicos publicos, utilidades gratuitas e atalhos confiaveis do dia a dia, sempre com clareza e sem misturar com vitrines comerciais.",
+      "Um setor pensado para reunir serviços públicos, utilidades gratuitas e atalhos confiáveis do dia a dia, sempre com clareza e sem misturar com vitrines comerciais.",
     highlight: "Espaço voltado para resolver e facilitar",
     pulse: "Mais calma, mais objetiva e com cara de servico que ajuda",
     shops: [
       {
         slug: "casa-da-prefeitura",
         name: "Casa da Prefeitura",
-        street: "Rua dos Servicos",
-        vibe: "Porta de entrada para Prefeitura, Ouvidoria, E-SIC e servicos municipais de Cidade Piloto.",
+        street: "Setor de Servicos",
+        vibe: "Porta de entrada para Prefeitura, Ouvidoria, E-SIC e servicos municipais de Piloto.",
         badge: "oficial",
         offer: "Acesso rapido a servicos municipais",
         products: ["prefeitura", "ouvidoria", "e-sic", "servicos municipais"],
         verification: "oficial",
-        address: "Av. Presidente Castelo Branco, 5100, Centro, Cidade Piloto/CE",
+        address: "Av. Presidente Castelo Branco, 5100, Centro, Piloto/CE",
       },
       {
         slug: "saude-horizonte",
-        name: "Saude Cidade Piloto",
-        street: "Rua dos Servicos",
+        name: "Saude Piloto",
+        street: "Setor de Servicos",
         vibe: "Secretaria de Saude, UPA, hospital e caminhos de atendimento publico organizados num mesmo lugar.",
         badge: "oficial",
         offer: "Informacoes de saude e atendimento",
         products: ["secretaria de saude", "upa", "hospital municipal", "ubs"],
         verification: "oficial",
-        address: "Av. Presidente Castelo Branco, 3600, Centro, Cidade Piloto/CE",
+        address: "Av. Presidente Castelo Branco, 3600, Centro, Piloto/CE",
         contact: "(85) 3222-0520",
       },
       {
         slug: "demutran-horizonte",
-        name: "DEMUTRAN Cidade Piloto",
-        street: "Rua dos Servicos",
+        name: "DEMUTRAN Piloto",
+        street: "Setor de Servicos",
         vibe: "Atalhos de transito, atendimento e formularios publicos para quem quer resolver rapido.",
         badge: "oficial",
         offer: "Servicos de transito e formularios",
         products: ["demutran", "transito", "formularios", "servicos publicos"],
         verification: "oficial",
-        address: "Cidade Piloto/CE",
+        address: "Piloto/CE",
       },
       {
         slug: "art-ton-papelaria",
         name: "Art & Ton Papelaria",
-        street: "Rua dos Servicos",
-        vibe: "Loja real de papelaria em Cidade Piloto, boa para testar comecio local com fonte publica verificavel.",
+        street: "Setor de Servicos",
+        vibe: "Loja real de papelaria em Piloto, boa para testar comecio local com fonte publica verificavel.",
         badge: "mais verificavel",
         offer: "Kit escolar essencial por R$ 94,90",
         products: ["papelaria", "caderno", "kit escolar", "livraria"],
         verification: "mais verificavel",
-        address: "Av. Presidente Castelo Branco, 4554, Centro, Cidade Piloto/CE",
+        address: "Av. Presidente Castelo Branco, 4554, Centro, Piloto/CE",
         sourceLabel: "Diario Cidade",
         sourceUrl: "https://www.diariocidade.com/ce/horizonte/guia/art-ton-livraria-e-grafica-03496998000155/amp/",
       },
@@ -286,13 +286,13 @@ export const districts: District[] = [
     count: "41 lojinhas",
     intro:
       "Aqui entram as vitrines que chegam fazendo barulho: quedas mais fortes, descontos chamativos e ofertas que puxam o olhar.",
-    highlight: "Avenida para quem quer ir direto no que esta fervendo",
+    highlight: "Vitrine para quem quer ir direto no que está fervendo",
     pulse: "Desconto forte, giro rapido e muita curiosidade",
     shops: [
       {
         slug: "farmacia-caminho-popular",
         name: "Farmacia Caminho Popular",
-        street: "Avenida Grandes Promocoes",
+        street: "Vitrine de Grandes Promocoes",
         vibe: "Farmacia real encontrada no eixo Castelo Branco, boa para testar vitrines locais do dia a dia.",
         badge: "mais verificavel",
         offer: "Vitamina C 1g por R$ 39,90",
@@ -304,7 +304,7 @@ export const districts: District[] = [
       },
       {
         name: "Ofertao Mix",
-        street: "Avenida Grandes Promocoes",
+        street: "Vitrine de Grandes Promocoes",
         vibe: "Um pouco de tudo, com foco em desconto alto",
         badge: "bombando agora",
         offer: "Liquidificador por R$ 99",
@@ -316,14 +316,14 @@ export const districts: District[] = [
 
 export const cityRoutes = [
   {
-    name: "Avenida dos 30%+",
+    name: "Vitrine dos 30%+",
     label: "movimento alto",
     detail: "Descontos mais agressivos do dia",
     accent: "bg-[var(--pp-orange)]",
     width: "w-[70%]",
   },
   {
-    name: "Travessa do Menor Preco",
+    name: "Setor do Menor Preço",
     label: "rota rapida",
     detail: "Onde o preco puxou la pra baixo",
     accent: "bg-[var(--pp-blue)]",
@@ -339,22 +339,22 @@ export const cityRoutes = [
 ] as const;
 
 export const missions = [
-  "Visite 3 ruas e salve suas vitrines favoritas.",
-  "Abra 1 oferta da Avenida Grandes Promocoes.",
+  "Visite 3 setores e salve suas vitrines favoritas.",
+  "Abra 1 oferta da Vitrine de Grandes Promocoes.",
   "Compare 5 precos antes de decidir.",
 ] as const;
 
 export const testShops: TestShop[] = [
   {
     name: "Passo Leve",
-    street: "Rua dos Calcados",
+    street: "Setor de Calcados",
     vibe: "Tenis, sandalias e achados para o dia a dia",
     badge: "vitrine aberta",
     offer: "Sandalia rasteira por R$ 79",
   },
   {
     name: "Casa Bonita",
-    street: "Rua da Casa",
+    street: "Setor da Casa",
     vibe: "Utilidades, pequenos moveis e promos da semana",
     badge: "2 promos novas",
     offer: "Air fryer por R$ 289",
@@ -363,12 +363,12 @@ export const testShops: TestShop[] = [
     name: "Papel & Cor",
     street: "Galeria das Lojinhas",
     vibe: "Papelaria, mochilas e lembrancas escolares",
-    badge: "favorita da rua",
+    badge: "favorita deste setor",
     offer: "Kit cadernos por R$ 49",
   },
   {
     name: "Brilho Nosso",
-    street: "Avenida Grandes Promocoes",
+    street: "Vitrine de Grandes Promocoes",
     vibe: "Beleza, autocuidado e vitrines relampago",
     badge: "queda forte",
     offer: "Perfume por R$ 119",

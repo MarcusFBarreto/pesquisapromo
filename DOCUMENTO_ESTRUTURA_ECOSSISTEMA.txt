@@ -101,10 +101,10 @@ Funcoes atuais:
 
 Exemplos atuais:
 
-- `Rua dos Calcados`
-- `Rua da Casa`
-- `Rua dos Testes`
-- `Rua dos Servicos`
+- `Setor de Calcados`
+- `Setor da Casa`
+- `Setor de Testes`
+- `Setor de Servicos`
 
 ---
 
@@ -116,7 +116,7 @@ Arquivo:
 
 Exemplo atual:
 
-- `Avenida Grandes Promocoes`
+- `Vitrine de Grandes Promocoes`
 
 Papel:
 
@@ -140,7 +140,7 @@ Estado atual:
   - card de oferta
   - CTA
   - mini gamificacao
-  - simulacao da futura Rua dos Brinquedos
+  - simulacao da futura Setor de Brinquedos
 
 ---
 
@@ -214,7 +214,7 @@ Conceitos em andamento:
 - eggs
 - mini joguinhos em ruas especificas
 
-### Rua dos Brinquedos
+### Setor de Brinquedos
 
 Ja existe em simulacao conceitual dentro do laboratorio.
 
@@ -225,7 +225,7 @@ Ideias relacionadas:
 - recompensas leves
 - surpresa sem perder utilidade
 
-### Rua dos Servicos
+### Setor de Servicos
 
 Ja registrada como conceito e como rua simulada.
 
@@ -239,9 +239,9 @@ Objetivo:
 
 ---
 
-## Rua dos Testes
+## Setor de Testes
 
-A `Rua dos Testes` existe para permitir experimentos sem baguncar as ruas principais.
+A `Setor de Testes` existe para permitir experimentos sem baguncar as ruas principais.
 
 Objetivo:
 
@@ -308,7 +308,7 @@ Usar esse espaco quando a ideia:
 Nao usar esse espaco quando a ideia:
 
 - ainda fizer parte claramente da cidade principal
-- puder ser testada em `Rua dos Testes`
+- puder ser testada em `Setor de Testes`
 - for so um ajuste pequeno
 
 ---
@@ -323,7 +323,7 @@ Usar para:
 - ruas, avenidas e lojas do conceito principal
 - experiencia que ja representa o produto
 
-### Rua dos Testes
+### Setor de Testes
 
 Usar para:
 

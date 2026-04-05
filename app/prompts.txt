@@ -116,9 +116,9 @@ Ela deve estar muito clara no layout e na narrativa.
 ESTRUTURA DESEJADA
 Crie uma versão inicial com estas áreas da cidade:
 
-- Avenida Grandes Promoções
-- Rua da Casa
-- Rua dos Calçados
+- Vitrine de Grandes Promoções
+- Setor da Casa
+- Setor de Calçados
 - Travessa dos Achadinhos
 
 E estas lojinhas iniciais:
@@ -162,10 +162,10 @@ Ela deve:
 - ajudar o usuário a decidir o melhor caminho
 
 Exemplos esperados:
-- geladeira → Rua da Casa + Comparador de Geladeiras
-- tênis → Rua dos Calçados + Outlet do Tênis
+- geladeira → Setor da Casa + Comparador de Geladeiras
+- tênis → Setor de Calçados + Outlet do Tênis
 - achado → Travessa dos Achadinhos + Achado do Dia
-- promoções → Avenida Grandes Promoções
+- promoções → Vitrine de Grandes Promoções
 - fone → caminho coerente dentro da cidade
 
 3. TÁXI VIRTUAL
@@ -192,10 +192,10 @@ As ruas devem ser mais do que listas.
 Cada rua precisa ter identidade.
 
 Exemplos:
-- Rua da Casa: mais utilitária, organizada, eletrodomésticos e casa
-- Rua dos Calçados: mais vitrine, comparação, moda funcional
+- Setor da Casa: mais utilitária, organizada, eletrodomésticos e casa
+- Setor de Calçados: mais vitrine, comparação, moda funcional
 - Travessa dos Achadinhos: mais dinâmica, descoberta rápida
-- Avenida Grandes Promoções: mais concentrada em destaque e força comercial
+- Vitrine de Grandes Promoções: mais concentrada em destaque e força comercial
 
 Cada uma deve ter:
 - título
