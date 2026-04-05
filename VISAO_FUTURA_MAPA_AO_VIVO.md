@@ -8,8 +8,8 @@ Quando o PesquisaPromo tiver volume de parceiros e dados reais de preço, implem
 
 - Sinais de "queima de preço" pipocam no mapa em tempo real
 - Super ofertas reais aparecem geolocalizadas
-- O usuário vê a cidade e descobre oportunidades por proximidade
-- A metáfora de ruas, avenidas e lojinhas ganha vida como camada visual sobre o mapa
+- O usuário vê a região e descobre oportunidades por proximidade
+- A metáfora de setores, vitrines e lojinhas ganha vida como camada visual sobre o mapa
 
 ## Pré-requisitos para viabilizar
 1. Base sólida de parceiros reais publicando preços
@@ -19,13 +19,13 @@ Quando o PesquisaPromo tiver volume de parceiros e dados reais de preço, implem
 
 ## Código existente que pode ser reaproveitado
 - `lib/pesquisapromo-verified-discount.ts` — lógica de queda real de preço
-- `lib/pesquisapromo-city-data.ts` — estrutura de dados de ruas/lojas/ofertas
+- `lib/pesquisapromo-city-data.ts` — estrutura de dados de setores/lojas/ofertas
 - `components/pesquisapromo/map-board-leaflet.tsx` — componente de mapa (já existe em stash)
 - `lib/exploration-data.ts` — districts, shops, routes
 
 ## Referência visual
 - Waze com pins pulsando em lojas com promoções ativas
 - Cores: laranja para queimas fortes, teal para ofertas normais
-- Filtro por categoria/rua/tipo de produto
+- Filtro por categoria/setor/tipo de produto
 
 > **Guardar até ter 20+ parceiros ativos e dados reais fluindo.**

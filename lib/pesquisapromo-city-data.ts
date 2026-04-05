@@ -16,7 +16,7 @@ export const streets: Street[] = [
     slug: "grandes-promocoes",
     kind: "avenue",
     summary: "Destaques em evidência calculados por engajamento e confiança.",
-    keywords: ["promoções", "promocoes", "descontos", "ofertas", "avenida"],
+    keywords: ["promoções", "promocoes", "descontos", "ofertas", "vitrine"],
     targetRoute: "/mypromos",
   },
   {
