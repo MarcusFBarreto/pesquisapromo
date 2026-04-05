@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { getFeaturedPartners } from "@/lib/partner-data";
 import { HeroDemandForm } from "@/components/ui/hero-demand-form";
-import { MerchantCTA } from "@/components/ui/merchant-cta";
 import { 
   ChevronRight, 
   PenLine, 
@@ -38,9 +36,9 @@ const howItWorks = [
 ] as const;
 
 const trustSignals = [
-  { icon: <Users className="w-5 h-5 text-emerald-600" />, text: "Parceiros locais REALMENTE interessados em atender você." },
-  { icon: <Zap className="w-5 h-5 text-amber-500" />, text: "Excelente para cotações rápidas e comparativas." },
-  { icon: <Search className="w-5 h-5 text-slate-400" />, text: "Não está encontrando algo? Consulte nossa rede de parceiros." },
+  { icon: <Users className="w-5 h-5 text-emerald-600" />, text: "Parceiros locais prontos para te atender." },
+  { icon: <Zap className="w-5 h-5 text-amber-500" />, text: "Sem tempo de cotar? A gente faz por você." },
+  { icon: <Search className="w-5 h-5 text-slate-400" />, text: "Item raro ou caro? Nós myLupamos." },
 ] as const;
 
 import { PesquisaPromoHeader } from "@/components/pesquisapromo/header";
@@ -51,7 +49,7 @@ export default function Home() {
       <PesquisaPromoHeader />
 
       {/* ─── Hero Solar Compacto ─── */}
-      <section className="relative overflow-hidden bg-white pb-20 pt-0 lg:pb-24 lg:pt-2">
+      <section className="relative overflow-hidden bg-white pb-12 pt-0 lg:pb-24 lg:pt-2">
         {/* Background decorations */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -right-32 -top-32 h-[600px] w-[600px] rounded-full bg-emerald-500 opacity-[0.03] blur-[120px]" />
@@ -62,18 +60,18 @@ export default function Home() {
           {/* LEFT COLUMN: Section 1 (Headline + Para) */}
           <div className="animate-fade-in-up flex flex-col lg:row-start-1 lg:col-start-1">
             <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-600 mb-4 sm:tracking-[0.4em]">
-              Sua vitrine de ofertas verificadas
+              O seu Concierge de Compras
             </p>
 
             <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
-              Precisa de algo? <br/>
+              Dificuldade na busca?<br/>
               <span className="text-emerald-500 italic font-medium">
-                receba propostas.
+                deixe a myLupa achar.
               </span>
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
-              Seu desejo em boas mãos. Descreva o que você precisa e parceiros verificados da sua região respondem com propostas reais. Sem intermediários, direto no seu WhatsApp.
+              Encontramos o difícil. Negociamos o caro. myLupar é poupar seu tempo. Descreva o que precisa e deixe a frustração de lado.
             </p>
           </div>
 
@@ -127,7 +125,7 @@ export default function Home() {
                       href="/mypromos"
                       className="group flex items-center justify-between rounded-2xl bg-slate-900 px-6 py-4 text-[10px] font-black uppercase tracking-widest text-white transition-all hover:bg-emerald-600 shadow-xl shadow-slate-900/10 active:scale-95"
                     >
-                      Visitar myPromos
+                      myLupar oportunidades
                       <Tag className="w-4 h-4" />
                     </Link>
                   </div>
@@ -222,7 +220,7 @@ export default function Home() {
       {/* ─── COMO FUNCIONA ─── */}
       <section
         id="como-funciona"
-        className="border-b border-slate-100 bg-slate-50 py-24 lg:py-32"
+        className="border-b border-slate-100 bg-slate-50 py-16 lg:py-32"
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
           <div className="animate-fade-in-up flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
@@ -260,9 +258,9 @@ export default function Home() {
       </section>
 
       {/* ─── COMPRADORES PARCEIROS (Suporte VIP) ─── */}
-      <section id="compradores" className="bg-white py-24 lg:py-32">
+      <section id="compradores" className="bg-white py-16 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-10">
-          <div className="relative isolate overflow-hidden rounded-2xl bg-emerald-50/50 px-6 py-20 text-center sm:px-16 sm:py-32 border border-emerald-100 shadow-xl shadow-emerald-500/5">
+          <div className="relative isolate overflow-hidden rounded-2xl bg-emerald-50/50 px-6 py-12 text-center sm:px-16 sm:py-32 border border-emerald-100 shadow-xl shadow-emerald-500/5">
             {/* Ambient glow sutil */}
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05),transparent_70%)]" />
             
@@ -315,7 +313,7 @@ export default function Home() {
           </div>
 
           <p className="mt-6 text-xs leading-relaxed text-slate-400 max-w-md mx-auto font-light">
-            Sua vitrine de ofertas e demandas. A inteligência local que conecta quem precisa com quem tem a melhor proposta.
+            Encontramos o difícil. Negociamos o caro. Seu tempo vale mais.
           </p>
 
           <div className="mt-12 flex justify-center gap-10">

@@ -1,22 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { Menu, X, Home, Search, Telescope, User, Info, MessageSquare, ChevronRight, Tag } from "lucide-react";
+import { useState, useCallback } from "react";
+import { Menu, X, Home, Search, Telescope, User, MessageSquare, ChevronRight, Tag } from "lucide-react";
+
+const menuItems = [
+  { icon: Home, label: "Início", href: "/" },
+  { icon: Tag, label: "Vitrine (myPromos)", href: "/mypromos" },
+  { icon: Search, label: "Pesquisar Ofertas", href: "/busca" },
+  { icon: Telescope, label: "Oportunidades", href: "/balaio" },
+  { icon: User, label: "Portal do Parceiro", href: "/parceiro/login" },
+  { icon: MessageSquare, label: "Fale Conosco", href: "/contato" },
+] as const;
 
 export function PesquisaPromoHeader() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
-  const menuItems = [
-    { icon: Home, label: "Início", href: "/" },
-    { icon: Tag, label: "Vitrine (myPromos)", href: "/mypromos" },
-    { icon: Search, label: "Pesquisar Ofertas", href: "/busca" },
-    { icon: Telescope, label: "Oportunidades", href: "/balaio" },
-    { icon: User, label: "Portal do Parceiro", href: "/parceiro/login" },
-    { icon: MessageSquare, label: "Fale Conosco", href: "/contato" },
-  ];
+  const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
+  const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
 
   return (
     <>
@@ -50,7 +51,8 @@ export function PesquisaPromoHeader() {
 
           {/* Mobile Hamburger Toggle */}
           <button 
-            onClick={toggleSidebar}
+            type="button"
+            onClick={openSidebar}
             className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-900 transition-all active:scale-90 md:hidden"
             aria-label="Abrir Menu"
           >
@@ -59,63 +61,65 @@ export function PesquisaPromoHeader() {
         </div>
       </header>
 
-      {/* ─── MOBILE SIDEBAR ─── */}
-      <div 
-        className={`fixed inset-0 z-[100] transition-opacity duration-300 pointer-events-none ${isSidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0"}`}
-      >
-        {/* Backdrop */}
-        <div 
-          className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
-          onClick={toggleSidebar}
-        />
+      {/* ─── MOBILE SIDEBAR (Overlay) ─── */}
+      {isSidebarOpen && (
+        <div className="fixed inset-0 z-[100]" role="dialog" aria-modal="true">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-fade-in"
+            onClick={closeSidebar}
+            aria-hidden="true"
+          />
 
-        {/* Panel */}
-        <div 
-          className={`absolute right-0 top-0 h-full w-[280px] bg-white shadow-2xl transition-transform duration-300 ease-out border-l border-slate-100 flex flex-col ${isSidebarOpen ? "translate-x-0" : "translate-x-full"}`}
-        >
-          {/* Sidebar Header */}
-          <div className="flex h-16 items-center justify-between border-b border-slate-50 px-6">
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Navegação</p>
-            <button 
-              onClick={toggleSidebar}
-              className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 text-slate-400 hover:text-slate-900 transition-colors"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+          {/* Panel */}
+          <aside className="absolute right-0 top-0 h-full w-[280px] max-w-[85vw] bg-white shadow-2xl border-l border-slate-100 flex flex-col animate-slide-in-right">
+            {/* Sidebar Header */}
+            <div className="flex h-16 items-center justify-between border-b border-slate-50 px-6 shrink-0">
+              <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Navegação</p>
+              <button 
+                type="button"
+                onClick={closeSidebar}
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 text-slate-400 hover:text-slate-900 transition-colors"
+                aria-label="Fechar Menu"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
 
-          {/* Sidebar Content */}
-          <nav className="flex-1 overflow-y-auto py-6">
-            <ul className="space-y-1 px-4">
-              {menuItems.map((item) => (
-                <li key={item.href}>
-                  <Link 
-                    href={item.href}
-                    onClick={() => setIsSidebarOpen(false)}
-                    className="flex items-center justify-between rounded-xl p-4 text-slate-600 transition-all hover:bg-emerald-50 hover:text-emerald-600 group"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-50 text-slate-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
-                        <item.icon className="h-4.5 w-4.5" />
-                      </div>
-                      <span className="text-xs font-bold tracking-tight">{item.label}</span>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-slate-200 group-hover:text-emerald-600/40 transition-colors" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+            {/* Sidebar Content */}
+            <nav className="flex-1 overflow-y-auto py-4">
+              <ul className="space-y-1 px-3">
+                {menuItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <li key={item.href}>
+                      <Link 
+                        href={item.href}
+                        onClick={closeSidebar}
+                        className="flex items-center gap-4 rounded-xl px-4 py-3.5 text-slate-600 transition-all active:bg-emerald-50 active:text-emerald-600 hover:bg-emerald-50 hover:text-emerald-600"
+                      >
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-slate-400">
+                          <Icon className="h-4 w-4" />
+                        </div>
+                        <span className="flex-1 text-xs font-bold tracking-tight">{item.label}</span>
+                        <ChevronRight className="h-4 w-4 shrink-0 text-slate-200" />
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
 
-          {/* Sidebar Footer */}
-          <div className="border-t border-slate-50 p-6 bg-slate-50/50">
-             <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">myLupa v2.1.0</p>
-             <p className="text-[9px] text-slate-400 leading-relaxed font-light">
-               Sua demanda nas mãos certas.
-             </p>
-          </div>
+            {/* Sidebar Footer */}
+            <div className="border-t border-slate-50 p-6 bg-slate-50/50 shrink-0">
+               <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">myLupa v2.1.0</p>
+               <p className="text-[9px] text-slate-400 leading-relaxed font-light">
+                 Sua demanda nas mãos certas.
+               </p>
+            </div>
+          </aside>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -95,6 +95,15 @@ textarea:-webkit-autofill {
 .delay-4 { animation-delay: 0.4s; }
 .delay-5 { animation-delay: 0.5s; }
 
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.25s ease-out both;
+}
+
 /* ── Glass card ── */
 .glass-card {
   background: rgba(255, 255, 255, 0.07);

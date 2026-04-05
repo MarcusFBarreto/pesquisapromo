@@ -26,7 +26,6 @@ export function DemandForm({
   const [resultInfo, setResultInfo] = useState<{ categories?: string[]; id?: string } | null>(null);
 
   const lastSuggestedRef = useRef("");
-1
   // Sync suggested details from parent/chat
   useEffect(() => {
     // Only auto-fill if the user hasn't manually changed the field to something else
@@ -169,7 +168,7 @@ export function DemandForm({
             </div>
             <h3 className="mb-2 text-2xl font-black text-slate-900 tracking-tight">Validado com Sucesso!</h3>
             <p className="mx-auto mb-10 max-w-xs text-sm text-slate-500 font-light leading-relaxed">
-              Sua demanda já está visível na **myLupa**. Enquanto aguarda os orçamentos, que tal ver o que tem de novo?
+              Sua demanda já está visível na <strong className="text-slate-900 font-bold">myLupa</strong>. Enquanto aguarda os orçamentos, que tal ver o que tem de novo?
             </p>
             
             {matches.length > 0 && (
@@ -210,7 +209,7 @@ export function DemandForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Request summary */}
+      {/* 1. Request summary (Essential) */}
       <div>
         <label
           htmlFor="form-request"
@@ -229,28 +228,7 @@ export function DemandForm({
         />
       </div>
 
-      {/* Details / context */}
-      <div>
-        <label
-          htmlFor="form-details"
-          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor"
-        >
-          Detalhes e contexto{" "}
-          <span className="normal-case tracking-normal text-slate-300 font-medium sm:text-slate-200">(opcional)</span>
-        </label>
-        <textarea
-          id="form-details"
-          rows={3}
-          value={details}
-          onChange={(e) => setDetails(e.target.value)}
-          className="w-full rounded-xl border border-emerald-100 bg-white p-5 text-sm leading-relaxed text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
-          placeholder="Quantidade, marca, urgência, endereço de entrega..."
-        />
-      </div>
-
-      <hr className="border-slate-100" />
-
-      {/* WhatsApp */}
+      {/* 2. WhatsApp (Essential — right after the request) */}
       <div>
         <label
           htmlFor="form-whatsapp"
@@ -271,7 +249,31 @@ export function DemandForm({
         />
       </div>
 
-      {/* Name (optional) */}
+      <hr className="border-slate-100" />
+
+      {/* 3. Concierge Details (Optional) */}
+      <div>
+        <label
+          htmlFor="form-details"
+          className="mb-2 block text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor"
+        >
+          Gostaríamos de saber mais...
+          <span className="normal-case tracking-normal text-slate-300 font-medium sm:text-slate-200"> (opcional)</span>
+        </label>
+        <p className="mb-3 text-xs text-slate-400 font-light leading-relaxed">
+          É um item raro? Você tem pressa ou é reposição comum?
+        </p>
+        <textarea
+          id="form-details"
+          rows={3}
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          className="w-full rounded-xl border border-emerald-100 bg-white p-5 text-sm leading-relaxed text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
+          placeholder="Ex: Não encontrei em nenhum lugar... preciso para amanhã..."
+        />
+      </div>
+
+      {/* 4. Name (Optional) */}
       <div>
         <label
           htmlFor="form-name"
@@ -303,10 +305,10 @@ export function DemandForm({
         className="w-full rounded-xl bg-slate-900 py-5 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-emerald-600 hover:shadow-xl hover:shadow-emerald-500/20 active:scale-[0.98] mobile-btn-soft-dark solar-shimmer-effect"
       >
         {status === "submitting"
-          ? "Enviando..."
+          ? "myLupando..."
           : partnerName
-            ? `Enviar para ${partnerName}`
-            : "Enviar pedido"}
+            ? `myLupar para ${partnerName}`
+            : "myLupar este pedido"}
       </button>
 
       <p className="text-center text-[10px] font-bold uppercase tracking-widest text-slate-300">
