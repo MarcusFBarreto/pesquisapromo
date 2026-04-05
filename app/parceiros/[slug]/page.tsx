@@ -30,7 +30,7 @@ export default async function PartnerPage({ params }: PageProps) {
           name: data.name,
           tagline: data.tagline || `Sua loja de ${data.category}`,
           category: data.category,
-          city: data.city || "Cidade Piloto",
+          city: data.city || "Piloto",
           region: data.region || "CE",
           description: data.description || "",
           services: data.services || [],

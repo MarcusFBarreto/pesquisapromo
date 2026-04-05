@@ -160,7 +160,7 @@ const BalaioCard = ({ demand, viewMode = "list" }: { demand: Demand; viewMode?: 
       <div className={`${viewMode === "grid" ? "hidden" : "grid grid-cols-2 shadow-sm bg-slate-50/50 rounded-xl p-2.5 mb-8"} gap-4 pt-4 border-t border-slate-100/50`}>
         <div className="flex flex-col gap-1">
           <span className="text-[8px] uppercase text-slate-400 font-extrabold tracking-[0.15em] mobile-text-anchor">
-            Cidade
+            Região
           </span>
           <div className="flex items-center gap-1 text-slate-700 text-[10px] font-bold mobile-text-anchor">
             <MapPin className={`w-3 h-3 ${accent.text}`} />

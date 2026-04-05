@@ -15,7 +15,7 @@ export default function AchadoDoDiaPage() {
           <p className="text-sm font-medium text-amber-700">Vitrine de Testes</p>
           <h1 className="mt-2 text-3xl font-semibold text-slate-900">Achado do Dia</h1>
           <p className="mt-3 text-slate-700">
-            Um achado que vale a pena hoje, validado primeiro no laboratório vivo da cidade.
+            Um achado que vale a pena hoje, validado primeiro em nosso ambiente de testes.
           </p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">
             <Link href="/mypromos" className="rounded-xl border border-amber-300 bg-white px-3 py-2 text-slate-900">

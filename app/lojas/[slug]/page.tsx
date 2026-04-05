@@ -12,7 +12,7 @@ const verificationCopy = {
     tone:
       "border-[rgba(25,76,160,0.18)] bg-[rgba(25,76,160,0.08)] text-[var(--pp-blue)]",
     detail:
-      "Esta porta representa um servico oficial ou um atalho publico da cidade.",
+      "Esta porta representa um serviço oficial ou um atalho público do ecossistema.",
   },
   "mais verificavel": {
     label: "Mais verificavel",
@@ -147,13 +147,13 @@ export default async function StorePage({ params }: PageProps) {
             </p>
             <h2 className="mt-3 text-2xl font-semibold tracking-[-0.04em]">
               {shop.services?.length
-                ? "Um ponto mais util e direto dentro da cidade."
+                ? "Um ponto mais útil e direto dentro deste setor."
                 : "Um canto seguro para experimentar."}
             </h2>
             <p className="mt-4 text-sm leading-8 text-[var(--pp-muted)]">
               {shop.services?.length
                 ? "Aqui entram caminhos que resolvem, organizam e ajudam a pessoa a chegar mais rapido no que precisa."
-                : "Esta lojinha pode receber novos cards, filtros, botoes, selos e pequenas experiencias sem atrapalhar o restante da cidade."}
+                : "Este piloto pode receber novos cards, filtros, botões, selos e pequenas experiências sem atrapalhar o restante do ecossistema."}
             </p>
 
             <div className="mt-6 grid gap-3">

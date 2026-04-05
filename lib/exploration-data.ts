@@ -1,4 +1,4 @@
-export type DistrictType = "ruas" | "avenidas";
+export type DistrictType = "setores" | "vitrines";
 
 export type TestShop = {
   slug?: string;
@@ -31,21 +31,21 @@ export type District = {
 export const featuredDeals = [
   {
     item: "Geladeira Brastemp Frost Free 375L",
-    store: "J Erivaldo & Cia · Cidade Piloto",
+    store: "J Erivaldo & Cia · Piloto",
     price: "R$ 2.899",
-    note: "queda real simulada com base em loja local",
+    note: "queda real simulada com base em parceiro local",
   },
   {
     item: "Kit escolar essencial",
-    store: "Art & Ton Papelaria · Cidade Piloto",
+    store: "Art & Ton Papelaria · Piloto",
     price: "R$ 94,90",
-    note: "menor preco recente nesta loja",
+    note: "menor preço recente neste parceiro",
   },
   {
     item: "Vitamina C 1g",
-    store: "Farmacia Caminho Popular · Cidade Piloto",
+    store: "Farmácia Caminho Popular · Piloto",
     price: "R$ 39,90",
-    note: "achado local com leitura mais crivel",
+    note: "achado verificado com leitura mais crível",
   },
 ] as const;
 
@@ -116,12 +116,12 @@ export const districts: District[] = [
         slug: "comparador-de-geladeiras",
         name: "Comparador de Geladeiras",
         street: "Rua da Casa",
-        vibe: "Comparacao mais serena, inspirada em lojas reais de Cidade Piloto como J Erivaldo & Cia e Zenir Moveis.",
+        vibe: "Comparação mais serena, inspirada em lojas reais como J Erivaldo & Cia e Zenir Móveis.",
         badge: "mais verificavel",
         offer: "Geladeira Brastemp Frost Free 375L por R$ 2.899",
         products: ["geladeira frost free", "geladeira brastemp", "geladeira electrolux"],
         verification: "mais verificavel",
-        address: "Av. Presidente Castelo Branco, Centro, Cidade Piloto/CE",
+        address: "Av. Presidente Castelo Branco, Centro, Piloto/CE",
         sourceLabel: "Diario Cidade",
         sourceUrl: "https://www.diariocidade.com/ce/horizonte/guia/j-erivaldo-cia-ltda-06001044003480/",
       },
@@ -226,7 +226,7 @@ export const districts: District[] = [
     count: "8 portas uteis",
     intro:
       "Uma rua pensada para reunir servicos publicos, utilidades gratuitas e atalhos confiaveis do dia a dia, sempre com clareza e sem misturar com vitrines comerciais.",
-    highlight: "Um canto da cidade voltado para resolver e facilitar",
+    highlight: "Espaço voltado para resolver e facilitar",
     pulse: "Mais calma, mais objetiva e com cara de servico que ajuda",
     shops: [
       {
@@ -298,7 +298,7 @@ export const districts: District[] = [
         offer: "Vitamina C 1g por R$ 39,90",
         products: ["farmacia", "vitamina c", "medicamento", "perfumaria"],
         verification: "mais verificavel",
-        address: "Av. Presidente Castelo Branco, 5437, Centro, Cidade Piloto/CE",
+        address: "Av. Presidente Castelo Branco, 5437, Centro, Piloto/CE",
         sourceLabel: "Diario Cidade",
         sourceUrl: "https://www.diariocidade.com/ce/horizonte/guia/farmacia-caminho-popular-41123351000177/",
       },
