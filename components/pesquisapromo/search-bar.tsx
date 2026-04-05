@@ -12,10 +12,9 @@ type Props = {
 };
 
 export function SearchBar({
-  placeholder = "Buscar na cidade...",
+  placeholder = "O que você está procurando?",
   initialValue = "",
-  showTaxiShortcut = true,
-}: Props) {
+}: Props & { showTaxiShortcut?: boolean }) {
   const [value, setValue] = useState(initialValue);
   const router = useRouter();
 
@@ -52,15 +51,6 @@ export function SearchBar({
           >
             Buscar
           </button>
-          {showTaxiShortcut ? (
-            <button
-              type="button"
-              onClick={() => router.push(`/taxi-virtual?q=${encodeURIComponent(value.trim())}`)}
-              className="h-14 rounded-2xl border border-slate-200 bg-white px-6 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 transition-all hover:border-slate-900 hover:text-slate-900 hover:bg-slate-50 active:scale-[0.98] shadow-sm"
-            >
-              Táxi Virtual
-            </button>
-          ) : null}
         </div>
       </form>
       {value.trim() ? (

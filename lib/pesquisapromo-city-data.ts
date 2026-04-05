@@ -17,7 +17,7 @@ export const streets: Street[] = [
     kind: "avenue",
     summary: "Destaques fortes da cidade, com ofertas priorizadas por evidência e confiança.",
     keywords: ["promoções", "promocoes", "descontos", "ofertas", "avenida"],
-    targetRoute: "/avenidas/grandes-promocoes",
+    targetRoute: "/mypromos",
   },
   {
     id: "rua-da-casa",
@@ -26,7 +26,7 @@ export const streets: Street[] = [
     kind: "street",
     summary: "Eletrodomésticos e itens de casa com foco em utilidade real.",
     keywords: ["geladeira", "air fryer", "casa", "cozinha", "eletrodomésticos", "eletrodomesticos"],
-    targetRoute: "/ruas/casa",
+    targetRoute: "/busca?q=casa",
   },
   {
     id: "rua-dos-calcados",
@@ -35,7 +35,7 @@ export const streets: Street[] = [
     kind: "street",
     summary: "Tênis, sandálias e vitrines para quem quer comparar antes de decidir.",
     keywords: ["tênis", "tenis", "calçados", "calcados", "sapato"],
-    targetRoute: "/ruas/calcados",
+    targetRoute: "/busca?q=calcados",
   },
   {
     id: "rua-dos-testes",
@@ -44,7 +44,7 @@ export const streets: Street[] = [
     kind: "street",
     summary: "Laboratório vivo da cidade, onde experiências, buscas e vitrines são validadas.",
     keywords: ["testes", "laboratorio", "sandbox", "achado", "achado do dia"],
-    targetRoute: "/ruas/testes",
+    targetRoute: "/busca?q=testes",
   },
   {
     id: "rua-dos-servicos",
@@ -53,7 +53,7 @@ export const streets: Street[] = [
     kind: "street",
     summary: "Apoios, conveniências e atalhos úteis para quem quer resolver rápido.",
     keywords: ["serviços", "servicos", "fone", "acessorios", "utilidade"],
-    targetRoute: "/ruas/servicos",
+    targetRoute: "/busca?q=servicos",
   },
 ];
 
