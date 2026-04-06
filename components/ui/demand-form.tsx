@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent, useEffect, useRef } from "react";
+import Link from "next/link";
 import { CheckCircle2, ChevronRight, Tag, Sparkles } from "lucide-react";
 import { findMatchesForDemand } from "@/lib/match-service";
 import { MatchCard } from "./match-card";
@@ -126,7 +127,7 @@ export function DemandForm({
             </div>
             <h3 className="mb-2 text-2xl font-black text-slate-900 tracking-tight">Quase lá!</h3>
             <p className="mx-auto mb-6 max-w-xs text-sm text-slate-500 font-light leading-relaxed">
-              Enviamos um código de segurança para o seu WhatsApp para validar sua solicitação.
+              Recebemos sua solicitação; um código de segurança foi enviado ao seu WhatsApp para validar seu pedido.
             </p>
             
             <form onSubmit={handleVerify} className="w-full max-w-xs mb-8">
@@ -152,7 +153,7 @@ export function DemandForm({
                   <div className="flex items-center gap-2 mb-6">
                     <Sparkles className="h-4 w-4 text-pp-orange animate-pulse" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">
-                      O Apollo encontrou ofertas para você!
+                      Enquanto isso, saiba o que está rolando:
                     </p>
                   </div>
                   <div className="grid gap-3">
@@ -166,9 +167,9 @@ export function DemandForm({
             <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 shadow-xl shadow-emerald-500/10 border border-emerald-100">
               <CheckCircle2 className="h-10 w-10" />
             </div>
-            <h3 className="mb-2 text-2xl font-black text-slate-900 tracking-tight">Validado com Sucesso!</h3>
+            <h3 className="mb-2 text-2xl font-black text-slate-900 tracking-tight">Tudo certo!</h3>
             <p className="mx-auto mb-10 max-w-xs text-sm text-slate-500 font-light leading-relaxed">
-              Sua demanda já está visível na <strong className="text-slate-900 font-bold">myLupa</strong>. Enquanto aguarda os orçamentos, que tal ver o que tem de novo?
+              Recebemos sua solicitação; iremos trabalhar para lhe retornar com as melhores informações.
             </p>
             
             {matches.length > 0 && (
@@ -176,7 +177,7 @@ export function DemandForm({
                   <div className="flex items-center gap-2 mb-6">
                     <Sparkles className="h-4 w-4 text-emerald-500" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">
-                      BOOM! Encontramos ofertas similares:
+                      Agora, veja o que está rolando:
                     </p>
                   </div>
                   <div className="grid gap-3">
