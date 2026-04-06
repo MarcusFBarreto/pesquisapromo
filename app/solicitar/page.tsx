@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { useState, Suspense } from "react";
 import { DemandForm } from "@/components/ui/demand-form";
 import { DemandChat } from "@/components/ui/demand-chat";
+import { MatchDetailPanel } from "@/components/ui/match-detail-panel";
+import { MatchedOffer } from "@/lib/match-service";
 import { getPartnerBySlug } from "@/lib/partner-data";
 import { ClipboardCheck, ArrowLeft } from "lucide-react";
 
@@ -16,6 +18,8 @@ function SolicitarContent() {
   const partner = partnerSlug ? getPartnerBySlug(partnerSlug) : null;
 
   const [suggestedDetails, setSuggestedDetails] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState<MatchedOffer | null>(null);
 
   return (
     <main className="min-h-screen bg-white">
@@ -92,21 +96,30 @@ function SolicitarContent() {
                 partnerSlug={partnerSlug}
                 partnerName={partner?.name ?? null}
                 suggestedDetails={suggestedDetails}
+                onVerified={() => setIsVerified(true)}
+                onSelectMatch={setSelectedMatch}
+                selectedMatchId={selectedMatch?.id}
               />
             </div>
           </div>
 
-          {/* RIGHT: Chat */}
+          {/* RIGHT: Chat or Detail */}
           <div className="animate-fade-in-up delay-1 order-1 lg:order-2">
             <div className="flex h-[500px] flex-col rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/30 lg:h-[650px] sticky top-24 overflow-hidden glass-container-mobile sm:bg-white sm:shadow-xl">
               <div className="p-5 border-b border-slate-100 bg-slate-50/50">
-                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor">Assistente myLupa</p>
+                 <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mobile-text-anchor">
+                   {isVerified ? "Análise da Oferta" : "Assistente myLupa"}
+                 </p>
               </div>
-              <DemandChat
-                demand={demand}
-                partnerName={partner?.name ?? null}
-                onSuggestDetail={setSuggestedDetails}
-              />
+              {isVerified ? (
+                <MatchDetailPanel match={selectedMatch} />
+              ) : (
+                <DemandChat
+                  demand={demand}
+                  partnerName={partner?.name ?? null}
+                  onSuggestDetail={setSuggestedDetails}
+                />
+              )}
             </div>
           </div>
         </div>

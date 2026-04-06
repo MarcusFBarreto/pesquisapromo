@@ -66,7 +66,7 @@ export default function Home() {
             <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
               Ajuda para compras?<br />
               <span className="text-emerald-500 italic font-medium">
-                deixe myLupa resolver.
+                myLupa resolve.
               </span>
             </h1>
 

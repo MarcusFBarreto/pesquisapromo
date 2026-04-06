@@ -6,9 +6,10 @@ import { Menu, X, Home, Search, Telescope, User, MessageSquare, ChevronRight, Ta
 
 const menuItems = [
   { icon: Home, label: "Início", href: "/" },
-  { icon: Tag, label: "Vitrine (myPromos)", href: "/mypromos" },
-  { icon: Search, label: "Pesquisar Ofertas", href: "/busca" },
-  { icon: Telescope, label: "Oportunidades", href: "/balaio" },
+  // Links de Vitrine e Pesquisa ocultos para a Fase 1:
+  // { icon: Tag, label: "Vitrine (myPromos)", href: "/mypromos" },
+  // { icon: Search, label: "Pesquisar Ofertas", href: "/busca" },
+  // { icon: Telescope, label: "Oportunidades", href: "/balaio" },
   { icon: User, label: "Portal do Parceiro", href: "/parceiro/login" },
   { icon: MessageSquare, label: "Fale Conosco", href: "/contato" },
 ] as const;
@@ -21,6 +22,21 @@ export function PesquisaPromoHeader() {
 
   return (
     <>
+      {/* ─── BANNER DE AVISO DE FASE PILOTO ─── */}
+      <div className="bg-slate-900 px-4 py-2.5 text-center sm:px-6 lg:px-8 shrink-0 relative z-[60]">
+        <p className="text-[9px] sm:text-[11px] font-medium text-slate-200 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+          <span className="relative overflow-hidden font-black text-pp-orange tracking-widest uppercase text-[8px] bg-pp-orange/10 border border-pp-orange/20 px-2 py-0.5 rounded-sm shrink-0 shadow-[0_0_15px_rgba(249,115,22,0.4)] solar-shimmer-effect animate-pulse">
+            Fase 1 (Até 06/26)
+          </span>
+          <span className="leading-tight">Nessa fase piloto, gostaríamos de receber dicas, reclamações e ideias:</span>
+          <span className="flex items-center gap-2 mt-0.5 sm:mt-0 font-bold text-white">
+            <a href="mailto:oi@mylupa.com.br" className="hover:text-emerald-400 transition-colors">oi@mylupa.com.br</a>
+            <span className="text-slate-600">•</span>
+            <a href="https://wa.me/5511999999999" target="_blank" rel="noreferrer" className="hover:text-emerald-400 transition-colors">WhatsApp</a>
+          </span>
+        </p>
+      </div>
+
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-xl animate-fade-in sm:bg-white/80 sm:backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
           <Link href="/" className="flex items-center gap-2 sm:gap-4 shrink-0 whitespace-nowrap">
@@ -41,12 +57,19 @@ export function PesquisaPromoHeader() {
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-500 md:flex">
+            {/* Links ocultados para a Fase 1: 
             <Link href="/mypromos" className="flex items-center gap-2 text-slate-900 hover:text-emerald-600 transition-colors">
               <Tag className="h-3 w-3" />
               myPromos
             </Link>
             <Link href="/busca" className="hover:text-slate-900 transition-colors">Pesquisa</Link>
             <Link href="/balaio" className="hover:text-slate-900 transition-colors">Oportunidades</Link>
+            */}
+            
+            <Link href="/parceiro/login" className="flex items-center gap-2 hover:text-slate-900 transition-colors">
+              <User className="h-3 w-3" />
+              Portal do Parceiro
+            </Link>
           </nav>
 
           {/* Mobile Hamburger Toggle */}

@@ -3,7 +3,7 @@
 import { useState, FormEvent, useEffect, useRef } from "react";
 import Link from "next/link";
 import { CheckCircle2, ChevronRight, Tag, Sparkles } from "lucide-react";
-import { findMatchesForDemand } from "@/lib/match-service";
+import { findMatchesForDemand, MatchedOffer } from "@/lib/match-service";
 import { MatchCard } from "./match-card";
 
 type DemandFormProps = {
@@ -11,6 +11,9 @@ type DemandFormProps = {
   partnerSlug?: string | null;
   partnerName?: string | null;
   suggestedDetails?: string;
+  onVerified?: () => void;
+  onSelectMatch?: (match: MatchedOffer) => void;
+  selectedMatchId?: string;
 };
 
 export function DemandForm({
@@ -18,6 +21,9 @@ export function DemandForm({
   partnerSlug = null,
   partnerName = null,
   suggestedDetails = "",
+  onVerified,
+  onSelectMatch,
+  selectedMatchId,
 }: DemandFormProps) {
   const [request, setRequest] = useState(initialDemand);
   const [details, setDetails] = useState(suggestedDetails);
@@ -77,6 +83,7 @@ export function DemandForm({
         // Se NÃO for necessário verificar (Trusted User), pulamos direto para o fim
         if (data.verificationRequired === false) {
           setVerified(true);
+          onVerified?.();
         }
         
         setStatus("success");
@@ -104,6 +111,7 @@ export function DemandForm({
       });
       if (res.ok) {
         setVerified(true);
+        onVerified?.();
       } else {
         alert("Código incorreto. Verifique no seu WhatsApp.");
       }
@@ -153,11 +161,20 @@ export function DemandForm({
                   <div className="flex items-center gap-2 mb-6">
                     <Sparkles className="h-4 w-4 text-pp-orange animate-pulse" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">
-                      Enquanto isso, saiba o que está rolando:
+                      Sua solução pode estar aqui. Confira:
                     </p>
                   </div>
                   <div className="grid gap-3">
-                    {matches.map(m => <MatchCard key={m.id} match={m} />)}
+                    {matches.map(m => (
+                      <button 
+                        key={m.id}
+                        type="button"
+                        onClick={() => onSelectMatch?.(m)}
+                        className="text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-2xl transition-transform active:scale-[0.98]"
+                      >
+                        <MatchCard match={m} isSelected={selectedMatchId === m.id} />
+                      </button>
+                    ))}
                   </div>
                </div>
             )}
@@ -177,24 +194,25 @@ export function DemandForm({
                   <div className="flex items-center gap-2 mb-6">
                     <Sparkles className="h-4 w-4 text-emerald-500" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-900">
-                      Agora, veja o que está rolando:
+                      Sua solução pode estar aqui. Confira:
                     </p>
                   </div>
                   <div className="grid gap-3">
-                    {matches.map(m => <MatchCard key={m.id} match={m} />)}
+                    {matches.map(m => (
+                      <button 
+                        key={m.id}
+                        type="button"
+                        onClick={() => onSelectMatch?.(m)}
+                        className="text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 rounded-2xl transition-transform active:scale-[0.98]"
+                      >
+                        <MatchCard match={m} isSelected={selectedMatchId === m.id} />
+                      </button>
+                    ))}
                   </div>
                </div>
             )}
 
             <div className="flex flex-col gap-3 w-full max-w-xs">
-              <a
-                href="/mypromos"
-                className="group flex items-center justify-center gap-3 rounded-2xl bg-slate-900 px-10 py-5 text-[11px] font-black uppercase tracking-[0.2em] text-white transition hover:bg-emerald-600 hover:scale-[1.02] shadow-xl shadow-slate-900/10 mobile-btn-soft-dark solar-shimmer-effect"
-              >
-                <Tag className="h-4 w-4" />
-                Explorar mais no myPromos
-                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
               <Link
                 href="/"
                 className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors py-2"

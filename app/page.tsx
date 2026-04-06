@@ -59,14 +59,14 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-x-20 lg:px-10">
           {/* LEFT COLUMN: Section 1 (Headline + Para) */}
           <div className="animate-fade-in-up flex flex-col lg:row-start-1 lg:col-start-1">
-            <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-600 mb-4 sm:tracking-[0.4em]">
+            <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-700 subpixel-antialiased mb-4 sm:tracking-[0.4em]">
               Especialistas em encontrar o que você procura
             </p>
 
             <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-6xl lg:text-[4.5rem]">
-              Ajuda para compras?<br />
+              Compra difícil?<br />
               <span className="text-emerald-500 italic font-medium">
-                deixe myLupa resolver.
+                myLupa resolve.
               </span>
             </h1>
 
@@ -127,38 +127,97 @@ export default function Home() {
               </div>
             </div>
           </div>
+                   </div> {/* Final do Hero Grid */}
 
-          {/* RIGHT COLUMN: Partner CTA (Below the alignment line) */}
-          <div className="animate-fade-in-up delay-3 lg:row-start-3 lg:col-start-2 mt-8">
-            <div className="h-full min-h-[360px] bg-emerald-50/40 border border-emerald-100 rounded-2xl p-10 transition-all hover:scale-[1.01] shadow-xl shadow-emerald-500/5 overflow-hidden relative group glass-container-mobile">
-              {/* Decorative element */}
-              <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-emerald-500/10 blur-2xl group-hover:bg-emerald-500/20 transition-colors" />
+        {/* ─── BASE DE PATROCÍNIOS & TRUST SIGNALS DE PONTA A PONTA ─── */}
+        <div className="w-full mt-24 border-t border-slate-100 pt-16 bg-slate-50/30">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+            <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 opacity-80 text-center">Quem myLupa as compras</h3>
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes marquee {
+                0% { transform: translateX(0%); }
+                100% { transform: translateX(-50%); }
+              }
+              .animate-marquee {
+                animation: marquee 25s linear infinite;
+              }
+              .mask-fade {
+                mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+              }
+            `}} />
+            <div className="relative flex overflow-hidden w-full mask-fade mb-10">
+              <div className="animate-marquee flex gap-8 sm:gap-24 items-center whitespace-nowrap opacity-40 hover:opacity-100 transition-opacity">
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">CONSTRUTORA ALFA</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">REFORMAS BEM-FEITAS</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">GRUPO ESTRUTURAL</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">PREFEITURA LOCAL</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">MÓVEIS PLANEJADOS</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">CONSTRUTORA ALFA</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">REFORMAS BEM-FEITAS</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tighter">GRUPO ESTRUTURAL</span>
+              </div>
+            </div>
 
-              <div className="flex flex-col justify-between h-full relative">
-                <div className="flex items-center gap-5 text-slate-900">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-emerald-600 border border-emerald-200 shadow-sm transition-transform group-hover:scale-110">
-                    <Store className="w-7 h-7" />
-                  </div>
+            <div className="border-t border-slate-200/80 pt-8 pb-12">
+              <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 opacity-80 text-center">Fornecedores Homologados</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm border border-emerald-100 grayscale hover:grayscale-0 transition-all hover:shadow-md cursor-default group">
+                  <div className="h-10 w-10 shrink-0 rounded-lg bg-slate-50 flex items-center justify-center text-[8px] font-black text-slate-300 uppercase tracking-widest group-hover:bg-emerald-50 group-hover:text-emerald-500 transition-colors">Logo</div>
                   <div>
-                    <h3 className="text-xl font-black leading-tight text-slate-900">Bons fornecedores são<br /><span className="text-emerald-600 italic font-medium">muito bem-vindos!</span></h3>
-                    <p className="mt-2 text-[10px] text-emerald-600 uppercase tracking-[0.25em] font-black">Preencha um pequeno pré-cadastro</p>
+                    <p className="text-xs font-black text-slate-900">Cimento & Cia</p>
+                    <p className="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">Patrocinador</p>
                   </div>
                 </div>
 
-                <div className="mt-10 lg:mt-0">
-                  <Link
-                    href="/parceiro/fornecer"
-                    className="group flex items-center justify-between rounded-3xl bg-pp-orange px-8 py-6 text-[12px] font-black uppercase tracking-[0.15em] text-white transition-all hover:bg-pp-orange-hover shadow-2xl shadow-pp-orange/25 active:scale-95"
-                  >
-                    Ver como participar
-                    <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
-                  </Link>
+                <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm border border-emerald-100 grayscale hover:grayscale-0 transition-all hover:shadow-md cursor-default group">
+                  <div className="h-10 w-10 shrink-0 rounded-lg bg-slate-50 flex items-center justify-center text-[8px] font-black text-slate-300 uppercase tracking-widest group-hover:bg-emerald-50 group-hover:text-emerald-500 transition-colors">Logo</div>
+                  <div>
+                    <p className="text-xs font-black text-slate-900">Elétrica Sul</p>
+                    <p className="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">Patrocinador</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm border border-emerald-100 grayscale hover:grayscale-0 transition-all hover:shadow-md cursor-default group">
+                  <div className="h-10 w-10 shrink-0 rounded-lg bg-slate-50 flex items-center justify-center text-[8px] font-black text-slate-300 uppercase tracking-widest group-hover:bg-emerald-50 group-hover:text-emerald-500 transition-colors">Logo</div>
+                  <div>
+                    <p className="text-xs font-black text-slate-900">Madeireira João</p>
+                    <p className="text-[9px] font-bold text-emerald-600 uppercase tracking-widest mt-0.5">Patrocinador</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* ─── CTA BANNER P/ PARCEIROS (DE PONTA A PONTA) ─── */}
+        <div className="w-full border-t border-emerald-100 bg-emerald-50/40">
+          <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 relative">
+              <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-[80px]" />
+              
+              <div className="flex items-center gap-6 relative z-10 w-full md:w-auto">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white text-emerald-600 border border-emerald-200 shadow-sm transition-transform hover:scale-110">
+                  <Store className="w-8 h-8" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black leading-tight text-slate-900">Bons fornecedores são <span className="text-emerald-600 italic font-medium">muito bem-vindos!</span></h3>
+                  <p className="mt-2 text-[11px] text-emerald-700 uppercase tracking-[0.25em] font-bold subpixel-antialiased">3 passos e você já está dentro.</p>
+                </div>
+              </div>
+
+              <div className="w-full md:w-auto relative z-10">
+                <Link
+                  href="/parceiro/fornecer"
+                  className="group flex items-center justify-center gap-4 rounded-full bg-pp-orange px-10 py-5 text-[12px] font-black uppercase tracking-[0.15em] text-white transition-all hover:bg-pp-orange-hover hover:scale-105 shadow-xl shadow-pp-orange/25 active:scale-95 w-full md:w-auto"
+                >
+                  Ver como participar
+                  <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-2" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>      </section>
 
       {/* ─── FOOTER FASE 1 ─── */}
       <footer className="bg-slate-50 py-12 border-t border-slate-100">
