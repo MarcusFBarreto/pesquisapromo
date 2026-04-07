@@ -1,34 +1,25 @@
-import { adminAuth } from "./firebase-admin";
-
-const ADMIN_EMAILS = ["erivaldo@mylupa.com.br", "admin@mylupa.com.br"];
+import { adminAuth, adminDb } from "./firebase-admin";
 
 /**
- * Checks if a request comes from an authorized administrator.
- * Expects a Firebase ID Token in the Authorization header: 'Bearer <token>'
+ * Verifica se um token é de um administrador.
+ * Agora utiliza a coleção "admins" no Firestore para validação dinâmica.
  */
-export async function isAdminRequest(req: Request): Promise<boolean> {
+export async function isAdminRequest(req: Request) {
   try {
     const authHeader = req.headers.get("Authorization");
+    if (!authHeader?.startsWith("Bearer ")) return false;
+
+    const token = authHeader.split(" ")[1];
+    const decodedToken = await adminAuth.verifyIdToken(token);
     
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      // If no token in header, check cookies (optional, but good for some setups)
-      return false;
-    }
+    if (!decodedToken.email) return false;
 
-    const idToken = authHeader.split("Bearer ")[1];
-    if (!idToken) return false;
-
-    // Verify the token
-    const decodedToken = await adminAuth.verifyIdToken(idToken);
+    // Check if email exists in the "admins" collection
+    const adminDoc = await adminDb.collection("admins").doc(decodedToken.email.toLowerCase()).get();
     
-    if (!decodedToken || !decodedToken.email) {
-      return false;
-    }
-
-    // Check if email is in the admin list
-    return ADMIN_EMAILS.includes(decodedToken.email);
+    return adminDoc.exists;
   } catch (error) {
-    console.error("[API Auth] Error verifying admin request:", error);
+    console.error("[API Auth] Admin verify error:", error);
     return false;
   }
 }

@@ -12,7 +12,10 @@ import {
   ArrowTopRightOnSquareIcon,
   ClockIcon,
   LinkIcon,
-  BuildingStorefrontIcon
+  BuildingStorefrontIcon,
+  ShieldCheckIcon,
+  UserMinusIcon,
+  UserPlusIcon
 } from "@heroicons/react/24/outline";
 import { auth } from "@/lib/firebase";
 import { Demand } from "@/lib/mock-demands";
@@ -21,13 +24,16 @@ import { useAuth } from "@/lib/auth-context";
 import { useRouter } from "next/navigation";
 
 export default function AdminDashboardPage() {
-  const [activeTab, setActiveTab] = useState<'demands' | 'partners'>('demands');
+  const [activeTab, setActiveTab] = useState<'demands' | 'partners' | 'admins'>('demands');
   const [demands, setDemands] = useState<Demand[]>([]);
   const [applications, setApplications] = useState<any[]>([]);
+  const [adminList, setAdminList] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteName, setInviteName] = useState("");
   const [isInviting, setIsInviting] = useState(false);
+  const [newAdminEmail, setNewAdminEmail] = useState("");
+  const [isAddingAdmin, setIsAddingAdmin] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -61,20 +67,25 @@ export default function AdminDashboardPage() {
       const token = await auth.currentUser?.getIdToken();
       if (!token) return;
 
-      const [demRes, appRes] = await Promise.all([
+      const [demRes, appRes, adminRes] = await Promise.all([
         fetch('/api/admin/demands', {
           headers: { 'Authorization': `Bearer ${token}` }
         }),
         fetch('/api/admin/partners', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }),
+        fetch('/api/admin/admins', {
           headers: { 'Authorization': `Bearer ${token}` }
         })
       ]);
       
       const demData = await demRes.json();
       const appData = await appRes.json();
+      const adminData = await adminRes.json();
 
       if (demData.demands) setDemands(demData.demands);
       if (appData.applications) setApplications(appData.applications);
+      if (adminData.admins) setAdminList(adminData.admins);
     } catch (error) {
       console.error("Erro ao carregar dados do admin:", error);
     } finally {
@@ -142,6 +153,49 @@ export default function AdminDashboardPage() {
     setIsInviting(false);
   };
 
+  const handleAddAdmin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAdminEmail) return;
+    setIsAddingAdmin(true);
+    try {
+       const token = await auth.currentUser?.getIdToken();
+       const res = await fetch('/api/admin/admins', {
+         method: 'POST',
+         headers: { 
+           'Content-Type': 'application/json',
+           'Authorization': `Bearer ${token}`
+         },
+         body: JSON.stringify({ email: newAdminEmail })
+       });
+       if (res.ok) {
+         setNewAdminEmail("");
+         fetchData();
+       }
+    } catch (error) {
+       console.error("Erro ao adicionar admin:", error);
+    }
+    setIsAddingAdmin(false);
+  };
+
+  const handleRemoveAdmin = async (email: string) => {
+    if (email === user?.email) {
+      alert("Você não pode remover a si mesmo.");
+      return;
+    }
+    if (!window.confirm(`Remover acesso administrativo de ${email}?`)) return;
+    
+    try {
+       const token = await auth.currentUser?.getIdToken();
+       const res = await fetch(`/api/admin/admins?email=${email}`, {
+         method: 'DELETE',
+         headers: { 'Authorization': `Bearer ${token}` }
+       });
+       if (res.ok) fetchData();
+    } catch (error) {
+       console.error("Erro ao remover admin:", error);
+    }
+  };
+
   const handleDeleteDemand = async (id: string) => {
     if (!window.confirm("Tem certeza que deseja excluir esta demanda definitivamente?")) return;
     try {
@@ -177,6 +231,12 @@ export default function AdminDashboardPage() {
               className={`px-4 py-2 text-sm font-semibold rounded-full transition ${activeTab === 'partners' ? 'bg-pp-orange text-white' : 'text-white/60 hover:text-white'}`}
             >
               Aprovações
+            </button>
+            <button 
+              onClick={() => setActiveTab('admins')}
+              className={`px-4 py-2 text-sm font-semibold rounded-full transition ${activeTab === 'admins' ? 'bg-pp-orange text-white' : 'text-white/60 hover:text-white'}`}
+            >
+              Equipe
             </button>
           </nav>
         </div>
@@ -350,7 +410,7 @@ export default function AdminDashboardPage() {
               ))}
             </div>
           </div>
-        ) : (
+        ) : activeTab === 'partners' ? (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-pp-ink">Aprovações e Convites</h2>
 
@@ -496,6 +556,75 @@ export default function AdminDashboardPage() {
                   </div>
                 ))
               )}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-pp-ink">Administração da Equipe</h2>
+              <span className="text-[10px] font-bold text-pp-orange bg-pp-orange/10 px-3 py-1 rounded-full uppercase tracking-widest border border-pp-orange/20">Acesso Restrito</span>
+            </div>
+
+            {/* ADD ADMIN FORM */}
+            <div className="bg-white p-8 rounded-[40px] border border-pp-line shadow-sm border-pp-orange/20">
+               <h3 className="text-pp-ink font-bold italic mb-6">ADICIONAR NOVO ADMINISTRADOR</h3>
+               <form onSubmit={handleAddAdmin} className="flex flex-col md:flex-row gap-4">
+                 <div className="flex-1 relative">
+                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-pp-muted">
+                     <UserPlusIcon className="h-5 w-5" />
+                   </div>
+                   <input 
+                     type="email" 
+                     placeholder="Digite o e-mail do novo administrador..."
+                     value={newAdminEmail}
+                     onChange={(e) => setNewAdminEmail(e.target.value)}
+                     className="w-full bg-pp-cream border border-pp-line rounded-2xl pl-12 pr-6 py-4 text-sm text-pp-ink focus:border-pp-orange outline-none transition"
+                     required
+                   />
+                 </div>
+                 <button 
+                   type="submit"
+                   disabled={isAddingAdmin}
+                   className="bg-pp-dark text-white rounded-2xl px-8 font-bold text-sm hover:bg-pp-ink transition flex items-center justify-center gap-2"
+                 >
+                   {isAddingAdmin ? "Adicionando..." : "Autorizar Admin"}
+                 </button>
+               </form>
+               <p className="mt-4 text-[10px] text-pp-muted italic flex items-center gap-2">
+                 <ShieldCheckIcon className="h-4 w-4 text-pp-teal" />
+                 Administradores podem aprovar parceiros, ver todas as demandas e gerenciar a equipe.
+               </p>
+            </div>
+
+            {/* ADMIN LIST */}
+            <div className="grid gap-4">
+              <p className="text-xs font-bold text-pp-muted uppercase tracking-widest ml-1">Membros da Equipe ({adminList.length})</p>
+              {adminList.map((admin) => (
+                <div key={admin.email} className="bg-white p-6 rounded-3xl border border-pp-line flex items-center justify-between group hover:border-pp-orange transition">
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 bg-pp-orange/10 text-pp-orange rounded-xl flex items-center justify-center font-bold">
+                       {admin.email[0].toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-pp-ink">{admin.email}</p>
+                      <p className="text-[10px] text-pp-muted uppercase tracking-wider">Membro desde {new Date(admin.createdAt).toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                  
+                  {admin.email !== user?.email && (
+                    <button 
+                      onClick={() => handleRemoveAdmin(admin.email)}
+                      className="p-2 text-pp-muted hover:text-red-500 hover:bg-red-50 transition rounded-xl"
+                      title="Remover Acesso"
+                    >
+                      <UserMinusIcon className="h-5 w-5" />
+                    </button>
+                  )}
+                  {admin.email === user?.email && (
+                    <span className="text-[10px] font-bold text-pp-teal bg-pp-teal/10 px-2 py-1 rounded-md">VOCÊ</span>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}

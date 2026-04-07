@@ -3,7 +3,6 @@ import { createMagicLink } from "@/lib/magic-link-service";
 import { sendMagicLinkEmail } from "@/lib/email-service";
 import { adminDb } from "@/lib/firebase-admin";
 
-const ADMIN_EMAILS = ["erivaldo@mylupa.com.br", "admin@mylupa.com.br"];
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +17,9 @@ export async function POST(req: Request) {
     let type: 'admin' | 'partner' = 'partner';
 
     // 1. Check if Admin
-    if (ADMIN_EMAILS.includes(lowerEmail)) {
+    const adminDoc = await adminDb.collection("admins").doc(lowerEmail).get();
+    
+    if (adminDoc.exists) {
       type = 'admin';
       partnerInfo = { slug: 'admin' };
     } else {
