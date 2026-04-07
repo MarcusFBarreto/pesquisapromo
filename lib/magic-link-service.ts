@@ -72,10 +72,6 @@ export async function verifyMagicLink(token: string): Promise<{ email: string; t
     return null;
   }
 
-  // Mark as used
-  console.log(`[MagicLink] Marcando token como usado...`);
-  await doc.ref.update({ used: true, usedAt: new Date() });
-
   // Generate Firebase Custom Token
   console.log(`[MagicLink] Gerando Custom Token para ${data.email}...`);
   try {
@@ -83,6 +79,11 @@ export async function verifyMagicLink(token: string): Promise<{ email: string; t
       role: data.type === 'admin' ? 'admin' : 'partner'
     });
     console.log(`[MagicLink] Custom Token gerado com sucesso.`);
+
+    // Mark as used ONLY AFTER successful generation
+    console.log(`[MagicLink] Marcando token como usado...`);
+    await doc.ref.update({ used: true, usedAt: new Date() });
+
     return { 
       email: data.email, 
       type: data.type, 
