@@ -2,9 +2,13 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 import { adminDb, adminAuth } from "@/lib/firebase-admin";
 import { slugify } from "@/lib/utils";
+import { isAdminRequest } from "@/lib/api-auth";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    if (!await isAdminRequest(req)) {
+      return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
+    }
     const snapshot = await adminDb.collection('partner_applications')
       .orderBy('createdAt', 'desc')
       .get();
@@ -28,6 +32,9 @@ export async function GET() {
 
 export async function PATCH(req: Request) {
   try {
+    if (!await isAdminRequest(req)) {
+      return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
+    }
     const body = await req.json();
     const { applicationId, status } = body;
 

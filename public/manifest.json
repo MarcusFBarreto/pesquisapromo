@@ -1,0 +1,17 @@
+{
+  "name": "myLupa Pro",
+  "short_name": "myLupa Pro",
+  "description": "Painel exclusivo para administradores e parceiros verificados myLupa.",
+  "start_url": "/admin/painel",
+  "display": "standalone",
+  "background_color": "#1A1A1A",
+  "theme_color": "#FF4D00",
+  "icons": [
+    {
+      "src": "/icon-pro.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

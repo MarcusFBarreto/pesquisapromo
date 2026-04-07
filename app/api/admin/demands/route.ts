@@ -2,9 +2,13 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 import { adminDb } from "@/lib/firebase-admin";
 import { Demand } from "@/lib/mock-demands";
+import { isAdminRequest } from "@/lib/api-auth";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    if (!await isAdminRequest(req)) {
+      return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
+    }
     const snapshot = await adminDb.collection('demands')
       .orderBy('createdAt', 'desc')
       .get();
@@ -28,6 +32,9 @@ export async function GET() {
 
 export async function DELETE(req: Request) {
   try {
+    if (!await isAdminRequest(req)) {
+      return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
+    }
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
 

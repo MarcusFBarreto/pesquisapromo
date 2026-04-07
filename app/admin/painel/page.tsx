@@ -10,28 +10,60 @@ import {
   XCircleIcon,
   TrashIcon,
   ArrowTopRightOnSquareIcon,
-  ClockIcon
+  ClockIcon,
+  LinkIcon
 } from "@heroicons/react/24/outline";
+import { auth } from "@/lib/firebase";
 import { Demand } from "@/lib/mock-demands";
 import { slugify } from "@/lib/utils";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
 
 export default function AdminDashboardPage() {
   const [activeTab, setActiveTab] = useState<'demands' | 'partners'>('demands');
   const [demands, setDemands] = useState<Demand[]>([]);
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 15000);
-    return () => clearInterval(interval);
-  }, []);
+    if (!authLoading) {
+      if (!user || !user.isAdmin) {
+        router.push("/parceiro/login");
+        return;
+      }
+      fetchData();
+      const interval = setInterval(fetchData, 15000);
+      return () => clearInterval(interval);
+    }
+  }, [user, authLoading, router]);
+
+  if (authLoading || (user && !user.isAdmin)) {
+    return (
+      <div className="min-h-screen bg-pp-cream flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-12 w-12 border-4 border-pp-orange border-t-transparent rounded-full animate-spin" />
+          <p className="text-pp-muted font-bold animate-pulse">Verificando credenciais...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user || !user.isAdmin) return null;
 
   const fetchData = async () => {
     try {
+      const token = await auth.currentUser?.getIdToken();
+      if (!token) return;
+
       const [demRes, appRes] = await Promise.all([
-        fetch('/api/admin/demands'),
-        fetch('/api/admin/partners')
+        fetch('/api/admin/demands', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }),
+        fetch('/api/admin/partners', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
       ]);
       
       const demData = await demRes.json();
@@ -48,9 +80,13 @@ export default function AdminDashboardPage() {
 
   const handleUpdateAppStatus = async (applicationId: string, status: string) => {
     try {
+      const token = await auth.currentUser?.getIdToken();
       const res = await fetch('/api/admin/partners', {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ applicationId, status })
       });
       if (res.ok) fetchData();
@@ -59,10 +95,35 @@ export default function AdminDashboardPage() {
     }
   };
 
+  const handleGenerateMagicLink = async (email: string, slug?: string) => {
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const res = await fetch('/api/admin/magic-link', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ email, type: 'partner', metadata: { partnerSlug: slug } })
+      });
+      const data = await res.json();
+      if (data.magicLink) {
+        navigator.clipboard.writeText(data.magicLink);
+        alert("Link Mágico de Acesso Pro copiado! Envie para o parceiro via WhatsApp.");
+      }
+    } catch (error) {
+      console.error("Erro ao gerar link mágico:", error);
+    }
+  };
+
   const handleDeleteDemand = async (id: string) => {
     if (!window.confirm("Tem certeza que deseja excluir esta demanda definitivamente?")) return;
     try {
-      const res = await fetch(`/api/admin/demands?id=${id}`, { method: 'DELETE' });
+      const token = await auth.currentUser?.getIdToken();
+      const res = await fetch(`/api/admin/demands?id=${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       if (res.ok) fetchData();
     } catch (error) {
       console.error("Erro ao deletar demanda:", error);
@@ -343,6 +404,13 @@ export default function AdminDashboardPage() {
                           >
                             <CheckBadgeIcon className="h-5 w-5" />
                             Aprovar
+                          </button>
+                          <button 
+                            onClick={() => handleGenerateMagicLink(app.email, slugify(app.name))}
+                            className="w-full flex items-center justify-center gap-2 bg-white text-pp-teal border border-pp-teal/30 py-3 rounded-2xl font-bold text-[10px] uppercase hover:bg-pp-teal/5 transition"
+                          >
+                            <LinkIcon className="h-4 w-4" />
+                            Gerar Link Pro
                           </button>
                           <button 
                             onClick={() => handleUpdateAppStatus(app.id, 'rejected')}

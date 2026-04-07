@@ -6,6 +6,7 @@ type AuthUser = {
   email: string;
   partnerSlug: string;
   partnerName: string;
+  isAdmin?: boolean;
 } | null;
 
 type AuthContextType = {
@@ -13,6 +14,7 @@ type AuthContextType = {
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   signOut: () => void;
+  setSession: (user: AuthUser) => void;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -20,6 +22,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   signIn: async () => ({ success: false }),
   signOut: () => {},
+  setSession: () => {},
 });
 
 export function useAuth() {
@@ -32,11 +35,14 @@ export function useAuth() {
  */
 const PARTNER_EMAILS: Record<string, { slug: string; name: string }> = {
   "erivaldo@mylupa.com.br": { slug: "j-erivaldo-cia", name: "J Erivaldo & Cia" },
+  "admin@mylupa.com.br": { slug: "admin", name: "Administrador" },
   "artton@pesquisapromo.com": { slug: "art-ton-papelaria", name: "Art & Ton Papelaria" },
   "farmacia@pesquisapromo.com": { slug: "farmacia-caminho-popular", name: "Farmácia Caminho Popular" },
   "zenir@pesquisapromo.com": { slug: "zenir-moveis", name: "Zenir Móveis" },
   "deposito@pesquisapromo.com": { slug: "construtora-horizonte", name: "Depósito Horizonte" },
 };
+
+const ADMIN_EMAILS = ["erivaldo@mylupa.com.br", "admin@mylupa.com.br"];
 
 const IS_FIREBASE_READY =
   typeof window !== "undefined" &&
@@ -87,11 +93,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const cred = await signInWithEmailAndPassword(auth, lower, password);
 
-          if (!partnerInfo) {
-            return { success: false, error: "Este email não está associado a um parceiro verificado." };
+          if (!partnerInfo && !ADMIN_EMAILS.includes(lower)) {
+            return { success: false, error: "Este email não está associado a uma conta autorizada." };
           }
 
-          const authUser = { email: cred.user.email!, partnerSlug: partnerInfo.slug, partnerName: partnerInfo.name };
+          const isAdmin = ADMIN_EMAILS.includes(lower);
+          const authUser = { 
+            email: cred.user.email!, 
+            partnerSlug: partnerInfo?.slug || "admin", 
+            partnerName: partnerInfo?.name || "Administrador",
+            isAdmin
+          };
           setUser(authUser);
           localStorage.setItem("pp_auth", JSON.stringify(authUser));
           return { success: true };
@@ -101,11 +113,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           if (authError.code === 'auth/configuration-not-found') {
             console.warn("[Auth] Firebase não configurado corretamente. Entrando em MODO DEMO para permitir teste.");
             
-            if (!partnerInfo) {
-              return { success: false, error: "Este email não está associado a um parceiro verificado." };
+            if (!partnerInfo && !ADMIN_EMAILS.includes(lower)) {
+              return { success: false, error: "Este email não está associado a uma conta autorizada." };
             }
 
-            const authUser = { email: lower, partnerSlug: partnerInfo.slug, partnerName: partnerInfo.name };
+            const isAdmin = ADMIN_EMAILS.includes(lower);
+            const authUser = { 
+              email: lower, 
+              partnerSlug: partnerInfo?.slug || "admin", 
+              partnerName: partnerInfo?.name || "Administrador",
+              isAdmin
+            };
             setUser(authUser);
             localStorage.setItem("pp_auth", JSON.stringify(authUser));
             return { success: true };
@@ -115,11 +133,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       } else {
         // Mock mode
-        if (!partnerInfo) {
-          return { success: false, error: "Email não encontrado. Use um email de parceiro cadastrado." };
+        if (!partnerInfo && !ADMIN_EMAILS.includes(lower)) {
+          return { success: false, error: "Email não encontrado. Use uma conta cadastrada." };
         }
 
-        const authUser = { email: lower, partnerSlug: partnerInfo.slug, partnerName: partnerInfo.name };
+        const isAdmin = ADMIN_EMAILS.includes(lower);
+        const authUser = { 
+          email: lower, 
+          partnerSlug: partnerInfo?.slug || "admin", 
+          partnerName: partnerInfo?.name || "Administrador",
+          isAdmin
+        };
         setUser(authUser);
         localStorage.setItem("pp_auth", JSON.stringify(authUser));
         return { success: true };
@@ -143,8 +167,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  function setSession(authUser: AuthUser) {
+    setUser(authUser);
+    if (authUser) {
+      localStorage.setItem("pp_auth", JSON.stringify(authUser));
+    } else {
+      localStorage.removeItem("pp_auth");
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut, setSession }}>
       {children}
     </AuthContext.Provider>
   );

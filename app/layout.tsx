@@ -31,7 +31,13 @@ export const metadata: Metadata = {
     title: "myLupa | Sua demanda nas mãos certas",
     description: "Encontre o parceiro ideal para orçamentos e serviços localmente.",
   },
-  themeColor: "#ffffff",
+  themeColor: "#1A1A1A",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "myLupa Pro",
+  },
 };
 
 export default function RootLayout({

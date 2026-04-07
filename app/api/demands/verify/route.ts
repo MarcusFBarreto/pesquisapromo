@@ -1,4 +1,8 @@
+import { NextRequest, NextResponse } from "next/server";
+import { adminDb } from "@/lib/firebase-admin";
 import { rewardUser } from "@/lib/user-service";
+import { triggerAdminEmail } from "@/lib/email-service";
+import { Demand } from "@/lib/types";
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,6 +26,10 @@ export async function POST(req: NextRequest) {
         status: "pending",
         verifiedAt: new Date(),
       });
+
+      // Uma vez pendente/verificada, o Concierge precisa ser alertado via E-mail
+      const demandData = { id: demandDoc.id, ...data } as Demand;
+      await triggerAdminEmail(demandData);
 
       // RECOMPENSA: Usuário que valida ganha pontos no Sistema de Honra
       if (data?.whatsapp) {

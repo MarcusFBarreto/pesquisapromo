@@ -25,7 +25,11 @@ export default function PartnerLoginPage() {
       const stored = localStorage.getItem("pp_auth");
       if (stored) {
         const user = JSON.parse(stored);
-        router.push(`/parceiro/painel/${user.partnerSlug}`);
+        if (user.isAdmin) {
+          router.push("/admin/painel");
+        } else {
+          router.push(`/parceiro/painel/${user.partnerSlug}`);
+        }
       }
     } else {
       setError(result.error || "Erro ao entrar.");

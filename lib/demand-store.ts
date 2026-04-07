@@ -5,6 +5,7 @@ import { classifyDemand } from "./category-router";
 import { isBlocked } from "./blocklist-service";
 import { getAllPartners } from "./partner-data";
 import { getOrCreateUser, getUserReputation } from "./user-service";
+import { triggerAdminEmail } from "./email-service";
 
 /**
  * Firestore-backed demand store.
@@ -58,6 +59,11 @@ export async function addDemand(payload: {
   await docRef.set(demandData);
 
   console.info(`[myLupa] 🔥 Demanda salva no Firestore: #${demandData.id} (Status: ${demandData.status})`);
+  
+  if (isTrusted) {
+    await triggerAdminEmail(demandData);
+  }
+
   return { ...demandData, verificationRequired: !isTrusted };
 }
 
