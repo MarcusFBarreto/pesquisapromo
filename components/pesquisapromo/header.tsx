@@ -30,9 +30,7 @@ export function PesquisaPromoHeader() {
           </span>
           <span className="leading-tight">Nessa fase piloto, gostaríamos de receber dicas, reclamações e ideias:</span>
           <span className="flex items-center gap-2 mt-0.5 sm:mt-0 font-bold text-white">
-            <a href="mailto:oi@mylupa.com.br" className="hover:text-emerald-400 transition-colors">oi@mylupa.com.br</a>
-            <span className="text-slate-600">•</span>
-            <a href="https://wa.me/5511999999999" target="_blank" rel="noreferrer" className="hover:text-emerald-400 transition-colors">WhatsApp</a>
+            <a href="mailto:oimylupa@pesquisapromo.com.br" className="hover:text-emerald-400 transition-colors">oimylupa@pesquisapromo.com.br</a>
           </span>
         </p>
       </div>

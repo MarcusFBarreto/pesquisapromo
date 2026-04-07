@@ -31,7 +31,7 @@ export function useAuth() {
  * In production, this would come from Firestore or Firebase Auth custom claims.
  */
 const PARTNER_EMAILS: Record<string, { slug: string; name: string }> = {
-  "erivaldo@pesquisapromo.com": { slug: "j-erivaldo-cia", name: "J Erivaldo & Cia" },
+  "erivaldo@mylupa.com.br": { slug: "j-erivaldo-cia", name: "J Erivaldo & Cia" },
   "artton@pesquisapromo.com": { slug: "art-ton-papelaria", name: "Art & Ton Papelaria" },
   "farmacia@pesquisapromo.com": { slug: "farmacia-caminho-popular", name: "Farmácia Caminho Popular" },
   "zenir@pesquisapromo.com": { slug: "zenir-moveis", name: "Zenir Móveis" },

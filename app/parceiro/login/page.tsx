@@ -138,7 +138,7 @@ export default function PartnerLoginPage() {
               Modo demonstração
             </p>
             <p className="mt-1 text-xs leading-5 text-white/40">
-              Use <span className="font-mono text-pp-teal-soft">erivaldo@pesquisapromo.com</span> com qualquer senha.
+              Use <span className="font-mono text-pp-teal-soft">erivaldo@mylupa.com.br</span> com qualquer senha.
             </p>
           </div>
         </div>
