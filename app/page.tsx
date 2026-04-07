@@ -1,3 +1,5 @@
+export const revalidate = 3600; // Revalida a página a cada 1 hora (no servidor)
+
 import Link from "next/link";
 import { HeroDemandForm } from "@/components/ui/hero-demand-form";
 import {
