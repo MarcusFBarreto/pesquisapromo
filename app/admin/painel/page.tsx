@@ -129,7 +129,7 @@ export default function AdminDashboardPage() {
       const data = await res.json();
       if (data.magicLink) {
         navigator.clipboard.writeText(data.magicLink);
-        alert("Link Mágico de Acesso Pro copiado! Envie para o parceiro via WhatsApp.");
+        alert("Link Mágico copiado e e-mail enviado ao parceiro! ✨");
         return true;
       }
       return false;

@@ -4,6 +4,7 @@ import { isAdminRequest } from "@/lib/api-auth";
 import { createMagicLink } from "@/lib/magic-link-service";
 import { adminDb } from "@/lib/firebase-admin";
 import { slugify } from "@/lib/utils";
+import { sendMagicLinkEmail } from "@/lib/email-service";
 
 export async function POST(req: Request) {
   try {
@@ -49,6 +50,13 @@ export async function POST(req: Request) {
     const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
     const host = req.headers.get('host') || 'pesquisapromo.com.br';
     const magicLink = `${protocol}://${host}/pro/ativar?token=${token}`;
+
+    // 2. Trigger Email (Best effort)
+    try {
+      await sendMagicLinkEmail(lowerEmail, magicLink);
+    } catch (err) {
+      console.error("[API Admin Magic Link] Failed to send email, but link was generated:", err);
+    }
 
     return NextResponse.json({ magicLink });
   } catch (error) {
