@@ -133,14 +133,7 @@ export default function PartnerLoginPage() {
             </Link>
           </div>
 
-          <div className="mt-8 rounded-xl bg-white/[0.04] p-4">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/30">
-              Modo demonstração
-            </p>
-            <p className="mt-1 text-xs leading-5 text-white/40">
-              Use <span className="font-mono text-pp-teal-soft">erivaldo@mylupa.com.br</span> com qualquer senha.
-            </p>
-          </div>
+
         </div>
 
         <p className="mt-6 text-center text-xs text-white/25">
