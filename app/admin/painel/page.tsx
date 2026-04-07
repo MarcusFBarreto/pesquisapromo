@@ -11,7 +11,8 @@ import {
   TrashIcon,
   ArrowTopRightOnSquareIcon,
   ClockIcon,
-  LinkIcon
+  LinkIcon,
+  BuildingStorefrontIcon
 } from "@heroicons/react/24/outline";
 import { auth } from "@/lib/firebase";
 import { Demand } from "@/lib/mock-demands";
@@ -24,6 +25,9 @@ export default function AdminDashboardPage() {
   const [demands, setDemands] = useState<Demand[]>([]);
   const [applications, setApplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteName, setInviteName] = useState("");
+  const [isInviting, setIsInviting] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
@@ -95,7 +99,7 @@ export default function AdminDashboardPage() {
     }
   };
 
-  const handleGenerateMagicLink = async (email: string, slug?: string) => {
+  const handleGenerateMagicLink = async (email: string, slug?: string, name?: string) => {
     try {
       const token = await auth.currentUser?.getIdToken();
       const res = await fetch('/api/admin/magic-link', {
@@ -104,16 +108,38 @@ export default function AdminDashboardPage() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ email, type: 'partner', metadata: { partnerSlug: slug } })
+        body: JSON.stringify({ 
+          email, 
+          type: 'partner', 
+          name, 
+          metadata: { partnerSlug: slug } 
+        })
       });
       const data = await res.json();
       if (data.magicLink) {
         navigator.clipboard.writeText(data.magicLink);
         alert("Link Mágico de Acesso Pro copiado! Envie para o parceiro via WhatsApp.");
+        return true;
       }
+      return false;
     } catch (error) {
       console.error("Erro ao gerar link mágico:", error);
+      return false;
     }
+  };
+
+  const handleManualInvite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inviteEmail || !inviteName) return;
+    
+    setIsInviting(true);
+    const success = await handleGenerateMagicLink(inviteEmail, slugify(inviteName), inviteName);
+    if (success) {
+      setInviteEmail("");
+      setInviteName("");
+      fetchData(); // Refresh list to show new partner if they were created
+    }
+    setIsInviting(false);
   };
 
   const handleDeleteDemand = async (id: string) => {
@@ -326,7 +352,52 @@ export default function AdminDashboardPage() {
           </div>
         ) : (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-pp-ink">Novas Afiliações de Parceiros</h2>
+            <h2 className="text-2xl font-bold text-pp-ink">Aprovações e Convites</h2>
+
+            {/* QUICK INVITE FORM */}
+            <div className="bg-pp-dark p-8 rounded-[40px] border border-white/10 relative overflow-hidden">
+               <div className="absolute top-0 right-0 p-6 opacity-10">
+                 <LinkIcon className="h-20 w-20 text-pp-orange" />
+               </div>
+               
+               <div className="relative z-10">
+                 <h3 className="text-white font-bold italic mb-6">CONVIDAR NOVO PARCEIRO <span className="text-pp-orange text-[10px] font-normal not-italic opacity-60 ml-2 uppercase tracking-widest">Acesso Direto</span></h3>
+                 
+                 <form onSubmit={handleManualInvite} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                   <input 
+                     type="text" 
+                     placeholder="Nome da Empresa/Parceiro"
+                     value={inviteName}
+                     onChange={(e) => setInviteName(e.target.value)}
+                     className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-sm focus:border-pp-orange outline-none transition"
+                     required
+                   />
+                   <input 
+                     type="email" 
+                     placeholder="E-mail do Parceiro"
+                     value={inviteEmail}
+                     onChange={(e) => setInviteEmail(e.target.value)}
+                     className="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white text-sm focus:border-pp-orange outline-none transition"
+                     required
+                   />
+                   <button 
+                     type="submit"
+                     disabled={isInviting}
+                     className="bg-pp-orange text-white rounded-2xl font-bold text-sm hover:brightness-110 active:scale-95 transition flex items-center justify-center gap-2"
+                   >
+                     {isInviting ? (
+                        <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                     ) : (
+                        <>
+                          <LinkIcon className="h-5 w-5" />
+                          Gerar Link de Convite
+                        </>
+                     )}
+                   </button>
+                 </form>
+                 <p className="mt-4 text-[10px] text-white/40 italic">O link será automaticamente copiado e um perfil básico será criado se o parceiro ainda não existir.</p>
+               </div>
+            </div>
             
             <div className="grid gap-6">
               {applications.length === 0 ? (
