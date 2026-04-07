@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { isAdminRequest } from "@/lib/api-auth";
 import { createMagicLink } from "@/lib/magic-link-service";
 

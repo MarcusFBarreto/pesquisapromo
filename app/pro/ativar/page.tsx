@@ -30,7 +30,9 @@ function ActivationContent() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Erro na ativação.");
+        const error = new Error(data.error || "Erro na ativação.") as any;
+        error.details = data.details;
+        throw error;
       }
 
       // Sign in with Firebase Custom Token

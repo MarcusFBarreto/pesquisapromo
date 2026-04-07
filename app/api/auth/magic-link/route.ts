@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+export const dynamic = "force-dynamic";
 import { verifyMagicLink } from "@/lib/magic-link-service";
 
 export async function GET(req: Request) {
