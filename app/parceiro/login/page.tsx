@@ -10,18 +10,42 @@ export default function PartnerLoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [useMagicLink, setUseMagicLink] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const { signIn } = useAuth();
   const router = useRouter();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
+    setSuccessMsg("");
     setLoading(true);
+
+    if (useMagicLink) {
+      try {
+        const res = await fetch('/api/auth/request-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setSuccessMsg(data.message || "Link enviado com sucesso!");
+          setLoading(false);
+        } else {
+          setError(data.error || "Erro ao solicitar link.");
+          setLoading(false);
+        }
+      } catch (err) {
+        setError("Erro na conexão com o servidor.");
+        setLoading(false);
+      }
+      return;
+    }
 
     const result = await signIn(email, password);
 
     if (result.success) {
-      // Auth context has user now — redirect to dashboard
       const stored = localStorage.getItem("pp_auth");
       if (stored) {
         const user = JSON.parse(stored);
@@ -93,28 +117,36 @@ export default function PartnerLoginPage() {
               />
             </div>
 
-            <div>
-              <label
-                htmlFor="login-password"
-                className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40"
-              >
-                Senha
-              </label>
-              <input
-                id="login-password"
-                type="password"
-                required
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="h-12 w-full rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
-                placeholder="••••••••"
-              />
-            </div>
+            {!useMagicLink && (
+              <div>
+                <label
+                  htmlFor="login-password"
+                  className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-white/40"
+                >
+                  Senha
+                </label>
+                <input
+                  id="login-password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="h-12 w-full rounded-full border border-white/10 bg-white/[0.04] px-5 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-pp-teal focus:ring-1 focus:ring-pp-teal"
+                  placeholder="••••••••"
+                />
+              </div>
+            )}
 
             {error && (
-              <p role="alert" className="text-xs text-red-400">
+              <p role="alert" className="text-xs text-red-500 font-bold bg-red-500/10 p-3 rounded-xl border border-red-500/20">
                 {error}
+              </p>
+            )}
+
+            {successMsg && (
+              <p role="status" className="text-xs text-pp-teal font-bold bg-pp-teal/10 p-3 rounded-xl border border-pp-teal/20">
+                {successMsg}
               </p>
             )}
 
@@ -123,8 +155,22 @@ export default function PartnerLoginPage() {
               disabled={loading}
               className="mt-2 w-full rounded-full bg-pp-orange py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-pp-orange-hover hover:shadow-lg hover:shadow-pp-orange/20 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {loading ? "Entrando..." : "Entrar"}
+              {loading ? "Processando..." : (useMagicLink ? "Receber link por e-mail" : "Entrar")}
             </button>
+            
+            <div className="text-center pt-2">
+              <button 
+                type="button"
+                onClick={() => {
+                  setUseMagicLink(!useMagicLink);
+                  setError("");
+                  setSuccessMsg("");
+                }}
+                className="text-xs font-bold text-white/40 hover:text-pp-teal transition uppercase tracking-widest"
+              >
+                {useMagicLink ? "Voltar para Login por Senha" : "Entrar sem senha (Link por e-mail)"}
+              </button>
+            </div>
           </form>
 
           <div className="mt-6 flex flex-col items-center gap-4 border-t border-white/5 pt-6">
