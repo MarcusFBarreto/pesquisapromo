@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
       matchedCategories: demand.matchedCategories,
       verificationRequired: demand.verificationRequired,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("[myLupa] Erro ao criar demanda:", error);
-    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Erro interno", stack: error.stack }, { status: 500 });
   }
 }

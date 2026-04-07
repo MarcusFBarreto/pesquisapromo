@@ -75,9 +75,9 @@ export function DemandForm({
         }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
 
-      if (data.success) {
+      if (res.ok && data?.success) {
         setResultInfo({ categories: data.matchedCategories, id: data.id });
         
         // Se NÃO for necessário verificar (Trusted User), pulamos direto para o fim
@@ -89,9 +89,13 @@ export function DemandForm({
         setStatus("success");
       } else {
         setStatus("error");
+        console.error("Server Error:", data || "Unknown Error");
+        alert("Erro no servidor: " + (data?.error || "A API não retornou a resposta correta."));
       }
-    } catch {
+    } catch (err: any) {
+      console.error("Network or Syntax Error:", err);
       setStatus("error");
+      alert("Erro de conexão ou crash interno: " + err.message);
     }
   }
 
