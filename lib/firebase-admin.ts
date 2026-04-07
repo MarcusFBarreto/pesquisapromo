@@ -17,13 +17,17 @@ function ensureFirebaseAdmin() {
             privateKey: privateKey,
           }),
         });
-        console.log('[FirebaseAdmin] Initialized successfully.');
+        console.log('[FirebaseAdmin] Initialized with Service Account Key (Local/Dev).');
       } catch (error) {
-        console.error('[FirebaseAdmin] Initialization error:', error);
+        console.error('[FirebaseAdmin] Dev Initialization error:', error);
       }
     } else {
-      if (process.env.NODE_ENV === 'production') {
-        console.warn('[FirebaseAdmin] Missing environment variables. Skipping init.');
+      // PROD: Use Default Cloud Run / App Hosting Credentials (ADC)
+      try {
+        admin.initializeApp();
+        console.log('[FirebaseAdmin] Initialized with Application Default Credentials (Cloud).');
+      } catch (error) {
+        console.error('[FirebaseAdmin] Cloud Initialization error:', error);
       }
     }
   }
