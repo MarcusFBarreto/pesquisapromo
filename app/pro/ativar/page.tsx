@@ -61,6 +61,7 @@ function ActivationContent() {
       console.error(err);
       setStatus('error');
       setErrorMsg(err.message || "Erro ao ativar acesso Pro.");
+      if (err.details) setErrorMsg(prev => `${prev} (${err.details})`);
     }
   }
 
@@ -104,6 +105,12 @@ function ActivationContent() {
               </div>
               <h1 className="text-2xl font-bold text-white uppercase italic tracking-tighter">FALHA NA <span className="text-red-500">CONEXÃO</span></h1>
               <p className="text-sm text-white/40">{errorMsg}</p>
+              
+              {/* Reset Token for testing if failed */}
+              <div className="mt-4 p-3 bg-white/5 rounded-xl border border-white/5">
+                <p className="text-[10px] text-white/20 italic">Se o erro persistir, gere um novo link no painel admin.</p>
+              </div>
+
               <Link 
                 href="/parceiro/login" 
                 className="inline-block mt-4 text-pp-orange text-sm font-bold hover:underline"
