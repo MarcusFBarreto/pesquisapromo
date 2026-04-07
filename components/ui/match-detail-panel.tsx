@@ -25,7 +25,7 @@ export function MatchDetailPanel({ match }: { match: MatchedOffer | null }) {
           <span className="text-lg">🎯</span>
         </div>
         <div>
-          <p className="text-sm font-bold text-slate-900 truncate pr-4">Detalhes do Match</p>
+          <p className="text-sm font-bold text-slate-900 truncate pr-4">Análise da Oferta</p>
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Análise de Similaridade</p>
         </div>
       </div>

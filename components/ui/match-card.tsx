@@ -11,7 +11,7 @@ export function MatchCard({ match, isSelected }: { match: MatchedOffer, isSelect
       {/* Decorative Badge */}
       <div className="absolute -top-2 -left-2 bg-pp-orange text-white text-[8px] font-black uppercase tracking-widest px-2 py-1 rounded-full shadow-lg z-10 flex items-center gap-1">
         <Sparkles className="h-2 w-2 animate-pulse" />
-        Match!
+        Sugestão!
       </div>
 
       <div className={`h-20 w-20 sm:h-24 sm:w-24 shrink-0 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-300 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-500 ${isSelected ? 'bg-emerald-50 text-emerald-500' : ''}`}>

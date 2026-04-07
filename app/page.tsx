@@ -71,7 +71,7 @@ export default function Home() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
-              Encontramos o difícil. Dispensamos o caro. myLupar é poupar seu tempo. Informe o que precisa - simples assim.
+              Encontramos o difícil. Negociamos o caro. myLupar é poupar seu tempo. Informe o que precisa - simples assim.
             </p>
           </div>
 
@@ -127,13 +127,14 @@ export default function Home() {
               </div>
             </div>
           </div>
-                   </div> {/* Final do Hero Grid */}
+        </div> {/* Final do Hero Grid */}
 
         {/* ─── BASE DE PATROCÍNIOS & TRUST SIGNALS DE PONTA A PONTA ─── */}
         <div className="w-full mt-24 border-t border-slate-100 pt-16 bg-slate-50/30">
           <div className="mx-auto max-w-7xl px-6 lg:px-10">
             <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 opacity-80 text-center">Quem myLupa as compras</h3>
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+              __html: `
               @keyframes marquee {
                 0% { transform: translateX(0%); }
                 100% { transform: translateX(-50%); }
@@ -195,7 +196,7 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 relative">
               <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-[80px]" />
-              
+
               <div className="flex items-center gap-6 relative z-10 w-full md:w-auto">
                 <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-white text-emerald-600 border border-emerald-200 shadow-sm transition-transform hover:scale-110">
                   <Store className="w-8 h-8" />

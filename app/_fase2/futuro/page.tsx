@@ -71,7 +71,7 @@ export default function Home() {
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-500 font-light mobile-text-anchor">
-              Encontramos o difícil. Dispensamos o caro. myLupar é poupar seu tempo. Informe o que precisa - simples assim.
+              Encontramos o difícil. Negociamos o caro. myLupar é poupar seu tempo. Informe o que precisa - simples assim.
             </p>
           </div>
 

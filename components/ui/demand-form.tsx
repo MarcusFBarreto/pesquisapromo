@@ -80,6 +80,11 @@ export function DemandForm({
       if (res.ok && data?.success) {
         setResultInfo({ categories: data.matchedCategories, id: data.id });
         
+        const initialMatches = findMatchesForDemand(request, data.matchedCategories?.[0]);
+        if (initialMatches.length > 0) {
+          onSelectMatch?.(initialMatches[0]);
+        }
+
         // Se NÃO for necessário verificar (Trusted User), pulamos direto para o fim
         if (data.verificationRequired === false) {
           setVerified(true);
