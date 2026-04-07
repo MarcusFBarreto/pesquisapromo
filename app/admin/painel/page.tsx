@@ -503,12 +503,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-
-
-function BuildingStorefrontIcon(props: any) {
-  return (
-    <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21V10.5m0 0L7.5 4.5M13.5 10.5l6 6M4.5 9v11.25A1.875 1.875 0 0 0 6.375 22h11.25a1.875 1.875 0 0 0 1.875-1.875V9M4.5 9l3-4.875a1.125 1.125 0 0 1 1.05-.625h7.8a1.125 1.125 0 0 1 1.05.625L19.5 9M4.5 9h15" />
-    </svg>
-  );
-}
