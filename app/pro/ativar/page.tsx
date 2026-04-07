@@ -63,7 +63,6 @@ function ActivationContent() {
       console.error(err);
       setStatus('error');
       setErrorMsg(err.message || "Erro ao ativar acesso Pro.");
-      if (err.details) setErrorMsg(prev => `${prev} (${err.details})`);
     }
   }
 

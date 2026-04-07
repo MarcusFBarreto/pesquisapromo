@@ -26,8 +26,7 @@ export async function GET(req: Request) {
   } catch (error: any) {
     console.error("[API Magic Link] Erro na verificação:", error);
     return NextResponse.json({ 
-      error: "Erro interno no servidor",
-      details: error.message || String(error)
+      error: "Erro interno no servidor"
     }, { status: 500 });
   }
 }
