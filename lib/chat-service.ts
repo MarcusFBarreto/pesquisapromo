@@ -13,19 +13,19 @@ type ChatContext = {
 
 export function getInitialMessage(context: ChatContext): ChatMessage {
   const partnerRef = context.partnerName
-    ? `, e vi que você está de olho no **${context.partnerName}**`
+    ? `, e vi que você está interessado no **${context.partnerName}**`
     : "";
 
   if (!context.demand.trim()) {
     return {
       role: "assistant",
-      content: `Olá! 👋 Sou o **Promo**, assistente do myLupa${partnerRef}. Me conta o que você tá precisando que eu te ajudo a montar um pedido bem descrito pra você receber as melhores propostas!`,
+      content: `Olá! 👋 Sou o **Promo**, seu consultor técnico aqui no myLupa${partnerRef}. Me conta o que você está procurando!`,
     };
   }
 
   return {
     role: "assistant",
-    content: `Olá! 👋 Sou o **Promo**, assistente do myLupa${partnerRef}. Vi que você precisa de **"${context.demand}"**. Posso te fazer umas perguntinhas rápidas pra deixar seu pedido mais completo e você receber propostas melhores. Topa?`,
+    content: `Olá! 👋 Sou o **Promo**, seu consultor técnico${partnerRef}. Deixa eu dar uma olhada rápida no seu pedido de **"${context.demand}"**...`,
   };
 }
 

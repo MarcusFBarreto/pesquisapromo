@@ -18,7 +18,7 @@ export async function addDemand(payload: {
   name?: string;
   whatsapp: string;
 }): Promise<Demand & { verificationRequired: boolean }> {
-  const categories = classifyDemand(payload.request, payload.details);
+  const categories = await classifyDemand(payload.request, payload.details);
   
   // 1. Ensure user exists and get reputation
   const user = await getOrCreateUser(payload.whatsapp, payload.name);

@@ -25,13 +25,30 @@ export function DemandChat({
   const [aiMode, setAiMode] = useState<"openai" | "gemini" | "mock" | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // Initialize with the first assistant message
+  // Initialize with the first assistant message + Auto-analysis
   useEffect(() => {
-    if (!initialized) {
-      const initial = getInitialMessage({ demand, partnerName });
-      setMessages([initial]);
-      setInitialized(true);
+    async function initChat() {
+      if (!initialized) {
+        const initial = getInitialMessage({ demand, partnerName });
+        setMessages([initial]);
+        setInitialized(true);
+
+        // Se houver uma demanda inicial, já dispara a análise técnica imediata
+        if (demand.trim()) {
+          setIsTyping(true);
+          try {
+            const response = await getAssistantResponse([initial], { demand, partnerName });
+            if (response.source) setAiMode(response.source);
+            setMessages((prev) => [...prev, response]);
+          } catch (error) {
+            console.error("Erro na análise inicial:", error);
+          } finally {
+            setIsTyping(false);
+          }
+        }
+      }
     }
+    initChat();
   }, [initialized, demand, partnerName]);
 
   // Auto-scroll to bottom
