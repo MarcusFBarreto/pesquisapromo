@@ -361,10 +361,15 @@ export default function AdminDashboardPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-xs font-bold bg-pp-surface px-2 py-1 rounded-lg text-pp-muted">#{demand.id.slice(-6)}</span>
                         <span className={`text-[10px] font-bold uppercase tracking-tighter px-2 py-0.5 rounded-full ${
-                          demand.status === 'new' ? 'bg-pp-teal/10 text-pp-teal' : 'bg-pp-orange/10 text-pp-orange'
+                          demand.status === 'analyzing' ? 'bg-blue-100 text-blue-600' :
+                          demand.status === 'pending' || demand.status === 'new' ? 'bg-pp-teal/10 text-pp-teal' : 
+                          'bg-pp-orange/10 text-pp-orange'
                         }`}>
-                          {demand.status === 'new' ? 'Aguardando' : 'Atendida'}
+                          {demand.status === 'analyzing' ? '🤖 Analisando...' : 
+                           demand.status === 'pending' || demand.status === 'new' ? 'Aguardando' : 
+                           'Atendida'}
                         </span>
+
                       </div>
                       <h3 className="text-lg font-bold text-pp-ink group-hover:text-pp-teal transition">{demand.request}</h3>
                       <p className="mt-2 text-sm text-pp-muted leading-relaxed line-clamp-2">{demand.details}</p>

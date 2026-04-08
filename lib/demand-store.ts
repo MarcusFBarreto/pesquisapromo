@@ -18,7 +18,8 @@ export async function addDemand(payload: {
   name?: string;
   whatsapp: string;
 }): Promise<Demand & { verificationRequired: boolean }> {
-  const categories = await classifyDemand(payload.request, payload.details);
+  // AI Classification is now handled asynchronously by the Cloud Function (Blaze Artifice)
+  const categories: string[] = []; 
   
   // 1. Ensure user exists and get reputation
   const user = await getOrCreateUser(payload.whatsapp, payload.name);
@@ -48,7 +49,7 @@ export async function addDemand(payload: {
     details: payload.details || "",
     name: payload.name || user.name,
     whatsapp: user.whatsapp,
-    status: isTrusted ? "pending" : "verifying",
+    status: isTrusted ? "analyzing" : "verifying",
     vCode: isTrusted ? null : Math.floor(1000 + Math.random() * 9000).toString(),
     matchedCategories: categories,
     targetPartnerIds,

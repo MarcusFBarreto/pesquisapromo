@@ -64,7 +64,7 @@ export interface Demand {
   details: string;
   whatsapp: string;
   name: string;
-  status: "verifying" | "pending" | "negotiating" | "completed" | "cancelled" | "expired";
+  status: "verifying" | "analyzing" | "pending" | "negotiating" | "completed" | "cancelled" | "expired";
   vCode?: string | null;
   matchedCategories: string[];
   targetPartnerIds: string[];
