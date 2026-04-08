@@ -31,13 +31,19 @@ export const metadata: Metadata = {
     title: "myLupa | Sua demanda nas mãos certas",
     description: "Encontre o parceiro ideal para orçamentos e serviços localmente.",
   },
-  themeColor: "#1A1A1A",
-  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "myLupa Pro",
   },
+};
+
+export const viewport = {
+  themeColor: "#1A1A1A",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -48,7 +54,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased overflow-x-clip`}
     >
       <body className="min-h-full flex flex-col overflow-x-clip">
         <AuthProvider>{children}</AuthProvider>
