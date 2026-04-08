@@ -52,13 +52,13 @@ export default function Home() {
 
       {/* ─── Hero Solar Compacto ─── */}
       <section className="relative overflow-hidden bg-white pb-12 pt-0 lg:pb-24 lg:pt-2">
-        {/* Background decorations */}
-        <div className="pointer-events-none absolute inset-0">
+        {/* Background decorations - Isolated to avoid pushing layout width */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden select-none">
           <div className="absolute -right-32 -top-32 h-[600px] w-[600px] rounded-full bg-emerald-500 opacity-[0.03] blur-[120px]" />
           <div className="absolute -left-24 bottom-0 h-[500px] w-[500px] rounded-full bg-emerald-600 opacity-[0.02] blur-[100px]" />
         </div>
 
-        <div className="relative mx-auto grid max-w-7xl px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-x-20 lg:px-10">
+        <div className="relative mx-auto grid w-full max-w-7xl px-5 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-x-20 lg:px-10">
           {/* LEFT COLUMN: Section 1 (Headline + Para) */}
           <div className="animate-fade-in-up flex flex-col lg:row-start-1 lg:col-start-1">
             <p className="text-[10px] uppercase font-bold tracking-[0.15em] text-emerald-700 subpixel-antialiased mb-4 sm:tracking-[0.4em]">
@@ -133,7 +133,7 @@ export default function Home() {
 
         {/* ─── BASE DE PATROCÍNIOS & TRUST SIGNALS DE PONTA A PONTA ─── */}
         <div className="w-full mt-24 border-t border-slate-100 pt-16 bg-slate-50/30">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-10">
             <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 opacity-80 text-center">Quem myLupa as compras</h3>
             <style dangerouslySetInnerHTML={{
               __html: `
@@ -195,7 +195,7 @@ export default function Home() {
 
         {/* ─── CTA BANNER P/ PARCEIROS (DE PONTA A PONTA) ─── */}
         <div className="w-full border-t border-emerald-100 bg-emerald-50/40">
-          <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16">
+          <div className="mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-10 py-16">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 relative">
               <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/10 blur-[80px]" />
 
@@ -224,7 +224,7 @@ export default function Home() {
 
       {/* ─── FOOTER FASE 1 ─── */}
       <footer className="bg-slate-50 py-12 border-t border-slate-100">
-        <div className="mx-auto max-w-7xl px-6 text-center lg:px-10">
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-6 text-center lg:px-10">
           <div className="flex items-center justify-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-emerald-500 bg-white">
               <div className="h-2 w-2 rounded-full bg-pp-orange" />

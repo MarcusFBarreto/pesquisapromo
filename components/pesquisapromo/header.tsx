@@ -36,7 +36,7 @@ export function PesquisaPromoHeader() {
       </div>
 
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-xl animate-fade-in sm:bg-white/80 sm:backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-10">
+        <div className="mx-auto flex w-full h-16 max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-10">
           <Link href="/" className="flex items-center gap-2 sm:gap-4 shrink-0 whitespace-nowrap">
             <div className="flex h-9 w-9 items-center justify-center rounded-full border-[3px] border-emerald-500 bg-white shrink-0">
               <div className="h-2.5 w-2.5 rounded-full bg-pp-orange" />
