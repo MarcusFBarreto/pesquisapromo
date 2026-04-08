@@ -38,7 +38,7 @@ export function HeroDemandForm() {
       <button
         id="demand-submit"
         type="submit"
-        className="h-14 shrink-0 rounded-full bg-pp-orange px-8 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-pp-orange-hover hover:shadow-xl hover:shadow-pp-orange/20 active:scale-[0.98] sm:h-14 mobile-btn-soft solar-shimmer-effect"
+        className="h-14 w-full md:w-auto shrink-0 rounded-full bg-pp-orange px-8 text-[11px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-pp-orange-hover hover:shadow-xl hover:shadow-pp-orange/20 active:scale-[0.98] sm:h-14 mobile-btn-soft solar-shimmer-effect"
       >
         myLupar Agora
       </button>
