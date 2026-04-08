@@ -84,16 +84,30 @@ export async function POST(req: NextRequest) {
     let content: string;
     let provider: string;
 
-    // Priority: OpenAI (paid) > Gemini (free tier)
+    // 1. Try OpenAI (Paid/Stable) first if available
     if (OPENAI_KEY) {
-      content = await callOpenAI(messages, fullPrompt);
-      provider = "openai";
-    } else {
-      content = await callGemini(messages, fullPrompt);
-      provider = "gemini";
+      try {
+        content = await callOpenAI(messages, fullPrompt);
+        provider = "openai";
+        return NextResponse.json({ content, provider });
+      } catch (error) {
+        console.warn("[myLupa] OpenAI Chat failed, trying Gemini...", error);
+      }
     }
 
-    return NextResponse.json({ content, provider });
+    // 2. Try Gemini (Free/Experimental)
+    if (GEMINI_KEY) {
+      try {
+        content = await callGemini(messages, fullPrompt);
+        provider = "gemini";
+        return NextResponse.json({ content, provider });
+      } catch (error) {
+        console.error("[myLupa] Gemini Chat failed:", error);
+      }
+    }
+
+    // No providers worked or available
+    return NextResponse.json({ fallback: true });
   } catch (error) {
     console.error("[myLupa] AI API error:", error);
     return NextResponse.json({ fallback: true });

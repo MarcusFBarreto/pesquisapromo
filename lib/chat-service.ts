@@ -138,32 +138,42 @@ async function getMockResponse(
   messages: ChatMessage[],
   context: ChatContext
 ): Promise<ChatMessage> {
-  await new Promise((resolve) => setTimeout(resolve, 600 + Math.random() * 400));
+  await new Promise((resolve) => setTimeout(resolve, 800 + Math.random() * 600));
 
   const lastUserMessage =
     messages.filter((m) => m.role === "user").pop()?.content.toLowerCase() || "";
   const allText = (context.demand + " " + lastUserMessage).toLowerCase();
 
+  // Natural prefixes to avoid repetition
+  const prefixes = [
+    "Legal! E",
+    "Entendi. Outra coisa:",
+    "Certo! Pra fechar o pedido,",
+    "Ótimo. E quanto a isso:",
+    "Uma dúvida importante:",
+  ];
+  const prefix = prefixes[messages.length % prefixes.length];
+
+  // Specific logic for bricks/blocks (avoid "sacos/metros")
+  const isMasonry = ["tijolo", "bloco", "cerâmica", "telha"].some(kw => allText.includes(kw));
+
   // Quick replies to initial question
   if (messages.length <= 3 && /^(sim|topa|pode|claro|bora|vamos|ok|s)$/i.test(lastUserMessage.trim())) {
     const matched = QUESTION_PATTERNS.find((p) => p.keywords.some((kw) => allText.includes(kw)));
-    return { role: "assistant", content: `Boa! ${matched ? matched.questions[0] : GENERIC_QUESTIONS[0]}`, source: "mock" };
+    let initialQuestion = matched ? matched.questions[0] : GENERIC_QUESTIONS[0];
+    
+    // Adjust first question if it's masonry
+    if (isMasonry && initialQuestion.includes("sacos/metros")) {
+      initialQuestion = "De quantos milheiros ou unidades você precisa exatamente?";
+    }
+
+    return { role: "assistant", content: `Boa! ${initialQuestion}`, source: "mock" };
   }
 
   if (messages.length <= 3 && /^(não|nao|n|enviar|pular)$/i.test(lastUserMessage.trim())) {
     return {
       role: "assistant",
-      content: "Sem problemas! 👍 Seu pedido já está bom. Preenche o WhatsApp ali do lado e clica em **Enviar** quando quiser.",
-      source: "mock",
-    };
-  }
-
-  // Check for hard-to-find terms
-  const isHardToFind = ["difícil", "dificil", "não acho", "nao acho", "raro", "sumiu", "encontrar", "importado"].some((kw) => allText.includes(kw));
-  if (isHardToFind && messages.length <= 3) {
-    return {
-      role: "assistant",
-      content: "Entendi! Nesses casos, quer solicitar apoio da nossa **Equipe de Apoio para Buscas**? Você continuará decidindo tudo, mas receberá um suporte valioso para encontrar o que precisa. O que acha?",
+      content: "Sem problemas! 👍 Seu pedido já está bem encaminhado. Quando estiver pronto, basta preencher seu WhatsApp e clicar em **Enviar**.",
       source: "mock",
     };
   }
@@ -174,16 +184,23 @@ async function getMockResponse(
   if (userMessageCount >= 3) {
     return {
       role: "assistant",
-      content: `Perfeito, acho que já entendi bem o que você precisa! 🎯 Pode conferir o resumo ali do lado e enviar quando quiser.`,
+      content: `Perfeito, já consegui mapear tudo o que os parceiros precisam! 🎯 Pode conferir o resumo ali do lado e clicar em enviar quando quiser.`,
       source: "mock",
     };
   }
 
   if (matched) {
     questionIndex = (questionIndex + 1) % matched.questions.length;
-    return { role: "assistant", content: `Anotado! E mais uma coisa: ${matched.questions[questionIndex]}`, source: "mock" };
+    let nextQuestion = matched.questions[questionIndex];
+    
+    // Safety check for masonry in any step
+    if (isMasonry && nextQuestion.includes("sacos/metros")) {
+      nextQuestion = "Qual a quantidade exata em milheiros ou unidades?";
+    }
+
+    return { role: "assistant", content: `${prefix} ${nextQuestion}`, source: "mock" };
   }
 
   questionIndex = (questionIndex + 1) % GENERIC_QUESTIONS.length;
-  return { role: "assistant", content: `Entendi! ${GENERIC_QUESTIONS[questionIndex]}`, source: "mock" };
+  return { role: "assistant", content: `${prefix} ${GENERIC_QUESTIONS[questionIndex]}`, source: "mock" };
 }
