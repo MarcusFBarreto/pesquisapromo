@@ -267,9 +267,19 @@ export default function AdminDashboardPage() {
             >
               Equipe
             </button>
+            <a 
+              href="https://business.facebook.com/latest/inbox/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-pp-teal hover:text-white hover:bg-pp-teal/20 rounded-full transition border border-pp-teal/30 ml-2"
+            >
+              <ChatBubbleLeftRightIcon className="h-4 w-4" />
+              Mensagens Meta
+            </a>
           </nav>
         </div>
       </header>
+
 
       <main className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
         {/* STATS OVERVIEW */}
