@@ -1,4 +1,5 @@
-export type DemandStatus = "new" | "responded" | "archived";
+export type DemandStatus = "new" | "analyzing" | "pending" | "responded" | "archived";
+
 
 export interface Demand {
   id: string;
