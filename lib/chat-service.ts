@@ -19,15 +19,16 @@ export function getInitialMessage(context: ChatContext): ChatMessage {
   if (!context.demand.trim()) {
     return {
       role: "assistant",
-      content: `Olá! 👋 Sou o **Promo**, seu consultor técnico aqui no myLupa${partnerRef}. Me conta o que você está procurando!`,
+      content: `Olá! 👋 Sou o **Promo**, seu consultor técnico aqui no myLupa${partnerRef}. Como posso ajudar com as especificações técnicas do seu pedido hoje?`,
     };
   }
 
   return {
     role: "assistant",
-    content: `Olá! 👋 Sou o **Promo**, seu consultor técnico${partnerRef}. Deixa eu dar uma olhada rápida no seu pedido de **"${context.demand}"**...`,
+    content: `Olá! 👋 Sou o **Promo**, seu consultor técnico${partnerRef}. Deixa eu analisar seu pedido de **"${context.demand}"** para garantir que os parceiros recebam todos os detalhes necessários...`,
   };
 }
+
 
 // ─── Main response: tries Gemini API first, falls back to mock ───
 
@@ -134,73 +135,49 @@ const GENERIC_QUESTIONS = [
 
 let questionIndex = 0;
 
-async function getMockResponse(
-  messages: ChatMessage[],
-  context: ChatContext
-): Promise<ChatMessage> {
-  await new Promise((resolve) => setTimeout(resolve, 800 + Math.random() * 600));
-
+  // ─── Expert Mock Fallback ───
   const lastUserMessage =
     messages.filter((m) => m.role === "user").pop()?.content.toLowerCase() || "";
   const allText = (context.demand + " " + lastUserMessage).toLowerCase();
 
-  // Natural prefixes to avoid repetition
-  const prefixes = [
-    "Legal! E",
-    "Entendi. Outra coisa:",
-    "Certo! Pra fechar o pedido,",
-    "Ótimo. E quanto a isso:",
-    "Uma dúvida importante:",
-  ];
-  const prefix = prefixes[messages.length % prefixes.length];
+  const isZincTile = allText.includes("telha") && allText.includes("zinco");
+  const isMasonry = ["tijolo", "bloco", "cerâmica"].some(kw => allText.includes(kw));
 
-  // Specific logic for bricks/blocks (avoid "sacos/metros")
-  const isMasonry = ["tijolo", "bloco", "cerâmica", "telha"].some(kw => allText.includes(kw));
+  // Technical tips based on category
+  const getTechnicalTip = (text: string) => {
+    if (text.includes("telha")) return "Dica: Telhas de 0.50mm duram muito mais que as de 0.43mm!";
+    if (text.includes("cimento")) return "Dica: O CP2 é ótimo, mas para secagem rápida use CP5.";
+    if (text.includes("geladeira")) return "Dica: Modelos Inverter economizam até 40% de energia.";
+    return "Dica: Detalhes técnicos ajudam o lojista a te dar o melhor preço!";
+  };
 
-  // Quick replies to initial question
-  if (messages.length <= 3 && /^(sim|topa|pode|claro|bora|vamos|ok|s)$/i.test(lastUserMessage.trim())) {
-    const matched = QUESTION_PATTERNS.find((p) => p.keywords.some((kw) => allText.includes(kw)));
-    let initialQuestion = matched ? matched.questions[0] : GENERIC_QUESTIONS[0];
-    
-    // Adjust first question if it's masonry
-    if (isMasonry && initialQuestion.includes("sacos/metros")) {
-      initialQuestion = "De quantos milheiros ou unidades você precisa exatamente?";
-    }
+  const tip = getTechnicalTip(allText);
 
-    return { role: "assistant", content: `Boa! ${initialQuestion}`, source: "mock" };
-  }
-
-  if (messages.length <= 3 && /^(não|nao|n|enviar|pular)$/i.test(lastUserMessage.trim())) {
+  // Specific logic for Zinc Tiles
+  if (isZincTile && !allText.includes("espessura") && !allText.includes("modelo")) {
     return {
       role: "assistant",
-      content: "Sem problemas! 👍 Seu pedido já está bem encaminhado. Quando estiver pronto, basta preencher seu WhatsApp e clicar em **Enviar**.",
+      content: `Entendi! Para **Telhas de Zinco**, você sabe me dizer a **espessura** (0.43 ou 0.50)? E o **formato** (Trapezoidal ou Ondulada)?\n\n_${tip}_`,
+      source: "mock"
+    };
+  }
+
+  const userMessageCount = messages.filter((m) => m.role === "user").length;
+
+  if (userMessageCount >= 4) {
+    return {
+      role: "assistant",
+      content: "Excelente conjunto de informações! 🎯 Já incluí esses detalhes técnicos no seu pedido. Você pode conferir tudo no resumo e clicar em **Enviar** quando quiser.",
       source: "mock",
     };
   }
 
   const matched = QUESTION_PATTERNS.find((p) => p.keywords.some((kw) => allText.includes(kw)));
-  const userMessageCount = messages.filter((m) => m.role === "user").length;
+  const nextQuestion = matched ? matched.questions[userMessageCount % matched.questions.length] : GENERIC_QUESTIONS[userMessageCount % GENERIC_QUESTIONS.length];
 
-  if (userMessageCount >= 3) {
-    return {
-      role: "assistant",
-      content: `Perfeito, já consegui mapear tudo o que os parceiros precisam! 🎯 Pode conferir o resumo ali do lado e clicar em enviar quando quiser.`,
-      source: "mock",
-    };
-  }
+  return {
+    role: "assistant",
+    content: `${nextQuestion}\n\n_${tip}_`,
+    source: "mock"
+  };
 
-  if (matched) {
-    questionIndex = (questionIndex + 1) % matched.questions.length;
-    let nextQuestion = matched.questions[questionIndex];
-    
-    // Safety check for masonry in any step
-    if (isMasonry && nextQuestion.includes("sacos/metros")) {
-      nextQuestion = "Qual a quantidade exata em milheiros ou unidades?";
-    }
-
-    return { role: "assistant", content: `${prefix} ${nextQuestion}`, source: "mock" };
-  }
-
-  questionIndex = (questionIndex + 1) % GENERIC_QUESTIONS.length;
-  return { role: "assistant", content: `${prefix} ${GENERIC_QUESTIONS[questionIndex]}`, source: "mock" };
-}

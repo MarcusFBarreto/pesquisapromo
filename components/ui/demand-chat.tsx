@@ -65,14 +65,15 @@ export function DemandChat({
     setInput("");
     setIsTyping(true);
 
-    // Collect user answers to suggest as details
-    if (onSuggestDetail && updatedMessages.filter((m) => m.role === "user").length >= 2) {
+    // Collect and sync all user answers to the form (Gostaríamos de saber mais...)
+    if (onSuggestDetail) {
       const userAnswers = updatedMessages
         .filter((m) => m.role === "user")
         .map((m) => m.content)
         .join(". ");
       onSuggestDetail(userAnswers);
     }
+
 
     const response = await getAssistantResponse(updatedMessages, {
       demand,

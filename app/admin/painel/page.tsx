@@ -33,6 +33,8 @@ export default function AdminDashboardPage() {
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteName, setInviteName] = useState("");
   const [isInviting, setIsInviting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [newAdminEmail, setNewAdminEmail] = useState("");
   const [isAddingAdmin, setIsAddingAdmin] = useState(false);
   const { user, loading: authLoading } = useAuth();
@@ -87,12 +89,38 @@ export default function AdminDashboardPage() {
       if (demData.demands) setDemands(demData.demands);
       if (appData.applications) setApplications(appData.applications);
       if (adminData.admins) setAdminList(adminData.admins);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro ao carregar dados do admin:", error);
+      setError(error.message || "Erro desconhecido ao carregar dados");
     } finally {
       setLoading(false);
     }
   };
+
+  const handleCreateTestDemand = async () => {
+    if (!window.confirm("Isso criará uma demanda de teste 'Telhas de Zinco' para verificar o fluxo. Continuar?")) return;
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const res = await fetch('/api/demands', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          request: "Telhas de Zinco (Teste Admin)",
+          name: "Admin Tester",
+          whatsapp: "11999999999",
+          details: "Pedido de teste gerado pelo painel.",
+          matchedCategories: ["Construção e Reforma"]
+        })
+      });
+      if (res.ok) {
+        alert("Demanda de teste criada! A I.A. vai começar a processar em segundos. 🚀");
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Erro ao criar teste:", error);
+    }
+  };
+
 
   const handleUpdateAppStatus = async (applicationId: string, status: string) => {
     try {
@@ -348,12 +376,34 @@ export default function AdminDashboardPage() {
         {/* CONTENT AREA */}
         {activeTab === 'demands' ? (
           <div className="space-y-6">
+            {error && (
+              <div className="bg-red-50 border border-red-200 p-4 rounded-2xl text-red-600 text-sm mb-4">
+                <strong>Opa! Algo deu errado:</strong> {error}
+              </div>
+            )}
+
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold text-pp-ink">Visão Global de Demandas</h2>
-              <span className="text-xs text-pp-muted bg-white px-3 py-1 rounded-full border border-pp-line">Atualização Live</span>
+              <div className="flex gap-2">
+                <button 
+                  onClick={handleCreateTestDemand}
+                  className="text-xs text-pp-teal bg-pp-teal/5 px-4 py-2 rounded-full border border-pp-teal/20 hover:bg-pp-teal/10 transition font-bold"
+                >
+                  ⚡ Gerar Demanda de Teste
+                </button>
+                <span className="text-xs text-pp-muted bg-white px-3 py-1 rounded-full border border-pp-line">Atualização Live</span>
+              </div>
             </div>
             
+            {demands.length === 0 && !loading && (
+              <div className="bg-white p-12 rounded-3xl border border-pp-line border-dashed text-center">
+                <p className="text-pp-muted mb-4 italic">Nenhuma demanda encontrada no banco de dados.</p>
+                <p className="text-xs text-slate-400">Tente criar uma demanda na Home ou use o botão acima para testar.</p>
+              </div>
+            )}
+
             <div className="grid gap-4">
+
               {demands.map((demand) => (
                 <div key={demand.id} className="bg-white p-6 rounded-3xl border border-pp-line hover:border-pp-teal transition group">
                   <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">

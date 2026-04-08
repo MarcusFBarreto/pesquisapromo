@@ -9,9 +9,8 @@ export async function GET(req: Request) {
     if (!await isAdminRequest(req)) {
       return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
     }
-    const snapshot = await adminDb.collection('demands')
-      .orderBy('createdAt', 'desc')
-      .get();
+    // Fetch all without orderBy first to avoid index requirements during debugging
+    const snapshot = await adminDb.collection('demands').get();
 
     const demands: Demand[] = [];
     snapshot.forEach(doc => {
@@ -20,14 +19,18 @@ export async function GET(req: Request) {
         ...data,
         id: doc.id,
         createdAt: data.createdAt?.toDate() || new Date(),
-      } as Demand);
+      } as any); // Cast to any to avoid strict MockDemand type issues during debug
     });
 
+    // Sort in memory
+    demands.sort((a: any, b: any) => b.createdAt.getTime() - a.createdAt.getTime());
+
     return NextResponse.json({ demands });
-  } catch (error) {
-    console.error("[myLupa] Erro ao buscar todas as demandas:", error);
-    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
+  } catch (error: any) {
+    console.error("[myLupa] CRITICAL: Erro ao buscar todas as demandas:", error.message, error.stack);
+    return NextResponse.json({ error: "Erro interno", details: error.message }, { status: 500 });
   }
+
 }
 
 export async function DELETE(req: Request) {
