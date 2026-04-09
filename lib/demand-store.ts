@@ -57,11 +57,12 @@ export async function addDemand(payload: {
     expiresAt,
   };
 
+  console.info(`[myLupa] 🖋️ Tentando salvar demanda no Firestore... ID Sugerido: ${docRef.id}`);
   await docRef.set(demandData);
-
-  console.info(`[myLupa] 🔥 Demanda salva no Firestore: #${demandData.id} (Status: ${demandData.status})`);
+  console.info(`[myLupa] 🔥 Demanda salva com SUCESSO no Firestore: #${demandData.id} (Status: ${demandData.status})`);
   
   if (isTrusted) {
+    console.info(`[myLupa] 📧 Disparando e-mail de notificação admin...`);
     await triggerAdminEmail(demandData);
   }
 

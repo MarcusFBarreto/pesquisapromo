@@ -24,8 +24,8 @@ function ensureFirebaseAdmin() {
     } else {
       // PROD: Use Default Cloud Run / App Hosting Credentials (ADC)
       try {
-        admin.initializeApp();
-        console.log('[FirebaseAdmin] Initialized with Application Default Credentials (Cloud).');
+        const app = admin.initializeApp();
+        console.log(`[FirebaseAdmin] Initialized with Application Default Credentials (Cloud). Project: ${app.options.projectId || 'Auto-Inferred'}`);
       } catch (error) {
         console.error('[FirebaseAdmin] Cloud Initialization error:', error);
       }

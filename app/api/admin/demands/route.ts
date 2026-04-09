@@ -7,10 +7,14 @@ import { isAdminRequest } from "@/lib/api-auth";
 export async function GET(req: Request) {
   try {
     if (!await isAdminRequest(req)) {
+      console.warn("[myLupa] 🚫 Tentativa de acesso não autorizado ao Admin API.");
       return NextResponse.json({ error: "Não autorizado" }, { status: 403 });
     }
-    // Fetch all without orderBy first to avoid index requirements during debugging
+    
+    console.info("[myLupa] 🔍 Buscando todas as demandas no Firestore...");
+    
     const snapshot = await adminDb.collection('demands').get();
+    console.info(`[myLupa] 📊 Total de demandas encontradas no Firestore: ${snapshot.size}`);
 
     const demands: Demand[] = [];
     snapshot.forEach(doc => {
@@ -19,18 +23,19 @@ export async function GET(req: Request) {
         ...data,
         id: doc.id,
         createdAt: data.createdAt?.toDate() || new Date(),
-      } as any); // Cast to any to avoid strict MockDemand type issues during debug
+      } as any);
     });
+
+    console.info(`[myLupa] ✅ Retornando ${demands.length} demandas ordenadas.`);
 
     // Sort in memory
     demands.sort((a: any, b: any) => b.createdAt.getTime() - a.createdAt.getTime());
 
     return NextResponse.json({ demands });
   } catch (error: any) {
-    console.error("[myLupa] CRITICAL: Erro ao buscar todas as demandas:", error.message, error.stack);
+    console.error("[myLupa] ❌ CRITICAL: Erro ao buscar todas as demandas:", error.message, error.stack);
     return NextResponse.json({ error: "Erro interno", details: error.message }, { status: 500 });
   }
-
 }
 
 export async function DELETE(req: Request) {
