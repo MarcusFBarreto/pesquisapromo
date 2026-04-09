@@ -134,7 +134,7 @@ const GENERIC_QUESTIONS = [
 ];
 
 let questionIndex = 0;
-
+export async function getMockResponse(messages: Message[], context: any): Promise<Message> {
   // ─── Expert Mock Fallback ───
   const lastUserMessage =
     messages.filter((m) => m.role === "user").pop()?.content.toLowerCase() || "";
@@ -180,4 +180,4 @@ let questionIndex = 0;
     content: `${nextQuestion}\n\n_${tip}_`,
     source: "mock"
   };
-
+}
